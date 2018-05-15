@@ -1,26 +1,31 @@
 import * as React from 'react';
 import './App.css';
 
-import Canvas from './components/Canvas';
+import Modal from './components/Modal/Modal';
+import {Canvas, Overlay} from './components/UI/game/';
 
-import logo from './logo.svg';
 
 interface IState{
   height: number,
-  width: number
+  width: number,
+  showModal: boolean,
 }
 
 class App extends React.Component<{}, IState> {
 
   constructor(props:any) {
     super(props);
-    this.state = { width: 0, height: 0 };
+    this.state = { width: 0, height: 0, showModal: true };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
   
   public componentDidMount() {
+    
+
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
+    this.ModalOnClose = this.ModalOnClose.bind(this);
+    this.ModalOnAccept = this.ModalOnAccept.bind(this);
   }
   
   public componentWillUnmount() {
@@ -28,23 +33,54 @@ class App extends React.Component<{}, IState> {
   }
   
   public updateWindowDimensions() {
-    this.setState({ width: document.body.clientWidth, height: document.body.clientHeight });
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+  }
+
+  public ModalOnClose(){
+    console.log('Close');
+    this.setState({showModal: false});
+  }
+
+  public ModalOnAccept(){
+    console.log('Accept');
+    this.setState({showModal: false});
+    const element: HTMLElement|null = document.getElementById('App');
+    
+    if(element !== null)
+    {
+      goFullScreen(element);
+    }
   }
 
   public render() {
     const {height, width} = this.state;
 
     return (
-      <div className="App">
-        <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to React</h1>
-            <p>{width},{height}</p>
-        </header>
+      <div id='App' className='App'>
+        <Modal 
+          top={this.state.height/2}
+          left={this.state.width/2}
+          show={this.state.showModal} 
+          onClose={this.ModalOnClose} 
+          onAccept={this.ModalOnAccept}>
+          <h2>The spag game wants to enter full-screen mode. Do you want to accept ?</h2>
+        </Modal>
+        <Overlay />
         <Canvas width={width} height={height}/>
       </div>
     );
   }
 }
+
+function goFullScreen(element: HTMLElement){
+  if(element.requestFullscreen){
+    element.requestFullscreen();
+  }
+  else if(element.webkitRequestFullscreen){
+    element.webkitRequestFullscreen()
+  }
+}
+
+
 
 export default App;
