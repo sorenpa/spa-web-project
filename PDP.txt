@@ -1,0 +1,69 @@
+=============================================================================================
+Project Development Plan
+=============================================================================================
+
+
+=============================================================================================
+Tasks
+=============================================================================================
+T0001 Implement Redux
+T0002 Establish communication Between 2D and 3D UI parts (Redux + RXjS ?)
+T0003 Design a structure for the game
+    - GameObjects
+    - Systems (Phys, Input, Logic, Sound, Rendering, blah blah)
+    - Observables
+
+
+=============================================================================================
+T0003 Design a structure for the game
+=============================================================================================
+- https://www.haroldserrano.com/blog/how-do-i-build-a-game-engine    
+
+A Engine parts:
+- A01 GameStateControl
+    - GameObjects
+    - SceneGraph
+    - loop
+- A02 Rendering
+- A03 Physics
+- A04 Animation
+- A05 AI
+- A06 UserInput
+- A07 Sound
+- A08 Networking
+- A09 Math Library
+
+A01 + A08 GameStateControl (Game + State + Manager/Controler + Entity/Object)
+------------------------------------------
+The game state defines the state of stuff in the game world. The basic way to do it is to have 
+a collection of objects be an instance of GameObject.
+
+The game is "controlled" by a loop that repeatedly 
+    {Updates game state -> Renders based on the state}
+
+The SceneGraph is basically just the relationship between GameObjects that appear in the game-world.
+
+    World -> Character -> Sword -> Fire
+                       -> Shield
+
+When the world moves, the character moves with it, when the character moves, the sword and shield moves 
+with it. In essence each node/GObj in the graph only needs to place it self in relation to the parent.
+
+    worldMatrix = greatGrandParent * grandParent * parent * self(localMatrix)
+
+
+
+
+Questions:
+    - How do we link the collection and the rendering? Does the GObj know how to draw itself?
+    - How do we update the state of the GObj? 
+    -   
+
+
+
+
+
+
+=============================================================================================
+Done Tasks
+=============================================================================================

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import './Canvas.css';
 
+import {CanvasScript} from './Scripts';
+
 interface IProps {
   width: number,
   height: number,
@@ -8,23 +10,20 @@ interface IProps {
 
 
 class Canvas extends React.Component<IProps, {}> {
-    
-    private canvas: HTMLCanvasElement|null;
 
+    private canvas: HTMLCanvasElement|null;
+    private canvasScript: CanvasScript;
+  
     constructor(props:IProps) {
       super(props);
+      console.log('CONSTRUCTING');
+      
     }
 
-    public componentDidUpdate() {
-      if(this.canvas != null){
-        const ctx: CanvasRenderingContext2D|null = this.canvas.getContext("2d")
-        
-        if(ctx != null)
-        {
-          ctx.fillStyle = "#f33";
-          ctx.fillRect(180,180,30,30)
-        }
-      }
+    public componentDidMount(){
+      this.canvasScript = new CanvasScript(this.canvas);
+      this.canvasScript.run();
+      console.log('MOUNTING');
     }
 
     public render() {
