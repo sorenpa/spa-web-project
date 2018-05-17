@@ -1,6 +1,6 @@
 import * as Rx from 'rxjs';
 
-export class CanvasScript  {
+export class Rendering  {
 
     private canvas: HTMLCanvasElement;
     private x: number;

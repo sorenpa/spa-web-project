@@ -1,8 +1,7 @@
 import * as React from 'react';
 import './App.css';
 
-import Modal from './components/Modal/Modal';
-import {Canvas, Overlay} from './components/UI/game/';
+import {Canvas, Modal, Overlay} from './components/UI/';
 
 
 interface IState{

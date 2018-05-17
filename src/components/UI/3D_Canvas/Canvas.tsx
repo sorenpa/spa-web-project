@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './Canvas.css';
 
-import {CanvasScript} from './Scripts';
+import {Rendering} from '../../Engine';
 
 interface IProps {
   width: number,
@@ -12,7 +12,7 @@ interface IProps {
 class Canvas extends React.Component<IProps, {}> {
 
     private canvas: HTMLCanvasElement|null;
-    private canvasScript: CanvasScript;
+    private renderEngine: Rendering; // TODO Need to find a better way to get this passed to the rendering
   
     constructor(props:IProps) {
       super(props);
@@ -21,8 +21,8 @@ class Canvas extends React.Component<IProps, {}> {
     }
 
     public componentDidMount(){
-      this.canvasScript = new CanvasScript(this.canvas);
-      this.canvasScript.run();
+      this.renderEngine = new Rendering(this.canvas);
+      this.renderEngine.run();
       console.log('MOUNTING');
     }
 
@@ -36,4 +36,4 @@ class Canvas extends React.Component<IProps, {}> {
       )
     }
   }
-  export default Canvas
+  export {Canvas}
