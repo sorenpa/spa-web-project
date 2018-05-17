@@ -4,7 +4,11 @@ import './Overlay.css';
 import logo from './resources/logo.svg';
 
 class Overlay extends React.Component<{}, {}> {
-    
+  
+  public componentDidMount(){
+    console.log('Mount - 2D')
+  }
+
     public render() {
       return(
         <header className="App-header">

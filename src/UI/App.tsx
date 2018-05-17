@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './App.css';
 
-import {Canvas, Modal, Overlay} from './components/UI/';
+import {Canvas, Modal, Overlay} from './components/';
 
 
 interface IState{
@@ -25,6 +25,7 @@ class App extends React.Component<{}, IState> {
     window.addEventListener('resize', this.updateWindowDimensions);
     this.ModalOnClose = this.ModalOnClose.bind(this);
     this.ModalOnAccept = this.ModalOnAccept.bind(this);
+    console.log('Mount - APP')
   }
   
   public componentWillUnmount() {
