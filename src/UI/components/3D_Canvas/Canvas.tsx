@@ -15,10 +15,6 @@ class Canvas extends React.Component<IProps, {}> {
       super(props);
     }
 
-    public componentDidMount(){
-      console.log('Mount - Canvas')
-    }
-
     public render() {
       const {width, height} = this.props;
 

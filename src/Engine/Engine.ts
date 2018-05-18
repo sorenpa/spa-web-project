@@ -1,21 +1,15 @@
 import * as Rx from 'rxjs';
-
 import RenderEngine from './RenderEngine'
-
+import RenderModelService from './RenderEngine/RenderModels/ModelService';
 
 const LOOP_INTERVAL = 1000;
 
-export default class Engine{
+// Streams
+const gameloop$ : Rx.Observable<number> = Rx.interval(LOOP_INTERVAL);
 
-    public static renderEngine: RenderEngine;
+const renderModelService: RenderModelService = new RenderModelService();
+const renderEngine: RenderEngine = new RenderEngine(gameloop$, renderModelService);
 
-    public static boot(){
-
-        const gameloop$ : Rx.Observable<number> = Rx.interval(LOOP_INTERVAL);
-
-        this.renderEngine = new RenderEngine(gameloop$);
-
-    }
-
-    
+export default function boot(){
+    renderEngine.start();
 }

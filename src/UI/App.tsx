@@ -1,6 +1,7 @@
 import * as React from 'react';
 import './App.css';
 
+
 import {Canvas, Modal, Overlay} from './components/';
 
 
@@ -10,7 +11,11 @@ interface IState{
   showModal: boolean,
 }
 
-class App extends React.Component<{}, IState> {
+interface IProps{
+  initializeCallback: () => void,
+}
+
+class App extends React.Component<IProps, IState> {
 
   constructor(props:any) {
     super(props);
@@ -19,13 +24,12 @@ class App extends React.Component<{}, IState> {
   }
   
   public componentDidMount() {
-    
-
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
     this.ModalOnClose = this.ModalOnClose.bind(this);
     this.ModalOnAccept = this.ModalOnAccept.bind(this);
-    console.log('Mount - APP')
+    
+    this.props.initializeCallback();
   }
   
   public componentWillUnmount() {
@@ -54,7 +58,7 @@ class App extends React.Component<{}, IState> {
 
   public render() {
     const {height, width} = this.state;
-
+   
     return (
       <div id='App' className='App'>
         <Modal 

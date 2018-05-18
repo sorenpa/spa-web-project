@@ -6,10 +6,14 @@ import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import App from './UI';
 
-
 ReactDOM.render(
-  <App />,
+  <App initializeCallback={initializeCallBack} />,
   document.getElementById('root') as HTMLElement
 );
-Engine.boot();
+
 registerServiceWorker();
+
+// Boot the game engine once the DOM has been generated.
+function initializeCallBack(){
+  Engine();
+}
