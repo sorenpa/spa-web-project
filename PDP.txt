@@ -54,12 +54,6 @@ with it. In essence each node/GObj in the graph only needs to place it self in r
 
 
 
-Questions:
-    - How do we link the collection and the rendering? Does the GObj know how to draw itself?
-    - How do we update the state of the GObj? 
-    -   
-
-
 
 
 

@@ -1,11 +1,12 @@
-import { IVector3D } from '../Math/interfaces';
+import IGameObjectRenderData from './interfaces';
 import RenderObject from './RenderObject';
 
 
 export default class Rectangle extends RenderObject{
 
-    constructor(position:IVector3D, height: number, width: number, color:string = '#f33'){
-        super(position, 'rectangle');
+    constructor(gameObjectId:string, renderData:IGameObjectRenderData){
+        
+        super(gameObjectId, renderData);
     }
 
     

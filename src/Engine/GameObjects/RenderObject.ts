@@ -1,14 +1,12 @@
-import { IVector3D } from "../Math/interfaces";
 import GameObject from "./GameObject";
+import IGameObjectRenderData from "./interfaces";
 
 export default abstract class RenderObject extends GameObject{
 
-    public renderModelId: string;
+    public renderData: IGameObjectRenderData
 
-    constructor(position: IVector3D, renderModelId: string){
-        super(position);
-        this.renderModelId = renderModelId;
+    constructor(gmaeObjectId:string, renderData: IGameObjectRenderData){
+        super(gmaeObjectId, renderData.translation);
+        this.renderData = renderData;
     }
-
-
 }

@@ -1,16 +1,17 @@
+import { IVector3D } from "../../../Math/interfaces";
 import IRenderModel from "../IRenderModel";
 
 export default class RectangleModel implements IRenderModel{
 
-    public renderFunction(context: CanvasRenderingContext2D){
-        return;
+    private height: number = 25;
+    private width: number = 25;
+
+    public renderFunction(context: CanvasRenderingContext2D, translate:IVector3D , scale: IVector3D, texture: string){
+        const height = this.height*scale.x
+        const width = this.width*scale.y
+        
+        context.fillStyle = texture; // Temporarily the color is = to texture
+        context.fillRect(translate.x,translate.y,width,height)
     }
 
 }
-
-    // private draw(){
-    //     this.useCanvasContext((ctx) => {
-    //         ctx.fillStyle = "#f33";
-    //         ctx.fillRect(this.x,180,30,30)
-    //     })
-    // }

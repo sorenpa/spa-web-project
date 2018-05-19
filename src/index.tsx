@@ -14,6 +14,7 @@ ReactDOM.render(
 registerServiceWorker();
 
 // Boot the game engine once the DOM has been generated.
+// TODO Possibly transform into an observable passed to App/Engine
 function initializeCallBack(){
   Engine();
 }
