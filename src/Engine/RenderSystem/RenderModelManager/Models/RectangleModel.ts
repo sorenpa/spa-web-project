@@ -1,5 +1,5 @@
-import { IVector3D } from "../../../Math/interfaces";
-import IRenderModel from "../IRenderModel";
+import { IVector3D } from "../../../Shared/Math";
+import { IRenderModel } from "./interfaces";
 
 export default class RectangleModel implements IRenderModel{
 

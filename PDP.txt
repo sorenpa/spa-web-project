@@ -6,8 +6,8 @@ Project Development Plan
 =============================================================================================
 Tasks
 =============================================================================================
-T0001 Implement Redux
-T0002 Establish communication Between 2D and 3D UI parts (Redux + RXjS ?)
+
+T0002 Establish communication Between 2D and 3D UI parts 
 T0003 Design a structure for the game
     - GameObjects
     - Systems (Phys, Input, Logic, Sound, Rendering, blah blah)
@@ -19,27 +19,25 @@ T0003 Design a structure for the game
 =============================================================================================
 - https://www.haroldserrano.com/blog/how-do-i-build-a-game-engine    
 
-A Engine parts:
-- A01 GameStateControl
-    - GameObjects
-    - SceneGraph
-    - loop
-- A02 Rendering
-- A03 Physics
-- A04 Animation
-- A05 AI
-- A06 UserInput
-- A07 Sound
-- A08 Networking
-- A09 Math Library
+File structure
+- A1 Engine                     //Engine for rendering 3D on the HTML5 canvas
+    - ComponentSystem
+    - RenderSystem
+        - AnimationManager
+        - RenderModelManager
+        - SceneGraph
+    - PhysiscsSystem
+    - GameLogicSystem
+    - SoundSystem
+    - AISystem
+    - Shared
+        - InputSystem
+        - Math
+- A2 - UI                       //React code for the 2D UI overlay
+- A3 - EventManager             //Managing Observables and flow
+- A4 - Networking               //Networking
 
-A01 + A08 GameStateControl (Game + State + Manager/Controler + Entity/Object)
-------------------------------------------
-The game state defines the state of stuff in the game world. The basic way to do it is to have 
-a collection of objects be an instance of GameObject.
-
-The game is "controlled" by a loop that repeatedly 
-    {Updates game state -> Renders based on the state}
+Adopted a ECS based game engine system isntead of object heirachies.
 
 The SceneGraph is basically just the relationship between GameObjects that appear in the game-world.
 
@@ -61,3 +59,4 @@ with it. In essence each node/GObj in the graph only needs to place it self in r
 =============================================================================================
 Done Tasks
 =============================================================================================
+T0001 Implement Redux (RETRACTED)

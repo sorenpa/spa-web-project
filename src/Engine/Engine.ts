@@ -1,11 +1,13 @@
 import { interval, Observable, Subject } from 'rxjs';
 
-import GameObjectService from './GameObejctService';
-import { IGameObjectEvent } from './GameObejctService/interfaces';
-import Rectangle from './GameObjects/Rectangle';
+import { IGameObjectEvent } from '../EventManager';
+import EntityManager from './ComponentSystem/EntityManager';
+import RenderEngine from './RenderSystem';
 
-import RenderEngine from './RenderEngine';
-import RenderModelService from './RenderEngine/RenderModels/ModelService';
+import Entity from './ComponentSystem/Components/Entity';
+import { ComponentType, IComponent, IPhysics, IVisible } from './ComponentSystem/Components/interfaces';
+
+
 
 const LOOP_INTERVAL = 1000;
 
@@ -18,10 +20,9 @@ const gameObjectUpdates$ : Subject<IGameObjectEvent> = new Subject<IGameObjectEv
 // const userInputs$ : Rx.Observable<IUserInputEvent>
 // const PhysicsUpdates$ : Rx.Observable<IPhysicsUpdateEvent>
 
-const renderModelService: RenderModelService = new RenderModelService();
-const renderEngine: RenderEngine = new RenderEngine(gameloop$, gameObjectUpdates$, renderModelService);
-const gameObjectService: GameObjectService = new GameObjectService(gameObjectUpdates$);
-// const StreamControlService
+const renderEngine: RenderEngine = new RenderEngine(gameloop$, gameObjectUpdates$);
+const entityManager: EntityManager = new EntityManager(gameObjectUpdates$);
+// const EventStreamManager
 
 export default function boot(){
   
@@ -29,26 +30,47 @@ export default function boot(){
 
     gameObjectUpdates$.subscribe(x => console.log(x));
 
-    const newGo:Rectangle = new Rectangle('Rect1',
-        {
-            color: '#f33',
-            renderModelId: 'rectangle',
-            renderTextureId: 'xxx',
-            rotation: {x:0,y:0,z:0},
-            scale: {x:1,y:1,z:1},
-            translation: {x:25,y:50,z:0},
-        });
+    const vc1: IVisible = {
+        color: '#F33',
+        componentId: 'C1',
+        componentType: ComponentType.VISIBLE,
+        modelId: 'rectangle',
+        textureId: 'none',
+        
+    }
 
-    const newGo2:Rectangle = new Rectangle('Rect1',
-        {
-            color: '#A3B',
-            renderModelId: 'rectangle',
-            renderTextureId: 'xxx',
-            rotation: {x:0,y:0,z:0},
-            scale: {x:1,y:1,z:1},
-            translation: {x:300,y:230,z:0},
-        });
+    const pc1: IPhysics = {
+        componentId: 'C2',
+        componentType: ComponentType.PHYSICS,
+        direction: {x: 0, y:0, z:0},
+        position: {x: 250, y:700, z:0},
+        scale: {x: 1, y:1, z:1 }
+    }
 
-    gameObjectService.AddGameObject(newGo);
-    gameObjectService.AddGameObject(newGo2);
+    const components1: IComponent[] = [vc1,pc1];
+    
+    const entity1: Entity = new Entity('E1', components1);
+
+    const vc2: IVisible = {
+        color: '#A38',
+        componentId: 'C3',
+        componentType: ComponentType.VISIBLE,
+        modelId: 'rectangle',
+        textureId: 'none',
+    }
+
+    const pc2: IPhysics = {
+        componentId: 'C4',
+        componentType: ComponentType.PHYSICS,
+        direction: {x: 0, y:0, z:0},
+        position: {x: 200, y:300, z:0},
+        scale: {x: 2, y:2, z:1 }
+    }
+
+    const components2: IComponent[] = [vc2,pc2];
+    
+    const entity2: Entity = new Entity('E1', components2);
+
+    entityManager.AddGameObject(entity1);
+    entityManager.AddGameObject(entity2);
 }

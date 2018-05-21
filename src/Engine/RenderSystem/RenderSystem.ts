@@ -1,30 +1,30 @@
 import * as Rx from 'rxjs';
 
-import { IGameObjectEvent } from '../GameObejctService/interfaces';
-import IGameObjectRenderData from '../GameObjects/interfaces';
-import IRenderModel from './RenderModels/IRenderModel';
-import RenderModelService from './RenderModels/ModelService';
+import { IGameObjectEvent } from '../../EventManager';
+
+import Entity from '../ComponentSystem/Components/Entity';
+import { ComponentType, IPhysics, IVisible } from '../ComponentSystem/Components/interfaces';
+import RenderModelManager from './RenderModelManager';
+
 
 
 /*
     This class is meant to handle the rendering of the game
 */
-export default class Rendering  {
-
-    
+export default class RenderEngine  {
 
     public canvas: HTMLCanvasElement;
     private loop$: Rx.Observable<number>;
 
-    private renderModelService: RenderModelService;
-    private sceneGraph: IGameObjectRenderData[];
+    private renderModelManager: RenderModelManager;
+    private sceneGraph: Entity[];
 
-    constructor(loop$:Rx.Observable<number>, gameObject$: Rx.Observable<IGameObjectEvent>, renderModelService: RenderModelService){
+    constructor(loop$:Rx.Observable<number>, gameObject$: Rx.Observable<IGameObjectEvent>){
         this.loop$ = loop$;
         gameObject$.subscribe(this.onGameObjectEvent.bind(this));
 
-        this.sceneGraph = new Array<IGameObjectRenderData>();
-        this.renderModelService = renderModelService;
+        this.sceneGraph = new Array<Entity>();
+        this.renderModelManager = new RenderModelManager();
     }
     
     public start(){
@@ -34,7 +34,9 @@ export default class Rendering  {
 
     private onGameObjectEvent(event:IGameObjectEvent){
         console.log('Adding new render data')
-        this.sceneGraph.push(event.renderData);
+        if(event.entity.hasComponents([ComponentType.VISIBLE, ComponentType.PHYSICS])){
+            this.sceneGraph.push(event.entity)
+        }
     }
 
     private initCanvas(){
@@ -52,18 +54,18 @@ export default class Rendering  {
     }
 
     private render(frameNumber: number) {
-        console.log('Frame:', frameNumber, "x:");
+        console.log('Frame:', frameNumber);
         this.clearCanvas();
 
         this.sceneGraph.forEach(elem => {
             const ctx: CanvasRenderingContext2D|null = this.canvas.getContext("2d")
             if(ctx != null)
             {
-                const model: IRenderModel|undefined = this.renderModelService.GetModel(elem.renderModelId);    
-                if(model !== undefined){
-                    model.renderFunction(ctx, elem.translation, elem.scale, elem.color);
-                }
+                console.log(elem)
+                const vc: IVisible = elem.getCompoenent(ComponentType.VISIBLE) as IVisible;
+                const pc: IPhysics = elem.getCompoenent(ComponentType.PHYSICS) as IPhysics;
                 
+                this.renderModelManager.drawModel(ctx,vc, pc);
             }    
         })
         

@@ -1,4 +1,4 @@
-import IGameObjectRenderData from "../GameObjects/interfaces";
+import Entity from '../Engine/ComponentSystem/Components/Entity';
 
 export enum GameObjectUpdateType
 {
@@ -10,7 +10,5 @@ export enum GameObjectUpdateType
 export interface IGameObjectEvent
 {
     type: GameObjectUpdateType,
-    gameObjectId: string,
-    renderData: IGameObjectRenderData
+    entity: Entity,
 }
-
