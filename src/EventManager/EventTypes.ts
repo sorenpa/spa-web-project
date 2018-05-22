@@ -9,6 +9,6 @@ export enum GameObjectUpdateType
 
 export interface IGameObjectEvent
 {
-    type: GameObjectUpdateType,
+    eventType: GameObjectUpdateType,
     entity: Entity,
 }

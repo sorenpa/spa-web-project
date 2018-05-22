@@ -14,13 +14,11 @@ import RenderModelManager from './RenderModelManager';
 export default class RenderEngine  {
 
     public canvas: HTMLCanvasElement;
-    private loop$: Rx.Observable<number>;
 
     private renderModelManager: RenderModelManager;
     private sceneGraph: Entity[];
 
-    constructor(loop$:Rx.Observable<number>, gameObject$: Rx.Observable<IGameObjectEvent>){
-        this.loop$ = loop$;
+    constructor(gameObject$: Rx.Observable<IGameObjectEvent>){
         gameObject$.subscribe(this.onGameObjectEvent.bind(this));
 
         this.sceneGraph = new Array<Entity>();
@@ -29,12 +27,26 @@ export default class RenderEngine  {
     
     public start(){
         this.initCanvas();
-        this.loop$.subscribe(this.render.bind(this))
+    }
+
+    public render() {
+        this.clearCanvas();
+
+        this.sceneGraph.forEach(elem => {
+            const ctx: CanvasRenderingContext2D|null = this.canvas.getContext("2d")
+            if(ctx != null)
+            {
+                const vc: IVisible = elem.getCompoenent(ComponentType.VISIBLE) as IVisible;
+                const pc: IPhysics = elem.getCompoenent(ComponentType.PHYSICS) as IPhysics;
+                
+                this.renderModelManager.drawModel(ctx,vc, pc);
+            }    
+        })
     }
 
     private onGameObjectEvent(event:IGameObjectEvent){
-        console.log('Adding new render data')
         if(event.entity.hasComponents([ComponentType.VISIBLE, ComponentType.PHYSICS])){
+            console.log('RENDER: Adding entity to scenegraph', event.entity);
             this.sceneGraph.push(event.entity)
         }
     }
@@ -51,24 +63,6 @@ export default class RenderEngine  {
         this.useCanvasContext( (ctx) => {
             ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         })
-    }
-
-    private render(frameNumber: number) {
-        console.log('Frame:', frameNumber);
-        this.clearCanvas();
-
-        this.sceneGraph.forEach(elem => {
-            const ctx: CanvasRenderingContext2D|null = this.canvas.getContext("2d")
-            if(ctx != null)
-            {
-                console.log(elem)
-                const vc: IVisible = elem.getCompoenent(ComponentType.VISIBLE) as IVisible;
-                const pc: IPhysics = elem.getCompoenent(ComponentType.PHYSICS) as IPhysics;
-                
-                this.renderModelManager.drawModel(ctx,vc, pc);
-            }    
-        })
-        
     }
 
     private useCanvasContext(drawingFunc: (context:CanvasRenderingContext2D) => void){

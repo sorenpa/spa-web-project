@@ -18,7 +18,7 @@ export default class EntityManager{
 
         this.gameObject$.next({
             entity,
-            type: GameObjectUpdateType.CREATE,
+            eventType: GameObjectUpdateType.CREATE,
         })
     }
 

@@ -1,4 +1,4 @@
-import { ComponentType, IComponent, IPhysics, IVisible } from "./interfaces";
+import { ComponentType, IComponent } from "./interfaces";
 
 export default class Entity{
     
@@ -17,7 +17,7 @@ export default class Entity{
         return this.entityId;
     }
 
-    public hasComponents(componentTypes:ComponentType[]):boolean{
+    public hasComponents(componentTypes:ComponentType[]):boolean {
         let result: boolean = true;
         componentTypes.forEach(ct => {
             if(!this.components.has(ct))
@@ -30,8 +30,7 @@ export default class Entity{
         return result;
     }
 
-    public getCompoenent(type:ComponentType): IComponent|IVisible|IPhysics|undefined
-    {
+    public getCompoenent(type:ComponentType): IComponent|undefined {
         return this.components.get(type);
     }
 

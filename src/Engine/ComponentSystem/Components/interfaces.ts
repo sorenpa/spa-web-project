@@ -10,7 +10,6 @@ export interface IComponent
 {
     componentId: string,
     componentType: ComponentType,
-    // EntityId: string, ???
 }
 
 export interface IVisible extends IComponent
@@ -28,5 +27,5 @@ export interface IPhysics extends IComponent{
 
 export interface IMovable extends IComponent{
     acceleration: IVector3D,
-    speed: IVector3D,
+    velocity: IVector3D,
 }
