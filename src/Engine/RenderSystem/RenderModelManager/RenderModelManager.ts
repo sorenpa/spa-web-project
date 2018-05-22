@@ -1,6 +1,6 @@
-import { IPhysics, IVisible } from '../../ComponentSystem/Components/interfaces';
-import {IRenderModel} from './Models'
-import RectangleModel from './Models/RectangleModel';
+import { IPhysics, IVisible } from '../../ComponentSystem';
+import {IRenderModel, RectangleModel } from './Models'
+
 
 
 

@@ -1,11 +1,10 @@
 import { Observable } from 'rxjs'
 
-import { IGameObjectEvent } from "../../EventManager";
+import { IGameObjectEvent } from "../EventSystem";
 
-import Entity from '../ComponentSystem/Components/Entity';
-import { ComponentType, IMovable, IPhysics } from '../ComponentSystem/Components/interfaces';
+import { ComponentType, Entity, IMovable, IPhysics } from '../ComponentSystem';
 
-import { IVector3D } from '../Shared/Math';
+import { IVector3D } from '../Math';
 
 export default class PhysicsSystem{
 

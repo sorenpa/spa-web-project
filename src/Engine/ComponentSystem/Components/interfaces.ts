@@ -1,4 +1,4 @@
-import { IVector3D } from "../../Shared/Math";
+import { IVector3D } from "../../Math";
 
 export enum ComponentType{
     VISIBLE,

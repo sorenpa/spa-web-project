@@ -1,4 +1,4 @@
-import { ComponentType, IComponent } from "./interfaces";
+import { ComponentType, IComponent } from "../Components";
 
 export default class Entity{
     

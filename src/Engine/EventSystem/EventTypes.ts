@@ -1,4 +1,4 @@
-import Entity from '../Engine/ComponentSystem/Components/Entity';
+import {Entity} from '../ComponentSystem/';
 
 export enum GameObjectUpdateType
 {

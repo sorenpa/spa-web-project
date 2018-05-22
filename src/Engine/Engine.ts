@@ -1,16 +1,14 @@
 import { fromEvent, interval, merge, Observable, Subject } from 'rxjs';
 
-import { IGameObjectEvent } from '../EventManager';
-import EntityManager from './ComponentSystem/EntityManager';
+import { IGameObjectEvent } from './EventSystem';
 import RenderSystem from './RenderSystem';
 
-import Entity from './ComponentSystem/Components/Entity';
-import { ComponentType, IComponent, IMovable, IPhysics, IPlayer, IVisible } from './ComponentSystem/Components/interfaces';
+import { ComponentType, Entity, EntityManager, IComponent, IMovable, IPhysics, IPlayer, IVisible } from './ComponentSystem';
 import InputSystem from './InputSystem/InputSystem';
 import PhysicsSystem from './PhysicsSystem/PysicsSystem';
 
 
-const LOOP_INTERVAL = 100;
+const LOOP_INTERVAL = 16;
 
 // Streams
 const gameloop$ : Observable<number> = interval(LOOP_INTERVAL);
@@ -54,10 +52,10 @@ export default function boot(){
     }
 
     const mc1: IMovable = {
-        acceleration: {x:0,y:0,z:0},
+        acceleration: {x:3,y:3,z:0},
         componentId: 'C3',
         componentType: ComponentType.MOVABLE,
-        velocity: {x:1,y:1,z:0}
+        velocity: {x:0,y:0,z:0}
     }
 
     const playerComp: IPlayer = {
@@ -95,7 +93,7 @@ export default function boot(){
 }
 
 function gameLoop(frame: number){
-    // inputSystem.update();
+    inputSystem.update();
     physicsSystem.update();
     renderSystem.render();
 

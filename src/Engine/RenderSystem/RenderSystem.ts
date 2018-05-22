@@ -1,9 +1,8 @@
 import * as Rx from 'rxjs';
 
-import { IGameObjectEvent } from '../../EventManager';
+import { IGameObjectEvent } from '../EventSystem';
 
-import Entity from '../ComponentSystem/Components/Entity';
-import { ComponentType, IPhysics, IVisible } from '../ComponentSystem/Components/interfaces';
+import { ComponentType, Entity, IPhysics, IVisible } from '../ComponentSystem';
 import RenderModelManager from './RenderModelManager';
 
 

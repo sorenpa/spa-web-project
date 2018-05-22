@@ -2,7 +2,7 @@ import * as React from 'react';
 import './App.css';
 
 
-import {Canvas, Modal, Overlay} from './components/';
+import {Canvas, Overlay} from './components/';
 
 
 interface IState{
@@ -61,14 +61,14 @@ class App extends React.Component<IProps, IState> {
    
     return (
       <div id='App' className='App'>
-        <Modal 
+        {/* <Modal 
           top={this.state.height/2}
           left={this.state.width/2}
           show={this.state.showModal} 
           onClose={this.ModalOnClose} 
           onAccept={this.ModalOnAccept}>
           <h2>The spag game wants to enter full-screen mode. Do you want to accept ?</h2>
-        </Modal>
+        //</Modal> */}
         <Overlay />
         <Canvas width={width} height={height}/>
       </div>

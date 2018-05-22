@@ -1,10 +1,10 @@
 
 import { Observable } from 'rxjs'
 
-import { IGameObjectEvent } from "../../EventManager";
+import { IGameObjectEvent } from "../EventSystem";
 
-import Entity from '../ComponentSystem/Components/Entity';
-import { ComponentType } from '../ComponentSystem/Components/interfaces';
+import { Entity } from '../ComponentSystem';
+import { ComponentType, IMovable } from '../ComponentSystem/Components/interfaces';
 
 export default class InputSystem{
 
@@ -12,16 +12,16 @@ export default class InputSystem{
     private gameObject$: Observable<IGameObjectEvent>;
     private userInput$:Observable<Event>;
 
-    // private moveX: { left: boolean, right: boolean};
-    // private moveY: { up: boolean, down: boolean};
+    private moveX: { left: boolean, right: boolean};
+    private moveY: { up: boolean, down: boolean};
     
     constructor(gameObject$: Observable<IGameObjectEvent>, userInput$:Observable<Event>){
         this.gameObject$ = gameObject$;
         this.userInput$ = userInput$;
         this. entities= new Array<Entity>();
 
-        // this.moveX = { left: false, right: false };
-        // this.moveY = { up: false, down:false };
+        this.moveX = { left: false, right: false };
+        this.moveY = { up: false, down:false };
     }
     
     public start(){
@@ -31,12 +31,39 @@ export default class InputSystem{
 
     public update() {
         this.entities.forEach(entity => {
-            console.log('INPUT for Entity', entity)
+            const movableComponent: IMovable = entity.getCompoenent(ComponentType.MOVABLE) as IMovable;
+            
+            const { velocity, acceleration } = movableComponent;
+
+            const {left, right} = this.moveX;
+            const {up, down} = this.moveY;
+
+            if(left === right){
+                velocity.x = 0;
+            }
+            else if (left){
+                velocity.x = -acceleration.x;
+            }
+            else{
+                velocity.x = acceleration.x;
+            }
+                
+            if(up === down){
+                velocity.y = 0;
+            }
+            else if (up){
+                velocity.y = -acceleration.y;
+            }
+            else{
+                velocity.y = acceleration.y;    
+            }
+            
+            console.log(velocity);
         });
     }
 
     private onGameObjectEvent(event:IGameObjectEvent){
-        if(event.entity.hasComponents([ComponentType.PLAYER])){
+        if(event.entity.hasComponents([ComponentType.PLAYER, ComponentType.MOVABLE])){
             this.entities.push(event.entity);
         }
     }
@@ -46,16 +73,16 @@ export default class InputSystem{
 
        switch(keyEvent.key) {
            case "w":
-            console.log('UP');
+            this.moveY.up = keyEvent.type === 'keydown';
            break;
            case "a":
-            console.log('LEFT');
+            this.moveX.left = keyEvent.type === 'keydown';
            break;
            case "s":
-            console.log('DOWN');
+            this.moveY.down = keyEvent.type === 'keydown';
            break;
            case "d":
-            console.log('RIGHT');
+            this.moveX.right = keyEvent.type === 'keydown';
            break;
            default:
            break;

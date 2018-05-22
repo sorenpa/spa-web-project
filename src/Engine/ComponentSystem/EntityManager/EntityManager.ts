@@ -1,7 +1,7 @@
 import { Subject } from "rxjs";
 
-import { GameObjectUpdateType, IGameObjectEvent } from '../../../EventManager';
-import Entity from "../Components/Entity";
+import { GameObjectUpdateType, IGameObjectEvent } from '../../EventSystem';
+import Entity from "./Entity";
 
 export default class EntityManager{
 
