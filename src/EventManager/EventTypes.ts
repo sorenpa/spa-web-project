@@ -12,3 +12,7 @@ export interface IGameObjectEvent
     eventType: GameObjectUpdateType,
     entity: Entity,
 }
+
+export interface IUserInputEvent{
+    event: KeyboardEvent
+}

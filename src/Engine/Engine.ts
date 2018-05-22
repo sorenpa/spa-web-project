@@ -1,13 +1,13 @@
-import { interval, Observable, Subject } from 'rxjs';
+import { fromEvent, interval, merge, Observable, Subject } from 'rxjs';
 
 import { IGameObjectEvent } from '../EventManager';
 import EntityManager from './ComponentSystem/EntityManager';
 import RenderSystem from './RenderSystem';
 
 import Entity from './ComponentSystem/Components/Entity';
-import { ComponentType, IComponent, IMovable, IPhysics, IVisible  } from './ComponentSystem/Components/interfaces';
+import { ComponentType, IComponent, IMovable, IPhysics, IPlayer, IVisible } from './ComponentSystem/Components/interfaces';
+import InputSystem from './InputSystem/InputSystem';
 import PhysicsSystem from './PhysicsSystem/PysicsSystem';
-
 
 
 const LOOP_INTERVAL = 100;
@@ -18,8 +18,12 @@ const gameloop$ : Observable<number> = interval(LOOP_INTERVAL);
 const gameObjectUpdates$ : Subject<IGameObjectEvent> = new Subject<IGameObjectEvent>()
 // const gameObjectActions$ : Rx.Observable<IGameObjectActionEvent>
 // const gameLogicUpdates$ : Rx.Observable<GameLogicUpdateEvent>
-// const userInputs$ : Rx.Observable<IUserInputEvent>
 
+const keydown$ : Observable<Event> = fromEvent(document,'keydown');
+const keyup$ : Observable<Event> = fromEvent(document,'keyup');
+const userInputs$ : Observable<Event> = merge(keydown$, keyup$);
+
+const inputSystem: InputSystem = new InputSystem(gameObjectUpdates$, userInputs$);
 const renderSystem: RenderSystem = new RenderSystem(gameObjectUpdates$);
 const entityManager: EntityManager = new EntityManager(gameObjectUpdates$);
 const physicsSystem: PhysicsSystem = new PhysicsSystem(gameObjectUpdates$);
@@ -29,6 +33,7 @@ export default function boot(){
   
     renderSystem.start();
     physicsSystem.start();
+    inputSystem.start();
     
     gameloop$.subscribe(gameLoop);
 
@@ -55,7 +60,13 @@ export default function boot(){
         velocity: {x:1,y:1,z:0}
     }
 
-    const components1: IComponent[] = [vc1,pc1,mc1];
+    const playerComp: IPlayer = {
+        componentId: 'C6',
+        componentType: ComponentType.PLAYER,
+        playerName: 'Huggo'
+    }
+
+    const components1: IComponent[] = [vc1,pc1,mc1, playerComp];
     
     const entity1: Entity = new Entity('E1', components1);
 
@@ -84,6 +95,7 @@ export default function boot(){
 }
 
 function gameLoop(frame: number){
+    // inputSystem.update();
     physicsSystem.update();
     renderSystem.render();
 
