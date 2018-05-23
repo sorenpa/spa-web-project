@@ -52,9 +52,10 @@ export default function boot(){
     }
 
     const mc1: IMovable = {
-        acceleration: {x:3,y:3,z:0},
+        acceleration: {x:0.1,y:0.1,z:0.1},
         componentId: 'C3',
         componentType: ComponentType.MOVABLE,
+        maxSpeed: 5,
         velocity: {x:0,y:0,z:0}
     }
 

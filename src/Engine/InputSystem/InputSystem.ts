@@ -4,7 +4,7 @@ import { Observable } from 'rxjs'
 import { IGameObjectEvent } from "../EventSystem";
 
 import { Entity } from '../ComponentSystem';
-import { ComponentType, IMovable } from '../ComponentSystem/Components/interfaces';
+import { ComponentType, IMovable, IPhysics } from '../ComponentSystem/Components/interfaces';
 
 export default class InputSystem{
 
@@ -32,38 +32,54 @@ export default class InputSystem{
     public update() {
         this.entities.forEach(entity => {
             const movableComponent: IMovable = entity.getCompoenent(ComponentType.MOVABLE) as IMovable;
+            const physicsComponent: IPhysics = entity.getCompoenent(ComponentType.PHYSICS) as IPhysics;
             
-            const { velocity, acceleration } = movableComponent;
+            const { velocity, acceleration, maxSpeed } = movableComponent;
+            const {  } = physicsComponent;
 
             const {left, right} = this.moveX;
             const {up, down} = this.moveY;
 
             if(left === right){
-                velocity.x = 0;
+                console.log(velocity)
+                if(velocity.x > acceleration.x) {
+                    velocity.x -= acceleration.x
+                }
+                else if(velocity.x < -acceleration.x){
+                    velocity.x += acceleration.x
+                } else {
+                    velocity.x = 0;
+                }
             }
             else if (left){
-                velocity.x = -acceleration.x;
+                velocity.x = velocity.x < maxSpeed ? velocity.x - acceleration.x : maxSpeed;
             }
             else{
-                velocity.x = acceleration.x;
+                velocity.x = velocity.x < maxSpeed ? velocity.x + acceleration.x : maxSpeed;
             }
                 
             if(up === down){
-                velocity.y = 0;
+                if(velocity.y > acceleration.y) {
+                    velocity.y -= acceleration.y
+                }
+                else if(velocity.y < -acceleration.y){
+                    velocity.y += acceleration.y
+                } else {
+                    velocity.y = 0;
+                }
             }
             else if (up){
-                velocity.y = -acceleration.y;
+                velocity.y = velocity.y < maxSpeed ? velocity.y - acceleration.y : maxSpeed;
             }
             else{
-                velocity.y = acceleration.y;    
+                velocity.y = velocity.y < maxSpeed ? velocity.y + acceleration.y : maxSpeed;
             }
-            
-            console.log(velocity);
+           
         });
     }
 
     private onGameObjectEvent(event:IGameObjectEvent){
-        if(event.entity.hasComponents([ComponentType.PLAYER, ComponentType.MOVABLE])){
+        if(event.entity.hasComponents([ComponentType.PLAYER, ComponentType.MOVABLE, ComponentType.PHYSICS])){
             this.entities.push(event.entity);
         }
     }

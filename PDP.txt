@@ -11,9 +11,12 @@ T0002 Establish communication Between 2D and 3D UI parts
 T0004 Create a factory for entities/ComponentSystem
 T0005 Fix imports for systems. No deep imports. Everything should be ' import X {Y,Z, ...} from 'Path to System'
 T0006 Create a 3D RenderSystem
-T0007 Create better physics with acceleration.
+T0007 Create better physics with acceleration/collision.
 T0008 Create Animations when moving
 T0009 Create The event system
+T0010 we need to model time somehow other than saying 1 fram = 16ms
+
+
 
 =============================================================================================
 T0003 Design a structure for the game
