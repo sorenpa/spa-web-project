@@ -19,9 +19,9 @@ const gameObjectUpdates$ : Subject<IGameObjectEvent> = new Subject<IGameObjectEv
 
 const keydown$ : Observable<Event> = fromEvent(document,'keydown');
 const keyup$ : Observable<Event> = fromEvent(document,'keyup');
-const userInputs$ : Observable<Event> = merge(keydown$, keyup$);
+const keyboardInput$ : Observable<Event> = merge(keydown$, keyup$);
 
-const inputSystem: InputSystem = new InputSystem(gameObjectUpdates$, userInputs$);
+const inputSystem: InputSystem = new InputSystem(gameObjectUpdates$, keyboardInput$);
 const renderSystem: RenderSystem = new RenderSystem(gameObjectUpdates$);
 const entityManager: EntityManager = new EntityManager(gameObjectUpdates$);
 const physicsSystem: PhysicsSystem = new PhysicsSystem(gameObjectUpdates$);
@@ -52,10 +52,10 @@ export default function boot(){
     }
 
     const mc1: IMovable = {
-        acceleration: {x:0.1,y:0.1,z:0.1},
+        acceleration: {x:0.1,y:0.1,z:0.5},
         componentId: 'C3',
         componentType: ComponentType.MOVABLE,
-        maxSpeed: 5,
+        maxSpeed: 3,
         velocity: {x:0,y:0,z:0}
     }
 
