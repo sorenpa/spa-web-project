@@ -1,4 +1,4 @@
-import { IPhysics, IVisible } from '../../ComponentSystem';
+import { ITransform, IVisible } from '../../ComponentSystem';
 import {IRenderModel, RectangleModel } from './Models'
 
 
@@ -17,9 +17,9 @@ export default class RenderModelService{
         return this.ModelMap.get(id);
     }
 
-    public drawModel(context:CanvasRenderingContext2D, visibleCompoenent: IVisible, physicsComponent: IPhysics){
+    public drawModel(context:CanvasRenderingContext2D, visibleCompoenent: IVisible, transformComponent: ITransform){
         const { modelId, color} = visibleCompoenent;
-        const { position, scale } = physicsComponent;
+        const { position, scale } = transformComponent;
 
         const model: IRenderModel|undefined = this.ModelMap.get(modelId);
         if(model !== undefined){

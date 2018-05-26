@@ -1,3 +1,3 @@
-import { ComponentType, IComponent, IMovable, IPhysics, IPlayer, IVisible } from './interfaces'
+import { ComponentType, IComponent, IMovable, IPlayer, ITransform, IVisible } from './interfaces'
 
-export { ComponentType, IComponent, IMovable, IPhysics, IPlayer, IVisible }
+export { ComponentType, IComponent, IMovable, IPlayer, ITransform, IVisible }

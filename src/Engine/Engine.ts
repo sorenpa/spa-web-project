@@ -3,7 +3,7 @@ import { fromEvent, interval, merge, Observable, Subject } from 'rxjs';
 import { IGameObjectEvent } from './EventSystem';
 import RenderSystem from './RenderSystem';
 
-import { ComponentType, Entity, EntityManager, IComponent, IMovable, IPhysics, IPlayer, IVisible } from './ComponentSystem';
+import { ComponentType, Entity, EntityManager, IComponent, IMovable, IPlayer, ITransform, IVisible } from './ComponentSystem';
 import InputSystem from './InputSystem/InputSystem';
 import PhysicsSystem from './PhysicsSystem/PysicsSystem';
 
@@ -43,9 +43,9 @@ export default function boot(){
         textureId: 'none',
     }
 
-    const pc1: IPhysics = {
+    const tc1: ITransform = {
         componentId: 'C2',
-        componentType: ComponentType.PHYSICS,
+        componentType: ComponentType.TRANSFORM,
         direction: {x: 0, y:0, z:0},
         position: {x: 250, y:200, z:0},
         scale: {x: 1, y:1, z:1 }
@@ -64,7 +64,7 @@ export default function boot(){
         playerName: 'Huggo'
     }
 
-    const components1: IComponent[] = [vc1,pc1,mc1, playerComp];
+    const components1: IComponent[] = [vc1,tc1,mc1, playerComp];
     
     const entity1: Entity = new Entity('E1', components1);
 
@@ -76,15 +76,15 @@ export default function boot(){
         textureId: 'none',
     }
 
-    const pc2: IPhysics = {
+    const tc2: ITransform = {
         componentId: 'C5',
-        componentType: ComponentType.PHYSICS,
+        componentType: ComponentType.TRANSFORM,
         direction: {x: 0, y:0, z:0},
         position: {x: 200, y:300, z:0},
         scale: {x: 2, y:2, z:1 }
     }
 
-    const components2: IComponent[] = [vc2,pc2];
+    const components2: IComponent[] = [vc2,tc2];
     
     const entity2: Entity = new Entity('E2', components2);
 

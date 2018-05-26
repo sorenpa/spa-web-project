@@ -2,7 +2,7 @@ import * as Rx from 'rxjs';
 
 import { IGameObjectEvent } from '../EventSystem';
 
-import { ComponentType, Entity, IPhysics, IVisible } from '../ComponentSystem';
+import { ComponentType, Entity, ITransform, IVisible } from '../ComponentSystem';
 import RenderModelManager from './RenderModelManager';
 
 
@@ -36,15 +36,15 @@ export default class RenderEngine  {
             if(ctx != null)
             {
                 const vc: IVisible = elem.getCompoenent(ComponentType.VISIBLE) as IVisible;
-                const pc: IPhysics = elem.getCompoenent(ComponentType.PHYSICS) as IPhysics;
+                const tc: ITransform = elem.getCompoenent(ComponentType.TRANSFORM) as ITransform;
                 
-                this.renderModelManager.drawModel(ctx,vc, pc);
+                this.renderModelManager.drawModel(ctx,vc, tc);
             }    
         })
     }
 
     private onGameObjectEvent(event:IGameObjectEvent){
-        if(event.entity.hasComponents([ComponentType.VISIBLE, ComponentType.PHYSICS])){
+        if(event.entity.hasComponents([ComponentType.VISIBLE, ComponentType.TRANSFORM])){
             console.log('RENDER: Adding entity to scenegraph', event.entity);
             this.sceneGraph.push(event.entity)
         }

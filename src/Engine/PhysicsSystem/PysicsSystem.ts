@@ -2,7 +2,7 @@ import { Observable } from 'rxjs'
 
 import { IGameObjectEvent } from "../EventSystem";
 
-import { ComponentType, Entity, IMovable, IPhysics } from '../ComponentSystem';
+import { ComponentType, Entity, IMovable, ITransform } from '../ComponentSystem';
 
 import { IVector3D } from '../Math';
 
@@ -32,7 +32,7 @@ export default class PhysicsSystem{
 
     private onGameObjectEvent(event:IGameObjectEvent){
         console.log('PHYSICS: ', event)
-        if(event.entity.hasComponents([ComponentType.PHYSICS])){
+        if(event.entity.hasComponents([ComponentType.TRANSFORM])){
             console.log('PHYSICS: Adding entity to physics', event.entity);
             this.entities.push(event.entity);
         }
@@ -40,7 +40,7 @@ export default class PhysicsSystem{
 
     private moveEntity(entity:Entity){
         const moveComponent = entity.getCompoenent(ComponentType.MOVABLE) as IMovable;
-        const physicsComponent = entity.getCompoenent(ComponentType.PHYSICS) as IPhysics;
+        const physicsComponent = entity.getCompoenent(ComponentType.TRANSFORM) as ITransform;
 
         const {velocity} = moveComponent;
 

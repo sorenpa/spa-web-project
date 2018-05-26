@@ -2,7 +2,7 @@ import { IVector3D } from "../../Math";
 
 export enum ComponentType{
     VISIBLE,
-    PHYSICS,
+    TRANSFORM,
     MOVABLE,
     PLAYER,
 }
@@ -19,7 +19,7 @@ export interface IVisible extends IComponent {
     color: string
 }
 
-export interface IPhysics extends IComponent {
+export interface ITransform extends IComponent {
     position: IVector3D,
     direction: IVector3D,
     scale: IVector3D,
