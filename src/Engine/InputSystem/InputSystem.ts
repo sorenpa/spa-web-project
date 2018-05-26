@@ -34,7 +34,7 @@ export default class InputSystem{
     }
 
     private onGameObjectEvent(event:IGameObjectEvent){
-        if(event.entity.hasComponents([ComponentType.PLAYER, ComponentType.MOVABLE, ComponentType.PHYSICS])){
+        if(event.entity.hasComponents([ComponentType.PLAYER, ComponentType.MOVABLE, ComponentType.TRANSFORM])){
             this.entities.push(event.entity);
         }
     }
