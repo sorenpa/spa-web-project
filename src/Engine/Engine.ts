@@ -1,34 +1,16 @@
-import { fromEvent, interval, merge, Observable, Subject } from 'rxjs';
-
-import { IGameObjectEvent } from './EventSystem';
+import { gameloop$, gameObjectUpdates$, keyboardInput$ } from './EventSystem';
 import RenderSystem from './RenderSystem';
 
 import { ComponentType, Entity, EntityManager, IComponent, IMovable, IPlayer, ITransform, IVisible } from './ComponentSystem';
 import InputSystem from './InputSystem/InputSystem';
 import PhysicsSystem from './PhysicsSystem/PysicsSystem';
 
-
-const LOOP_INTERVAL = 16;
-
-// Streams
-const gameloop$ : Observable<number> = interval(LOOP_INTERVAL);
-
-const gameObjectUpdates$ : Subject<IGameObjectEvent> = new Subject<IGameObjectEvent>()
-// const gameObjectActions$ : Rx.Observable<IGameObjectActionEvent>
-// const gameLogicUpdates$ : Rx.Observable<GameLogicUpdateEvent>
-
-const keydown$ : Observable<Event> = fromEvent(document,'keydown');
-const keyup$ : Observable<Event> = fromEvent(document,'keyup');
-const userInputs$ : Observable<Event> = merge(keydown$, keyup$);
-
-const inputSystem: InputSystem = new InputSystem(gameObjectUpdates$, userInputs$);
+const inputSystem: InputSystem = new InputSystem(gameObjectUpdates$, keyboardInput$);
 const renderSystem: RenderSystem = new RenderSystem(gameObjectUpdates$);
 const entityManager: EntityManager = new EntityManager(gameObjectUpdates$);
 const physicsSystem: PhysicsSystem = new PhysicsSystem(gameObjectUpdates$);
-// const EventStreamManager
 
 export default function boot(){
-  
     renderSystem.start();
     physicsSystem.start();
     inputSystem.start();
@@ -52,9 +34,10 @@ export default function boot(){
     }
 
     const mc1: IMovable = {
-        acceleration: {x:3,y:3,z:0},
+        acceleration: {x:0.1,y:0.1,z:0.5},
         componentId: 'C3',
         componentType: ComponentType.MOVABLE,
+        maxSpeed: 3,
         velocity: {x:0,y:0,z:0}
     }
 

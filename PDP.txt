@@ -1,62 +1,110 @@
-=============================================================================================
+=================================================================================================
 Project Development Plan
-=============================================================================================
+=================================================================================================
+
+    =============================================================================================
+    Tasks
+    =============================================================================================
+
+    T0004 Create a factory for entities/ComponentSystem
+    T0005 Fix imports for systems. No deep imports. Everything should be ' import X {Y,Z, ...} from 'Path to System'
+    T0006 Create a 3D RenderSystem
+    T0007 Create better physics with acceleration/collision.
+    T0008 Create Animations when moving
+    T0010 we need to model time somehow other than saying 1 fram = 16ms
+
+    =============================================================================================
+    Current Task
+    =============================================================================================
 
 
-=============================================================================================
-Tasks
-=============================================================================================
+    =============================================================================================
+    Done Tasks
+    =============================================================================================
+    T0001 Implement Redux (RETRACTED)
+    T0003 Design a structure for the game
+    T0002 Establish communication Between 2D and 3D UI parts 
+    T0009 Create The event system
 
-T0002 Establish communication Between 2D and 3D UI parts 
-T0004 Create a factory for entities/ComponentSystem
-T0005 Fix imports for systems. No deep imports. Everything should be ' import X {Y,Z, ...} from 'Path to System'
-T0006 Create a 3D RenderSystem
-T0007 Create better physics with acceleration.
-T0008 Create Animations when moving
-T0009 Create The event system
 
-=============================================================================================
-T0003 Design a structure for the game
-=============================================================================================
-File structure
-- A1 Engine                     //Engine for rendering 3D on the HTML5 canvas
-    - ComponentSystem
-    - RenderSystem
-        - AnimationManager
-        - RenderModelManager
-        - SceneGraph
-    - PhysiscsSystem
-    - GameLogicSystem
-    - SoundSystem
-    - AISystem
-    - InputSystem
-    - Shared
+
+
+=================================================================================================
+Task Log
+=================================================================================================
+
+    =============================================================================================
+    T0009 Create The event system
+    =============================================================================================
+    The Event system have not been created as such, but a .ts file containing the Rx.Observalbes have been created
+    and the components can import them. More structure will be added as required throughout the projct.
+
+    =============================================================================================
+    T0002 Establish communication Between 2D and 3D UI parts 
+    =============================================================================================
+    It seems relatively easy and actual implementation can be postponed until later.
+
+    I did 2 different approaches to this:
+    1) Created an Rx.Observable fromevent on the element catched by ID. This is very easily done. However you get a mouse event from it
+    and that only contains screen coordinates so its hard to distinguish what UI element was clicked. Advantage is you can do it about
+    anywhere in the code.
+
+    2) You can define and export a Rx.Subject in the EventSystem (outside the class). Then you can import it in the root node of React and
+    pass it as props down the tree to React.Compoents that need to interact with the Engine. You will need to create some UIEvent interfaces
+    and manually link what buttons was pressed.
+
+    3) Alternatively we could investigate if Redux is a good way to do stuff. Some Redux/Rxjs hybrid.
+
+    conclussion is: Its possible and we are not shooting ourselves in the foot with the design.
+
+    =============================================================================================
+    T0003 Design a structure for the game
+    =============================================================================================
+    File structure
+    - A1 Engine                     //Engine for rendering 3D on the HTML5 canvas
+        - ComponentSystem
+        - RenderSystem
+            - AnimationManager
+            - RenderModelManager
+            - SceneGraph
+        - PhysiscsSystem
+        - GameLogicSystem
+        - SoundSystem
+        - AISystem
+        - InputSystem
         - Math
-- A2 - UI                       //React code for the 2D UI overlay
-- A3 - EventManager             //Managing Observables and flow
-- A4 - Networking               //Networking
-
-Adopted a ECS based game engine system isntead of object heirachies.
-
-The SceneGraph is basically just the relationship between GameObjects that appear in the game-world.
-
-    World -> Character -> Sword -> Fire
-                       -> Shield
-
-When the world moves, the character moves with it, when the character moves, the sword and shield moves 
-with it. In essence each node/GObj in the graph only needs to place it self in relation to the parent.
-
-    worldMatrix = greatGrandParent * grandParent * parent * self(localMatrix)
+        - EventManager             
+        - Networking               
+    - A2 - UI                       //React code for the 2D UI overlay
 
 
+    Adopted a ECS based game engine system isntead of object heirachies.
+
+    The game state is a collection of entities. The entity class is basically just and entityId, with a hashMap of componentType => I[ComponentType].
+    entityId = 1
+    components = 
+    {
+        VISIBLE => instance of IVisible
+        MOVABLE => instance of IMovable
+    } 
+
+    The systems then manages an internal collection of the subset of entities that is relevant to that system. These are added/removed when stuff is added/removed
+    through the entity manager.
+
+    The SceneGraph is basically just the relationship between GameObjects that appear in the game-world.
+
+        World -> Character -> Sword -> Fire
+                        -> Shield
+
+    When the world moves, the character moves with it, when the character moves, the sword and shield moves 
+    with it. In essence each node/GObj in the graph only needs to place it self in relation to the parent.
+
+        worldMatrix = greatGrandParent * grandParent * parent * self(localMatrix)
 
 
 
 
 
 
-=============================================================================================
-Done Tasks
-=============================================================================================
-T0001 Implement Redux (RETRACTED)
-T0003 Design a structure for the game
+
+

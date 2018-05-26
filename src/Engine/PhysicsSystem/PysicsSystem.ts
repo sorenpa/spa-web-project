@@ -24,7 +24,6 @@ export default class PhysicsSystem{
         this.entities.forEach(entity => {
             // Check collissions
             if(entity.hasComponents([ComponentType.MOVABLE])){
-                
                 this.moveEntity(entity);
             }
         });

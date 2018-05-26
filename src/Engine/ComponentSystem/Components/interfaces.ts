@@ -28,6 +28,7 @@ export interface ITransform extends IComponent {
 export interface IMovable extends IComponent {
     acceleration: IVector3D,
     velocity: IVector3D,
+    maxSpeed: number;
 }
 
 export interface IPlayer extends IComponent {
