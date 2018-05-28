@@ -18,7 +18,7 @@ export default class KeyboardInputService {
         }
     }
 
-    public start() {
+    public init() {
         this.keyboardInput$.subscribe(this.onKeyboardInputEvent.bind(this))
     }
 

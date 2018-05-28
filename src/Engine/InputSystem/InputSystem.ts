@@ -18,9 +18,9 @@ export default class InputSystem{
         this.keyboardInputService = new KeyboardInputService(keyboardInput$)
     }
     
-    public start(){
+    public init(){
         this.gameObject$.subscribe(this.onGameObjectEvent.bind(this));
-        this.keyboardInputService.start();
+        this.keyboardInputService.init();
     }
 
     public update() {

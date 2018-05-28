@@ -11,17 +11,33 @@ const entityManager: EntityManager = new EntityManager(gameObjectUpdates$);
 const physicsSystem: PhysicsSystem = new PhysicsSystem(gameObjectUpdates$);
 
 export default function boot(){
-    renderSystem.start();
-    physicsSystem.start();
-    inputSystem.start();
+    renderSystem.init();
+    physicsSystem.init();
+    inputSystem.init();
     
     gameloop$.subscribe(gameLoop);
+
+    addTestObjects()    
+}
+
+function gameLoop(frame: number){
+    inputSystem.update();
+    physicsSystem.update();
+    renderSystem.render();
+
+}
+
+function addTestObjects(){
 
     const vc1: IVisible = {
         color: '#F33',
         componentId: 'C1',
         componentType: ComponentType.VISIBLE,
-        modelId: 'rectangle',
+        modelId: 'cube',
+        shaders: {
+            fragmentShaderId: 'fragmentBase',
+            vertexShaderId: 'vertexBase'
+        },
         textureId: 'none',
     }
 
@@ -29,7 +45,7 @@ export default function boot(){
         componentId: 'C2',
         componentType: ComponentType.TRANSFORM,
         direction: {x: 0, y:0, z:0},
-        position: {x: 250, y:200, z:0},
+        position: {x: 3.0, y:0.0, z:-6.0},
         scale: {x: 1, y:1, z:1 }
     }
 
@@ -55,7 +71,11 @@ export default function boot(){
         color: '#A38',
         componentId: 'C4',
         componentType: ComponentType.VISIBLE,
-        modelId: 'rectangle',
+        modelId: 'cube',
+        shaders: {
+            fragmentShaderId: 'fragmentBase',
+            vertexShaderId: 'vertexBase'
+        },
         textureId: 'none',
     }
 
@@ -63,7 +83,7 @@ export default function boot(){
         componentId: 'C5',
         componentType: ComponentType.TRANSFORM,
         direction: {x: 0, y:0, z:0},
-        position: {x: 200, y:300, z:0},
+        position: {x: 0.0, y:0.0, z:-6.0},
         scale: {x: 2, y:2, z:1 }
     }
 
@@ -73,11 +93,4 @@ export default function boot(){
 
     entityManager.AddGameObject(entity1);
     entityManager.AddGameObject(entity2);
-}
-
-function gameLoop(frame: number){
-    inputSystem.update();
-    physicsSystem.update();
-    renderSystem.render();
-
 }

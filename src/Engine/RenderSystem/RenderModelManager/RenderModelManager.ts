@@ -1,5 +1,5 @@
 import { ITransform, IVisible } from '../../ComponentSystem';
-import {IRenderModel, RectangleModel } from './Models'
+import { CubeModel, IRenderModel } from './Models'
 
 
 
@@ -9,7 +9,7 @@ export default class RenderModelService{
     private ModelMap: Map<string,IRenderModel>;
     constructor(){
         this.ModelMap = new Map<string,IRenderModel>();
-        this.ModelMap.set('rectangle', new RectangleModel());
+        this.ModelMap.set('cube', new CubeModel());
         
     }
 
@@ -17,13 +17,22 @@ export default class RenderModelService{
         return this.ModelMap.get(id);
     }
 
-    public drawModel(context:CanvasRenderingContext2D, visibleCompoenent: IVisible, transformComponent: ITransform){
-        const { modelId, color} = visibleCompoenent;
-        const { position, scale } = transformComponent;
+    public initBuffer(gl:WebGLRenderingContext, visibleCompoenent: IVisible, transformComponent: ITransform): WebGLBuffer|null{
+        const { modelId } = visibleCompoenent;
+        // const { position, scale } = transformComponent;
 
         const model: IRenderModel|undefined = this.ModelMap.get(modelId);
         if(model !== undefined){
-            model.renderFunction(context, position, scale, color)
+
+            const positionBuffer = gl.createBuffer();
+
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(model.vertices), gl.STATIC_DRAW);
+
+            return positionBuffer;
         }
+
+        return null;
     }
 }

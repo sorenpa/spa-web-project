@@ -1,5 +1,4 @@
+import CubeModel from './CubeModel';
 import { IRenderModel } from './interfaces';
-import RectangleModel from './RectangleModel';
 
-
-export { IRenderModel, RectangleModel };
+export { IRenderModel, CubeModel };

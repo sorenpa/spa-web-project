@@ -13,10 +13,16 @@ export interface IComponent {
     // entityId?
 }
 
+// TODO split into Geometry/Material?
 export interface IVisible extends IComponent {
     modelId: string,
     textureId: string,
-    color: string
+    color: string,
+    shaders: {
+        vertexShaderId:string,
+        fragmentShaderId:string,
+    }
+
 }
 
 export interface ITransform extends IComponent {

@@ -16,7 +16,7 @@ export default class PhysicsSystem{
         this. entities= new Array<Entity>();
     }
     
-    public start(){
+    public init(){
         this.gameObject$.subscribe(this.onGameObjectEvent.bind(this));
     }
 
@@ -24,6 +24,7 @@ export default class PhysicsSystem{
         this.entities.forEach(entity => {
             // Check collissions
             if(entity.hasComponents([ComponentType.MOVABLE])){
+                
                 this.moveEntity(entity);
             }
         });
@@ -39,7 +40,7 @@ export default class PhysicsSystem{
 
     private moveEntity(entity:Entity){
         const moveComponent = entity.getCompoenent(ComponentType.MOVABLE) as IMovable;
-        const physicsComponent = entity.getCompoenent(ComponentType.TRANSFORM) as ITransform;
+        const transformComponent = entity.getCompoenent(ComponentType.TRANSFORM) as ITransform;
 
         const {velocity} = moveComponent;
 
@@ -50,8 +51,8 @@ export default class PhysicsSystem{
         }
 
         // TODO: Create Math.Add functions
-        physicsComponent.position.x += distance.x;
-        physicsComponent.position.y += distance.y;
-        physicsComponent.position.z += distance.z;
+        transformComponent.position.x += distance.x;
+        transformComponent.position.y += distance.y;
+        transformComponent.position.z += distance.z;
     }
 }
