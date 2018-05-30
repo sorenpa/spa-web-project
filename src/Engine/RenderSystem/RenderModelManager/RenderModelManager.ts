@@ -1,5 +1,5 @@
 import { ITransform, IVisible } from '../../ComponentSystem';
-import { CubeModel, IRenderModel } from './Models'
+import { CubeModel, IRenderModel, TestModel } from './Models'
 
 
 
@@ -10,6 +10,7 @@ export default class RenderModelService{
     constructor(){
         this.ModelMap = new Map<string,IRenderModel>();
         this.ModelMap.set('cube', new CubeModel());
+        this.ModelMap.set('test', new TestModel());
         
     }
 

@@ -1,10 +1,18 @@
 export const vertexShaderBase:string = `#version 300 es
-    in vec4 a_VertexPosition;
-    
-    uniform mat4 u_ModelViewMatrix;
-    uniform mat4 u_ProjectionMatrix;
+    in vec2 a_VertexPosition;
 
+    uniform vec2 u_resolution;
+    
     void main() {
-      gl_Position = u_ProjectionMatrix * u_ModelViewMatrix * a_VertexPosition;
+      // convert the position from pixels to 0.0 to 1.0
+      vec2 zeroToOne = a_VertexPosition / u_resolution;
+  
+      // convert from 0->1 to 0->2
+      vec2 zeroToTwo = zeroToOne * 2.0;
+  
+      // convert from 0->2 to -1->+1 (clipspace)
+      vec2 clipSpace = zeroToTwo - 1.0;
+  
+      gl_Position = vec4(clipSpace * vec2(1,-1), 0, 1);
     }
   `;
