@@ -29,37 +29,37 @@ export default class KeyboardInputService {
             const {up ,down,left,right} = this.inputs;
 
             if(left === right){
-                if(velocity.x > acceleration.x) {
-                    velocity.x -= acceleration.x
+                if(velocity[0] > acceleration[0]) {
+                    velocity[0] -= acceleration[0]
                 }
-                else if(velocity.x < -acceleration.x){
-                    velocity.x += acceleration.x
+                else if(velocity[0] < -acceleration[0]){
+                    velocity[0] += acceleration[0]
                 } else {
-                    velocity.x = 0;
+                    velocity[0] = 0;
                 }
             }
             else if (left){
-                velocity.x = velocity.x > -maxSpeed ? velocity.x - acceleration.x : -maxSpeed;
+                velocity[0] = velocity[0] > -maxSpeed ? velocity[0] - acceleration[0] : -maxSpeed;
             }
             else{
-                velocity.x = velocity.x < maxSpeed ? velocity.x + acceleration.x : maxSpeed;
+                velocity[0] = velocity[0] < maxSpeed ? velocity[0] + acceleration[0] : maxSpeed;
             }
                 
             if(up === down){
-                if(velocity.y > acceleration.y) {
-                    velocity.y -= acceleration.y
+                if(velocity[1] > acceleration[1]) {
+                    velocity[1] -= acceleration[1]
                 }
-                else if(velocity.y < -acceleration.y){
-                    velocity.y += acceleration.y
+                else if(velocity[1] < -acceleration[1]){
+                    velocity[1] += acceleration[1]
                 } else {
-                    velocity.y = 0;
+                    velocity[1] = 0;
                 }
             }
             else if (up){
-                velocity.y = velocity.y > -maxSpeed ? velocity.y - acceleration.y : -maxSpeed;
+                velocity[1] = velocity[1] > -maxSpeed ? velocity[1] - acceleration[1] : -maxSpeed;
             }
             else{
-                velocity.y = velocity.y < maxSpeed ? velocity.y + acceleration.y : maxSpeed;
+                velocity[1] = velocity[1] < maxSpeed ? velocity[1] + acceleration[1] : maxSpeed;
             }
     }
 

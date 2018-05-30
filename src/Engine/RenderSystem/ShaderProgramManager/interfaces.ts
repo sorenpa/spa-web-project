@@ -4,8 +4,11 @@ export interface IShaderProgramInfo {
         vertexPosition: number
     },
     uniformLocations:{
+        color: WebGLUniformLocation|null
+        modelViewMatrix: WebGLUniformLocation|null,
         projectionMatrix: WebGLUniformLocation|null
-        modelViewMatrix: WebGLUniformLocation|null
+        
+        
     }
 
 }

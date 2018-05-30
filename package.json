@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/gl-matrix": "^2.4.0",
     "gl-matrix": "^2.6.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
@@ -19,10 +18,12 @@
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
+    "@types/gl-matrix": "^2.4.0",
     "@types/jest": "^22.2.3",
     "@types/node": "^10.0.8",
     "@types/react": "^16.3.14",
     "@types/react-dom": "^16.0.5",
+    "@types/webgl2": "0.0.4",
     "typescript": "^2.8.3"
   }
 }

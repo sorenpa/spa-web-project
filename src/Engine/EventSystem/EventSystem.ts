@@ -2,7 +2,7 @@ import { fromEvent, interval, merge, Observable, Subject } from "rxjs";
 import { IGameObjectEvent } from "./EventTypes";
 
 // Constants
-const LOOP_INTERVAL = 16;
+const LOOP_INTERVAL = 1000;
 
 // Streams
 export const gameloop$ : Observable<number> = interval(LOOP_INTERVAL);

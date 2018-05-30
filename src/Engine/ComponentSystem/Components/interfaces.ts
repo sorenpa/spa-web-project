@@ -1,4 +1,4 @@
-import { IVector3D } from "../../Math";
+import { vec3, vec4 } from "gl-matrix";
 
 export enum ComponentType{
     VISIBLE,
@@ -15,9 +15,12 @@ export interface IComponent {
 
 // TODO split into Geometry/Material?
 export interface IVisible extends IComponent {
+    // Geometry
     modelId: string,
+
+    // Material
+    color: vec4,
     textureId: string,
-    color: string,
     shaders: {
         vertexShaderId:string,
         fragmentShaderId:string,
@@ -26,14 +29,14 @@ export interface IVisible extends IComponent {
 }
 
 export interface ITransform extends IComponent {
-    position: IVector3D,
-    direction: IVector3D,
-    scale: IVector3D,
+    position: vec3,
+    direction: vec3,
+    scale: vec3,
 }
 
 export interface IMovable extends IComponent {
-    acceleration: IVector3D,
-    velocity: IVector3D,
+    acceleration: vec3,
+    velocity: vec3,
     maxSpeed: number;
 }
 

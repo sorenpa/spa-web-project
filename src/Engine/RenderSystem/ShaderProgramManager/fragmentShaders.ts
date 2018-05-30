@@ -1,5 +1,11 @@
-export const fragmentShaderBase:string = `
+export const fragmentShaderBase:string = `#version 300 es
+precision mediump float;
+
+uniform vec4 u_color;
+
+out vec4 outColor;
+
 void main() {
-  gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+  outColor = u_color;
 }
 `;

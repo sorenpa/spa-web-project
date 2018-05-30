@@ -4,7 +4,7 @@ import { IGameObjectEvent } from "../EventSystem";
 
 import { ComponentType, Entity, IMovable, ITransform } from '../ComponentSystem';
 
-import { IVector3D } from '../Math';
+import { vec3 } from 'gl-matrix';
 
 export default class PhysicsSystem{
 
@@ -44,15 +44,6 @@ export default class PhysicsSystem{
 
         const {velocity} = moveComponent;
 
-        const distance: IVector3D = {
-            x: velocity.x,
-            y: velocity.y,
-            z: velocity.z 
-        }
-
-        // TODO: Create Math.Add functions
-        transformComponent.position.x += distance.x;
-        transformComponent.position.y += distance.y;
-        transformComponent.position.z += distance.z;
+        vec3.add(transformComponent.position, transformComponent.position, velocity) ;
     }
 }

@@ -23,7 +23,7 @@ export default class ShaderProgramManager {
         this.fragmentShaders.set('fragmentBase', fragmentShaderBase);
     }
 
-    public initShaderProgram(gl: WebGLRenderingContext, vertexShaderId: string, fragmentShaderId: string): IShaderProgramInfo| null {
+    public initShaderProgram(gl: WebGLRenderingContext, vertexShaderId: string, fragmentShaderId: string): IShaderProgramInfo|null {
         const vertexShader: WebGLShader|null = this.loadShader(gl, ShaderType.VERTEX, vertexShaderId);
         const fragmentShader: WebGLShader|null = this.loadShader(gl, ShaderType.FRAGMENT, fragmentShaderId);
 
@@ -40,12 +40,13 @@ export default class ShaderProgramManager {
 
         return {
             attribLocations: {
-                vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
+                vertexPosition: gl.getAttribLocation(shaderProgram, 'a_VertexPosition'),
             },
             program: shaderProgram,
             uniformLocations:{
-                modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
-                projectionMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix')
+                color: gl.getUniformLocation(shaderProgram, 'u_color'),
+                modelViewMatrix: gl.getUniformLocation(shaderProgram, 'u_ProjectionMatrix'),
+                projectionMatrix: gl.getUniformLocation(shaderProgram, 'u_ModelViewMatrix'),
             }
         };
     }

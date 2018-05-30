@@ -1,9 +1,12 @@
+import { vec3, vec4 } from 'gl-matrix';
 import { gameloop$, gameObjectUpdates$, keyboardInput$ } from './EventSystem';
 import RenderSystem from './RenderSystem';
 
 import { ComponentType, Entity, EntityManager, IComponent, IMovable, IPlayer, ITransform, IVisible } from './ComponentSystem';
 import InputSystem from './InputSystem/InputSystem';
 import PhysicsSystem from './PhysicsSystem/PysicsSystem';
+
+
 
 const inputSystem: InputSystem = new InputSystem(gameObjectUpdates$, keyboardInput$);
 const renderSystem: RenderSystem = new RenderSystem(gameObjectUpdates$);
@@ -23,14 +26,18 @@ export default function boot(){
 function gameLoop(frame: number){
     inputSystem.update();
     physicsSystem.update();
-    renderSystem.render();
+    if(frame === 0)
+    {
+        renderSystem.render();
+    }
+        
 
 }
 
 function addTestObjects(){
 
     const vc1: IVisible = {
-        color: '#F33',
+        color: vec4.fromValues(1.0, 0.0, 0.0, 1.0),
         componentId: 'C1',
         componentType: ComponentType.VISIBLE,
         modelId: 'cube',
@@ -44,17 +51,17 @@ function addTestObjects(){
     const tc1: ITransform = {
         componentId: 'C2',
         componentType: ComponentType.TRANSFORM,
-        direction: {x: 0, y:0, z:0},
-        position: {x: 3.0, y:0.0, z:-6.0},
-        scale: {x: 1, y:1, z:1 }
+        direction: vec3.fromValues(0.0, 0.0, 0.0),
+        position: vec3.fromValues(3.0, 3.0, -6.0),
+        scale: vec3.fromValues(1.0, 1.0, 1.0),
     }
 
     const mc1: IMovable = {
-        acceleration: {x:0.1,y:0.1,z:0.5},
+        acceleration: vec3.fromValues(1.0, 1.0, 1.0),
         componentId: 'C3',
         componentType: ComponentType.MOVABLE,
         maxSpeed: 3,
-        velocity: {x:0,y:0,z:0}
+        velocity: vec3.fromValues(0.0, 0.0, 0.0)
     }
 
     const playerComp: IPlayer = {
@@ -68,7 +75,7 @@ function addTestObjects(){
     const entity1: Entity = new Entity('E1', components1);
 
     const vc2: IVisible = {
-        color: '#A38',
+        color: vec4.fromValues(1.0, 0.0, 5.0, 1.0),
         componentId: 'C4',
         componentType: ComponentType.VISIBLE,
         modelId: 'cube',
@@ -82,9 +89,9 @@ function addTestObjects(){
     const tc2: ITransform = {
         componentId: 'C5',
         componentType: ComponentType.TRANSFORM,
-        direction: {x: 0, y:0, z:0},
-        position: {x: 0.0, y:0.0, z:-6.0},
-        scale: {x: 2, y:2, z:1 }
+        direction: vec3.fromValues(0.0, 0.0, 0.0),
+        position: vec3.fromValues(0.0, 0.0, -6.0),
+        scale: vec3.fromValues(1.0, 1.0, 1.0),
     }
 
     const components2: IComponent[] = [vc2,tc2];

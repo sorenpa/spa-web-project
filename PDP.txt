@@ -8,15 +8,15 @@ Project Development Plan
 
     T0004 Create a factory for entities/ComponentSystem
     T0005 Fix imports for systems. No deep imports. Everything should be ' import X {Y,Z, ...} from 'Path to System'
-    T0006 Create a 3D RenderSystem
+
     T0007 Create better physics with acceleration/collision.
-    T0008 Create Animations when moving
+    T0008 Create Animations when moving - Animations should not affect physics?
     T0010 we need to model time somehow other than saying 1 fram = 16ms
 
     =============================================================================================
     Current Task
     =============================================================================================
-
+    T0006 Create a 3D RenderSystem
 
     =============================================================================================
     Done Tasks
