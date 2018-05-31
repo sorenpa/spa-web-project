@@ -45,9 +45,9 @@ export default class ShaderProgramManager {
             program: shaderProgram,
             uniformLocations:{
                 color: gl.getUniformLocation(shaderProgram, 'u_color'),
-                modelViewMatrix: gl.getUniformLocation(shaderProgram, 'u_ProjectionMatrix'),
-                projectionMatrix: gl.getUniformLocation(shaderProgram, 'u_ModelViewMatrix'),
-                resolution: gl.getUniformLocation(shaderProgram, "u_resolution"),
+                modelViewMatrix: gl.getUniformLocation(shaderProgram, 'u_ModelViewMatrix'),
+                projectionMatrix: gl.getUniformLocation(shaderProgram, 'u_ProjectionMatrix'),
+                
             }
         };
     }

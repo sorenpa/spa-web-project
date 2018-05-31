@@ -1,3 +1,4 @@
+
 export interface IShaderProgramInfo {
     program: WebGLProgram|null,
     attribLocations: {
@@ -7,8 +8,6 @@ export interface IShaderProgramInfo {
         color: WebGLUniformLocation|null
         modelViewMatrix: WebGLUniformLocation|null,
         projectionMatrix: WebGLUniformLocation|null
-        resolution: WebGLUniformLocation|null
-        
     }
 
 }

@@ -1,3 +1,4 @@
+import { mat4 } from 'gl-matrix';
 import * as Rx from 'rxjs';
 
 import { IGameObjectEvent } from '../EventSystem';
@@ -9,6 +10,8 @@ import { IRenderModel } from './RenderModelManager/Models';
 
 import ShaderProgramManager from './ShaderProgramManager'
 import { IShaderProgramInfo } from './ShaderProgramManager/interfaces';
+import { degToRad } from './webGlUtils';
+
 
 
 /*
@@ -52,15 +55,6 @@ export default class RenderEngine {
 
         if (model === undefined) { console.log('Model is null'); return; }
 
-        const verts = [
-            60, 70,
-            130, 70,
-            60, 80,
-            60, 80,
-            130, 70,
-            130, 80,
-          ];
-
         this.initBuffers(gl, model.vertices);
 
         const vao = gl.createVertexArray();
@@ -87,23 +81,27 @@ export default class RenderEngine {
 
         gl.useProgram(programInfo.program);
 
+        const mat = mat4.fromValues(
+            2 / gl.canvas.width, 0, 0, 0,
+            0, -2 / gl.canvas.height, 0, 0,
+            0, 0, 2 / 400, 0,
+           -1, 1, 0, 1,
+        );
+        
+        mat4.translate(mat,mat,[300,200,0]);
+        mat4.rotate(mat,mat,degToRad(45), [1,0,0]);
+        mat4.rotate(mat,mat,degToRad(45), [0,1,0]);
+        mat4.rotate(mat,mat,degToRad(45), [0,0,1]);
+        mat4.scale(mat,mat,[1,1,1]);
+
+        gl.uniformMatrix4fv(programInfo.uniformLocations.projectionMatrix, false, mat);
+        gl.uniformMatrix4fv(programInfo.uniformLocations.modelViewMatrix, false, mat);
         gl.uniform4f(programInfo.uniformLocations.color, 1,0,0,1);
-        gl.uniform2f(programInfo.uniformLocations.resolution, gl.canvas.width, gl.canvas.height);
 
         const primitiveType = gl.TRIANGLES;
         const offset2 = 0;
         const count = model.vertexCount;
         gl.drawArrays(primitiveType, offset2, count);
-
-        
-        
-        gl.bufferData(
-            gl.ARRAY_BUFFER,
-            new Float32Array(verts),
-            gl.STATIC_DRAW);
-
-          gl.uniform4f(programInfo.uniformLocations.color, 1,0,5,1);
-          gl.drawArrays(primitiveType, offset2, count);
     }
 
     private initBuffers(gl: WebGL2RenderingContext, vertices: number[]): { position: WebGLBuffer } | null {

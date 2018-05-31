@@ -3,14 +3,30 @@ import { IRenderModel } from ".";
 
 export default class TestModel implements IRenderModel {
 
-    public vertexSize = 2; // Bad name, but represents the number of floats used per vertex
-    public vertexCount = 6; // 6 sides, each with 4 points
+    public vertexSize = 3; // Bad name, but represents the number of floats used per vertex
+    public vertexCount = 6*3; // 6 sides, each with 4 points
     public vertices = [
-        10, 20,
-        80, 20,
-        10, 30,
-        10, 30,
-        80, 20,
-        80, 30,
-      ];
+        // left column
+          0,   0,  0,
+         30,   0,  0,
+          0, 150,  0,
+          0, 150,  0,
+         30,   0,  0,
+         30, 150,  0,
+
+        // top rung
+         30,   0,  0,
+        100,   0,  0,
+         30,  30,  0,
+         30,  30,  0,
+        100,   0,  0,
+        100,  30,  0,
+
+        // middle rung
+         30,  60,  0,
+         67,  60,  0,
+         30,  90,  0,
+         30,  90,  0,
+         67,  60,  0,
+         67,  90,  0]
  }
