@@ -17,6 +17,8 @@ Project Development Plan
     Current Task
     =============================================================================================
     T0006 Create a 3D RenderSystem
+        - Design a structure for setting up GL environment, Rendering multiple game objects with different models and materials
+        - Perhaps a more flexible way to generate shaders. Something that sets uniforms, attribs and varyings -> Info object
 
     =============================================================================================
     Done Tasks

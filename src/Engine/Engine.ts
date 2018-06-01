@@ -35,8 +35,6 @@ function gameLoop(frame: number){
     {
         renderSystem.render();
     }
-        
-
 }
 
 function addTestObjects(){

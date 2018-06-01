@@ -10,7 +10,6 @@ export enum ComponentType{
 export interface IComponent {
     componentId: string,
     componentType: ComponentType,
-    // entityId?
 }
 
 // TODO split into Geometry/Material?
@@ -25,7 +24,6 @@ export interface IVisible extends IComponent {
         vertexShaderId:string,
         fragmentShaderId:string,
     }
-
 }
 
 export interface ITransform extends IComponent {
