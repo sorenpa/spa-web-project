@@ -16,8 +16,9 @@ export default class PhysicsSystem{
         this. entities= new Array<Entity>();
     }
     
-    public init(){
+    public init() : boolean{
         this.gameObject$.subscribe(this.onGameObjectEvent.bind(this));
+        return true;
     }
 
     public update() {

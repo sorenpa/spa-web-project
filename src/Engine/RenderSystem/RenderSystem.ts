@@ -36,8 +36,8 @@ export default class RenderEngine {
         this.shaderProgramManager = new ShaderProgramManager();
     }
 
-    public init() {
-        this.initCanvas();
+    public init() : boolean {
+        return this.initCanvas();
     }
 
     public render() {
@@ -130,7 +130,7 @@ export default class RenderEngine {
         }
     }
 
-    private initCanvas() {
+    private initCanvas() : boolean {
         const canv = document.getElementById('glCanvas') as HTMLCanvasElement;
 
         if (canv != null) {
@@ -142,12 +142,14 @@ export default class RenderEngine {
             }
             else {
                 alert("Unable to initialize WebGL. Your browser or machine may not support it.");
-                return;
+                return false;
             }
         }
         else {
             alert("Unable to initialize WebGL. Your browser or machine may not support it.");
-            return;
+            return false;
         }
+
+        return true;
     }
 }

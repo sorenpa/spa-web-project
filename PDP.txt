@@ -8,10 +8,10 @@ Project Development Plan
 
     T0004 Create a factory for entities/ComponentSystem
     T0005 Fix imports for systems. No deep imports. Everything should be ' import X {Y,Z, ...} from 'Path to System'
-
     T0007 Create better physics with acceleration/collision.
     T0008 Create Animations when moving - Animations should not affect physics?
     T0010 we need to model time somehow other than saying 1 fram = 16ms
+    T0011 Implement a logging system for debugging and fault finding. Could prop just be an RxSubject
 
     =============================================================================================
     Current Task

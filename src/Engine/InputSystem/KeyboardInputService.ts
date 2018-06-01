@@ -18,8 +18,9 @@ export default class KeyboardInputService {
         }
     }
 
-    public init() {
+    public init() : boolean {
         this.keyboardInput$.subscribe(this.onKeyboardInputEvent.bind(this))
+        return true;
     }
 
     public update(movableComponent:IMovable) {

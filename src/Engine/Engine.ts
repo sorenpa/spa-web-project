@@ -13,14 +13,19 @@ const renderSystem: RenderSystem = new RenderSystem(gameObjectUpdates$);
 const entityManager: EntityManager = new EntityManager(gameObjectUpdates$);
 const physicsSystem: PhysicsSystem = new PhysicsSystem(gameObjectUpdates$);
 
-export default function boot(){
-    renderSystem.init();
-    physicsSystem.init();
-    inputSystem.init();
-    
-    gameloop$.subscribe(gameLoop);
+export default function boot(): boolean{
+    let initSuccess = true;
 
-    addTestObjects()    
+    if(!renderSystem.init()) { initSuccess = false;};
+    if(!physicsSystem.init()) {initSuccess = false;};
+    if(!inputSystem.init()) {initSuccess = false;};
+    
+    if(initSuccess) {
+        gameloop$.subscribe(gameLoop);
+        addTestObjects()    
+    }
+
+    return true;
 }
 
 function gameLoop(frame: number){
