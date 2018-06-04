@@ -12,11 +12,12 @@ Project Development Plan
     T0008 Create Animations when moving - Animations should not affect physics?
     T0010 we need to model time somehow other than saying 1 fram = 16ms
     T0011 Implement a logging system for debugging and fault finding. Could prop just be an RxSubject
+    T0012 We might need a content loader system
 
     =============================================================================================
     Current Task
     =============================================================================================
-    T0006 Create a 3D RenderSystem
+    T0006 Create a basic 3D RenderSystem
         - Design a structure for setting up GL environment, Rendering multiple game objects with different models and materials
         - Perhaps a more flexible way to generate shaders. Something that sets uniforms, attribs and varyings -> Info object
 

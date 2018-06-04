@@ -14,6 +14,9 @@ export interface IComponent {
 
 // TODO split into Geometry/Material?
 export interface IVisible extends IComponent {
+    // General
+    positionBufffer: WebGLBuffer|null;
+
     // Geometry
     modelId: string,
 

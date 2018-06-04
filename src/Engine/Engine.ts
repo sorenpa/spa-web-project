@@ -31,10 +31,11 @@ export default function boot(): boolean{
 function gameLoop(frame: number){
     inputSystem.update();
     physicsSystem.update();
-    if(frame === 0)
-    {
-        renderSystem.render();
-    }
+    renderSystem.render();
+    // if(frame === 0)
+    // {
+    //     renderSystem.render();
+    // }
 }
 
 function addTestObjects(){
@@ -43,7 +44,8 @@ function addTestObjects(){
         color: vec4.fromValues(1.0, 0.0, 0.0, 1.0),
         componentId: 'C1',
         componentType: ComponentType.VISIBLE,
-        modelId: 'cube',
+        modelId: 'Cube',
+        positionBufffer: null,
         shaders: {
             fragmentShaderId: 'fragmentBase',
             vertexShaderId: 'vertexBase'
@@ -54,9 +56,9 @@ function addTestObjects(){
     const tc1: ITransform = {
         componentId: 'C2',
         componentType: ComponentType.TRANSFORM,
-        direction: vec3.fromValues(0.0, 0.0, 0.0),
-        position: vec3.fromValues(3.0, 3.0, -6.0),
-        scale: vec3.fromValues(1.0, 1.0, 1.0),
+        direction: vec3.fromValues(50.0, 23.0, 10.0),
+        position: vec3.fromValues(300,200,0),
+        scale: vec3.fromValues(50.0, 50.0, 50.0),
     }
 
     const mc1: IMovable = {
@@ -81,7 +83,8 @@ function addTestObjects(){
         color: vec4.fromValues(1.0, 0.0, 5.0, 1.0),
         componentId: 'C4',
         componentType: ComponentType.VISIBLE,
-        modelId: 'cube',
+        modelId: 'Test',
+        positionBufffer: null,
         shaders: {
             fragmentShaderId: 'fragmentBase',
             vertexShaderId: 'vertexBase'
@@ -93,7 +96,7 @@ function addTestObjects(){
         componentId: 'C5',
         componentType: ComponentType.TRANSFORM,
         direction: vec3.fromValues(0.0, 0.0, 0.0),
-        position: vec3.fromValues(0.0, 0.0, -6.0),
+        position: vec3.fromValues(0.0, 0.0, 0.0),
         scale: vec3.fromValues(1.0, 1.0, 1.0),
     }
 

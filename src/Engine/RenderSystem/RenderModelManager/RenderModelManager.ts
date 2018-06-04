@@ -1,39 +1,29 @@
-import { ITransform, IVisible } from '../../ComponentSystem';
-import { CubeModel, IRenderModel, TestModel } from './Models'
-
-
-
+import { CubeModel, RenderModel, TestModel } from './Models'
 
 export default class RenderModelService{
 
-    private ModelMap: Map<string,IRenderModel>;
+    private Models: Map<string,RenderModel>;
     constructor(){
-        this.ModelMap = new Map<string,IRenderModel>();
-        this.ModelMap.set('cube', new CubeModel());
-        this.ModelMap.set('test', new TestModel());
-        
+        this.Models = new Map<string,RenderModel>();
     }
 
-    public GetModel(id:string):IRenderModel|undefined{
-        return this.ModelMap.get(id);
-    }
+    public registerModel(gl:WebGL2RenderingContext, modelId:string) {
 
-    public initBuffer(gl:WebGLRenderingContext, visibleCompoenent: IVisible, transformComponent: ITransform): WebGLBuffer|null{
-        const { modelId } = visibleCompoenent;
-        // const { position, scale } = transformComponent;
+        if(this.Models.has(modelId)) { return; }
 
-        const model: IRenderModel|undefined = this.ModelMap.get(modelId);
-        if(model !== undefined){
-
-            const positionBuffer = gl.createBuffer();
-
-            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(model.vertices), gl.STATIC_DRAW);
-
-            return positionBuffer;
+        switch(modelId) {
+            case 'Cube':{
+                this.Models.set(modelId,new CubeModel(gl.createVertexArray()))
+                break;
+            }
+            case 'Test': {
+                this.Models.set(modelId,new TestModel(gl.createVertexArray()))
+                break;
+            }
         }
+    }
 
-        return null;
+    public getModel(id:string):RenderModel|undefined{
+        return this.Models.get(id);
     }
 }

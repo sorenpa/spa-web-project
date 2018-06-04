@@ -1,5 +1,5 @@
 import CubeModel from './CubeModel';
-import { IRenderModel } from './interfaces';
+import { RenderModel } from './RenderModel';
 import TestModel from './TestModel';
 
-export { IRenderModel, CubeModel, TestModel };
+export { RenderModel, CubeModel, TestModel };

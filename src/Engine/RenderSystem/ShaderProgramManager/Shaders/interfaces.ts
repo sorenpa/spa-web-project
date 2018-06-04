@@ -19,9 +19,15 @@ export interface IShaderVariable{
 }
 
 export interface IShaderProgram {
+    progamId: string,
     fragmentShaderId: string,
     vertexShaderId: string,
     program: WebGLProgram|null,
     attributeLocations: Map<string,number>,
     uniformLocations: Map<string,WebGLUniformLocation|null>,
+}
+
+export interface IShaderPair {
+    vertexShaderId: string,
+    fragmentShaderId: string, 
 }

@@ -1,7 +1,6 @@
-import { IRenderModel } from ".";
+import { RenderModel } from "./RenderModel";
 
-
-export default class TestModel implements IRenderModel {
+export default class TestModel extends RenderModel {
 
     public vertexSize = 3; // Bad name, but represents the number of floats used per vertex
     public vertexCount = 6*3; // 6 sides, each with 4 points
@@ -28,5 +27,5 @@ export default class TestModel implements IRenderModel {
          30,  90,  0,
          30,  90,  0,
          67,  60,  0,
-         67,  90,  0]
+         67,  90,  0];
  }

@@ -1,4 +1,4 @@
-import { IShader, ShaderType } from "../Shader";
+import { IShader, ShaderType } from "./interfaces";
 
 // export const fragmentShaderBase:string = `#version 300 es
 // precision mediump float;
@@ -13,20 +13,18 @@ import { IShader, ShaderType } from "../Shader";
 // `;
 
 export const fragmentShaderBase:IShader = {
+  attributes: [],
   header: `#version 300 es
   precision mediump float;`,
-  attributes: [],
-  uniforms: [
-    {name:'u_color', type: 'vec4'}
-  ],
-  varyings:[],
   shaderId: 'FragmentShaderBase',
   shaderType: ShaderType.FRAGMENT,
-  source: `
-
-  out vec4 outColor;
+  source: `out vec4 outColor;
 
   void main() {
-    outColor = u_color;
-  }`
+    outColor = u_Color;
+  }`,
+  uniforms: [
+    {name:'u_Color', type: 'vec4'}
+  ],
+  varyings:[],
 }

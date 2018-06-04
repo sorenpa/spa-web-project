@@ -1,6 +1,6 @@
+import { fragmentShaderBase } from "./Shaders/fragmentShaders";
 import { IShader, IShaderProgram, ShaderType } from "./Shaders/interfaces";
 import { vertexShaderBase } from "./Shaders/vertexShaders";
-import { fragmentShaderBase } from "./Shaders/fragmentShaders";
 
 
 export class ShaderLibrary{
@@ -53,10 +53,11 @@ export class ShaderLibrary{
 
         const program: IShaderProgram = {
             attributeLocations,
-            uniformLocations,
             fragmentShaderId,
-            vertexShaderId,
+            progamId: vertexShaderId+fragmentShaderId,
             program: shaderProgram,
+            uniformLocations,
+            vertexShaderId,
         }
 
         return program;
@@ -101,29 +102,25 @@ export class ShaderLibrary{
     private assembleShader(shader:IShader): string{
         let result: string = shader.header + '\n';
 
-        //Add attriubutes
+        // Add attriubutes
         shader.attributes.forEach(attribute => {
             result += 'in ' + attribute.type + ' ' + attribute.name + ";\n";
         });
 
-        result += '\n';
-
-        //Add uniforms
+        // Add uniforms
         shader.uniforms.forEach(uniform => {
             result += 'uniform ' + uniform.type + ' ' + uniform.name + ";\n";
         });
 
-        result += '\n';
-
-        //Add varyings
+        // Add varyings
         shader.varyings.forEach(varying => {
             result += 'varying ' + varying.type + ' ' + varying.name + ";\n";
         });
 
-        result += '\n';
-
-        //add main shader code
+        // Add main shader code
         result += shader.source
+
+        console.log(result);
 
         return result;
     }
