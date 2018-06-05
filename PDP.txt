@@ -11,7 +11,7 @@ Project Development Plan
     T0007 Create better physics with acceleration/collision.
     T0008 Create Animations when moving - Animations should not affect physics?
     T0010 we need to model time somehow other than saying 1 fram = 16ms
-    T0011 Implement a logging system for debugging and fault finding. Could prop just be an RxSubject
+    T0011 Implement a logging system for debugging and fault finding. Could prop just be an RxSubject.
     T0012 We might need a content loader system
 
     =============================================================================================
@@ -21,6 +21,39 @@ Project Development Plan
         - Design a structure for setting up GL environment, Rendering multiple game objects with different models and materials
         - Perhaps a more flexible way to generate shaders. Something that sets uniforms, attribs and varyings -> Info object
 
+        Design principles:
+        ------------------
+        - 100% decoupling from the ECS (Entity Component System) part of the engine.
+            - We need 1 simple interface thats basically CRUD for Entity->RenderItem + render frame
+            - We need to divide the render system into clear and selfcontained parts.
+                - render entity manager
+                    - Needs to register/deregister RenderEntities (A representation of an ECS render entity with relevant components)
+                    - Needs to be able to sort the entities by ShaderProgram -> Texture -> Model
+                - shader manager
+                    - need to register/deregister active shaders.
+                    - need to load/compile/link shaders into programs. 
+                - texture manager
+                    - Need to register/deregister active textures
+                    - Need to load textures from a file
+                - model manager
+                    - Need to register/deregister active models
+                    - We need to load models from a .dea files (COLLADA file format)
+                - [RENDERDEVICE] Some class that controls the rendering of the managed items/resources
+                - [SHADOW SYSTEM] Some functionality that controls shadows
+
+        we have perhaps
+        1 string[SHADER_IDS] with n elements
+        n string[TEXTURE_IDS] with m elements
+        n*m string[MODEL_IDS] with j elements
+        n*m*j string[RENDERENTITY_IDS]
+        MAP <ID,RENDERENTITY>
+
+        [S1,S2,S3]
+        s1 -> [t1,t2]
+                t1 -> [m1]
+                        -> [e1,e2,e3]
+
+        arrays vs maps ? - Arrays are easier to manage with null/udf? - faster ?
     =============================================================================================
     Done Tasks
     =============================================================================================
