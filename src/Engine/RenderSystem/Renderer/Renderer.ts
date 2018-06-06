@@ -1,22 +1,22 @@
 import { mat4 } from "gl-matrix";
 import RenderContext from "./RenderContext";
-import RenderModelManager, {RenderModel} from "./RenderModelManager";
-import ShaderProgramManager, { IShaderPair, IShaderProgram } from "./ShaderProgramManager";
+import RenderModelManager, { RenderModel } from "./RenderModelManager";
+import ShaderProgramManager, { IShaderProgram } from "./ShaderProgramManager";
 import { degToRad } from "./Utilities/webGlUtils";
 
-import { ComponentType, Entity, ITransform, IVisible } from "../../ComponentSystem"; // TODO: We need to get rid of this coupling
+import RenderEntity from "./RenderEntity";
 
 export default class Renderer {
 
     private renderContext: RenderContext
 
-    private sceneEntities: Map<string, Map<string, Entity[]>>;
+    private sceneEntities: Map<string, Map<string, RenderEntity[]>>;
 
     private renderModelManager: RenderModelManager;
     private shaderProgramManager: ShaderProgramManager;
 
     constructor() {
-        this.sceneEntities = new Map<string, Map<string, Entity[]>>();
+        this.sceneEntities = new Map<string, Map<string, RenderEntity[]>>();
         this.renderContext = new RenderContext();
         this.renderModelManager = new RenderModelManager();
         this.shaderProgramManager = new ShaderProgramManager();
@@ -55,10 +55,7 @@ export default class Renderer {
 
                 entities.forEach((entity) => {
 
-                    const tc = entity.getCompoenent(ComponentType.TRANSFORM) as ITransform;
-                    const vc = entity.getCompoenent(ComponentType.VISIBLE) as IVisible;
-
-                    gl.bindBuffer(gl.ARRAY_BUFFER, vc.positionBufffer);
+                    gl.bindBuffer(gl.ARRAY_BUFFER, entity.positionBufffer);
 
                     gl.bufferData(
                         gl.ARRAY_BUFFER,
@@ -92,11 +89,11 @@ export default class Renderer {
                         0, 0, 2 / 400, 0,
                         -1, 1, 0, 1,
                     );
-                    mat4.translate(mvMat, mvMat, tc.position);
-                    mat4.rotate(mvMat, mvMat, degToRad(tc.direction[0]), [1, 0, 0]);
-                    mat4.rotate(mvMat, mvMat, degToRad(tc.direction[1]), [0, 1, 0]);
-                    mat4.rotate(mvMat, mvMat, degToRad(tc.direction[2]), [0, 0, 1]);
-                    mat4.scale(mvMat, mvMat, tc.scale);
+                    mat4.translate(mvMat, mvMat, entity.position);
+                    mat4.rotate(mvMat, mvMat, degToRad(entity.direction[0]), [1, 0, 0]);
+                    mat4.rotate(mvMat, mvMat, degToRad(entity.direction[1]), [0, 1, 0]);
+                    mat4.rotate(mvMat, mvMat, degToRad(entity.direction[2]), [0, 0, 1]);
+                    mat4.scale(mvMat, mvMat, entity.scale);
                     const projectionLocation: WebGLUniformLocation | null | undefined = shaderProgram.uniformLocations.get('u_ProjectionMatrix');
 
                     if (projectionLocation === undefined || projectionLocation === null) {
@@ -112,7 +109,7 @@ export default class Renderer {
                     }
 
                     gl.uniformMatrix4fv(projectionLocation, false, mvMat);
-                    gl.uniform4f(colorLocation, vc.color[0], vc.color[1], vc.color[2], vc.color[3]);
+                    gl.uniform4f(colorLocation, entity.color[0], entity.color[1], entity.color[2], entity.color[3]);
 
                     const primitiveType = gl.TRIANGLES;
                     const offset2 = 0;
@@ -123,40 +120,37 @@ export default class Renderer {
         });
     }
 
-    public registerEntity(entity:Entity) {
+    public registerEntity(entity:RenderEntity) {
         const gl = this.renderContext.getContext();
 
-        const visibleComponent = entity.getCompoenent(ComponentType.VISIBLE) as IVisible;
+        const programId: string = this.shaderProgramManager.registerShader(gl, entity.shaders);
 
-            const shaderPair: IShaderPair = { ...visibleComponent.shaders };
-            const programId: string = this.shaderProgramManager.registerShader(gl, shaderPair);
+        // TODO: Register the model and bind VAO, perhaps create a buffer for the entity ?
+        this.renderModelManager.registerModel(gl, entity.modelId);
 
-            // TODO: Register the model and bind VAO, perhaps create a buffer for the entity ?
-            this.renderModelManager.registerModel(gl, visibleComponent.modelId);
+        const model = this.renderModelManager.getModel(entity.modelId);
 
-            const model = this.renderModelManager.getModel(visibleComponent.modelId);
+        if (model === undefined) { return; }
 
-            if (model === undefined) { return; }
+        const positionBuffer = gl.createBuffer();
+        if (positionBuffer === null) { return; }
+        entity.positionBufffer = positionBuffer;
 
-            const positionBuffer = gl.createBuffer();
-            if (positionBuffer === null) { return; }
-            visibleComponent.positionBufffer = positionBuffer;
+        console.log('RENDER: Adding entity to scenegraph', entity);
+        let modelMap: Map<string, RenderEntity[]> | undefined = this.sceneEntities.get(programId);
 
-            console.log('RENDER: Adding entity to scenegraph', entity);
-            let modelMap: Map<string, Entity[]> | undefined = this.sceneEntities.get(programId);
+        if (modelMap === undefined) {
+            modelMap = new Map<string, RenderEntity[]>();
+            this.sceneEntities.set(programId, modelMap);
+        }
 
-            if (modelMap === undefined) {
-                modelMap = new Map<string, Entity[]>();
-                this.sceneEntities.set(programId, modelMap);
-            }
+        let entityArray: RenderEntity[] | undefined = modelMap.get(entity.modelId);
 
-            let entityArray: Entity[] | undefined = modelMap.get(visibleComponent.modelId);
-
-            if (entityArray === undefined) {
-                entityArray = new Array<Entity>();
-                modelMap.set(visibleComponent.modelId, entityArray);
-            }
-
-            entityArray.push(entity);
+        if (entityArray === undefined) {
+            entityArray = new Array<RenderEntity>();
+            modelMap.set(entity.modelId, entityArray);
+        }
+        
+        entityArray.push(entity);
     }
 }

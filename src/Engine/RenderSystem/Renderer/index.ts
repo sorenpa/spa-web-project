@@ -1,3 +1,5 @@
-import RenderContext from './RenderContext'
+import IRenderEntity from './RenderEntity';
+import Renderer from './Renderer';
 
-export {RenderContext};
+export default Renderer;
+export { IRenderEntity };

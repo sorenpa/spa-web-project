@@ -41,7 +41,6 @@ function addTestObjects(){
         componentId: 'C1',
         componentType: ComponentType.VISIBLE,
         modelId: 'Cube',
-        positionBufffer: null,
         shaders: {
             fragmentShaderId: 'fragmentBase',
             vertexShaderId: 'vertexBase'
@@ -80,7 +79,6 @@ function addTestObjects(){
         componentId: 'C4',
         componentType: ComponentType.VISIBLE,
         modelId: 'Test',
-        positionBufffer: null,
         shaders: {
             fragmentShaderId: 'fragmentBase',
             vertexShaderId: 'vertexBase'
