@@ -1,15 +1,15 @@
 import {Entity} from '../ComponentSystem/';
 
-export enum GameObjectUpdateType
+export enum EntityEventType
 {
     CREATE,
     UPDATE,
     DELETE
 }
 
-export interface IGameObjectEvent
+export interface IEntityEvent
 {
-    eventType: GameObjectUpdateType,
+    eventType: EntityEventType,
     entity: Entity,
 }
 

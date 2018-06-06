@@ -1,5 +1,5 @@
+import { IShader, IShaderProgram, ShaderType } from "./Shaders";
 import { fragmentShaderBase } from "./Shaders/fragmentShaders";
-import { IShader, IShaderProgram, ShaderType } from "./Shaders/interfaces";
 import { vertexShaderBase } from "./Shaders/vertexShaders";
 
 

@@ -1,5 +1,5 @@
 import { ShaderLibrary } from "./ShaderLibrary";
-import { IShaderPair, IShaderProgram } from "./Shaders/interfaces";
+import { IShaderPair, IShaderProgram } from "./Shaders";
 
 
 export default class ShaderProgramManager {

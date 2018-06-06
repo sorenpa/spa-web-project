@@ -1,24 +1,24 @@
 import { Subject } from "rxjs";
 
-import { GameObjectUpdateType, IGameObjectEvent } from '../../EventSystem';
+import { EntityEventType, IEntityEvent } from '../../EventSystem';
 import Entity from "./Entity";
 
 export default class EntityManager{
 
-    private gameObjects: Map<string, Entity>;
-    private gameObject$: Subject<IGameObjectEvent>
+    private entities: Map<string, Entity>;
+    private entity$: Subject<IEntityEvent>
 
-    constructor(gameObject$:Subject<IGameObjectEvent>){
-        this.gameObjects = new Map<string,Entity>()
-        this.gameObject$ = gameObject$;
+    constructor(entity$:Subject<IEntityEvent>){
+        this.entities = new Map<string,Entity>()
+        this.entity$ = entity$;
     }
 
-    public AddGameObject(entity: Entity){
-        this.gameObjects.set(entity.getEntityId(), entity);
+    public AddEntity(entity: Entity){
+        this.entities.set(entity.getEntityId(), entity);
 
-        this.gameObject$.next({
+        this.entity$.next({
             entity,
-            eventType: GameObjectUpdateType.CREATE,
+            eventType: EntityEventType.CREATE,
         })
     }
 

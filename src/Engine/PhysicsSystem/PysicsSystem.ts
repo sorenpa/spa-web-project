@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs'
 
-import { IGameObjectEvent } from "../EventSystem";
+import { IEntityEvent } from "../EventSystem";
 
 import { ComponentType, Entity, IMovable, ITransform } from '../ComponentSystem';
 
@@ -9,15 +9,15 @@ import { vec3 } from 'gl-matrix';
 export default class PhysicsSystem{
 
     private entities: Entity[];
-    private gameObject$: Observable<IGameObjectEvent>;
+    private entity$: Observable<IEntityEvent>;
     
-    constructor(gameObject$: Observable<IGameObjectEvent>){
-        this.gameObject$ = gameObject$;
+    constructor(entity$: Observable<IEntityEvent>){
+        this.entity$ = entity$;
         this. entities= new Array<Entity>();
     }
     
     public init() : boolean{
-        this.gameObject$.subscribe(this.onGameObjectEvent.bind(this));
+        this.entity$.subscribe(this.onEntityEvent.bind(this));
         return true;
     }
 
@@ -31,7 +31,7 @@ export default class PhysicsSystem{
         });
     }
 
-    private onGameObjectEvent(event:IGameObjectEvent){
+    private onEntityEvent(event:IEntityEvent){
         console.log('PHYSICS: ', event)
         if(event.entity.hasComponents([ComponentType.TRANSFORM])){
             console.log('PHYSICS: Adding entity to physics', event.entity);

@@ -1,5 +1,5 @@
 import { fromEvent, interval, merge, Observable, Subject } from "rxjs";
-import { IGameObjectEvent } from "./EventTypes";
+import { IEntityEvent } from "./EventTypes";
 
 // Constants
 const LOOP_INTERVAL = 16;
@@ -7,7 +7,7 @@ const LOOP_INTERVAL = 16;
 // Streams
 export const gameloop$ : Observable<number> = interval(LOOP_INTERVAL);
 
-export const entity$ : Subject<IGameObjectEvent> = new Subject<IGameObjectEvent>()
+export const entity$ : Subject<IEntityEvent> = new Subject<IEntityEvent>()
 
 export const keydown$ : Observable<Event> = fromEvent(document,'keydown');
 export const keyup$ : Observable<Event> = fromEvent(document,'keyup');

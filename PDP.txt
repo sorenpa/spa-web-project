@@ -127,7 +127,7 @@ Task Log
     The systems then manages an internal collection of the subset of entities that is relevant to that system. These are added/removed when stuff is added/removed
     through the entity manager.
 
-    The SceneGraph is basically just the relationship between GameObjects that appear in the game-world.
+    The SceneGraph is basically just the relationship between Entities that appear in the game-world.
 
         World -> Character -> Sword -> Fire
                         -> Shield

@@ -100,6 +100,6 @@ function addTestObjects(){
     
     const entity2: Entity = new Entity('E2', components2);
 
-    entityManager.AddGameObject(entity1);
-    entityManager.AddGameObject(entity2);
+    entityManager.AddEntity(entity1);
+    entityManager.AddEntity(entity2);
 }
