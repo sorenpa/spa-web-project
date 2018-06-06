@@ -1,5 +1,5 @@
 import { vec3, vec4 } from 'gl-matrix';
-import { gameloop$, gameObjectUpdates$, keyboardInput$ } from './EventSystem';
+import { entity$, gameloop$, keyboardInput$ } from './EventSystem';
 import RenderSystem from './RenderSystem';
 
 import { ComponentType, Entity, EntityManager, IComponent, IMovable, IPlayer, ITransform, IVisible } from './ComponentSystem';
@@ -8,10 +8,10 @@ import PhysicsSystem from './PhysicsSystem/PysicsSystem';
 
 
 
-const inputSystem: InputSystem = new InputSystem(gameObjectUpdates$, keyboardInput$);
-const renderSystem: RenderSystem = new RenderSystem(gameObjectUpdates$);
-const entityManager: EntityManager = new EntityManager(gameObjectUpdates$);
-const physicsSystem: PhysicsSystem = new PhysicsSystem(gameObjectUpdates$);
+const inputSystem: InputSystem = new InputSystem(entity$, keyboardInput$);
+const renderSystem: RenderSystem = new RenderSystem(entity$);
+const entityManager: EntityManager = new EntityManager(entity$);
+const physicsSystem: PhysicsSystem = new PhysicsSystem(entity$);
 
 export default function boot(): boolean{
     let initSuccess = true;
@@ -32,10 +32,6 @@ function gameLoop(frame: number){
     inputSystem.update();
     physicsSystem.update();
     renderSystem.render();
-    // if(frame === 0)
-    // {
-    //     renderSystem.render();
-    // }
 }
 
 function addTestObjects(){

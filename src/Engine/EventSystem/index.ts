@@ -1,5 +1,5 @@
-import { gameloop$, gameObjectUpdates$, keyboardInput$ } from './EventSystem'
+import { entity$, gameloop$, keyboardInput$ } from './EventSystem';
 import { GameObjectUpdateType, IGameObjectEvent} from './EventTypes';
 
 export {GameObjectUpdateType, IGameObjectEvent};
-export { gameloop$, gameObjectUpdates$, keyboardInput$ }
+export { entity$, gameloop$, keyboardInput$ };
