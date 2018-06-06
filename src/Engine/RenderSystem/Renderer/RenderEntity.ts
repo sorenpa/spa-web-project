@@ -1,17 +1,17 @@
 import { vec3, vec4 } from "gl-matrix";
 
 export default interface IRenderEntity {
-    entityId: string
+    entityId: number
     // General
     positionBufffer: WebGLBuffer|null;
     // Geometry
-    modelId: string,
+    modelId: number,
     // Material
     color: vec4,
-    textureId: string,
+    textureId: number,
     shaders: {
-        vertexShaderId:string,
-        fragmentShaderId:string,
+        vertexShaderId:number,
+        fragmentShaderId:number,
     }
     position: vec3,
     direction: vec3,

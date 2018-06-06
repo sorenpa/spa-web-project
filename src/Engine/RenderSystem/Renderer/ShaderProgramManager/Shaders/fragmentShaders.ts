@@ -16,7 +16,7 @@ export const fragmentShaderBase:IShader = {
   attributes: [],
   header: `#version 300 es
   precision mediump float;`,
-  shaderId: 'FragmentShaderBase',
+  shaderId: 1,
   shaderType: ShaderType.FRAGMENT,
   source: `out vec4 outColor;
 

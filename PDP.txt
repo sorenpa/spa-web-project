@@ -42,18 +42,8 @@ Project Development Plan
                 - [SHADOW SYSTEM] Some functionality that controls shadows
 
         we have perhaps
-        1 string[SHADER_IDS] with n elements
-        n string[TEXTURE_IDS] with m elements
-        n*m string[MODEL_IDS] with j elements
-        n*m*j string[RENDERENTITY_IDS]
-        MAP <ID,RENDERENTITY>
-
-        [S1,S2,S3]
-        s1 -> [t1,t2]
-                t1 -> [m1]
-                        -> [e1,e2,e3]
-
-        arrays vs maps ? - Arrays are easier to manage with null/udf? - faster ?
+        No we create a render queue that is generated EVERY frame, processed, and discarded.
+        Its sorted by a bitKey typically by Shader -> Texture -> (VBO -> Translucent -> Depth)?
     =============================================================================================
     Done Tasks
     =============================================================================================

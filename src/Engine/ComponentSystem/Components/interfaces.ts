@@ -8,21 +8,21 @@ export enum ComponentType{
 }
 
 export interface IComponent {
-    componentId: string,
+    componentId: number,
     componentType: ComponentType,
 }
 
 // TODO split into Geometry/Material?
 export interface IVisible extends IComponent {
     // Geometry
-    modelId: string,
+    modelId: number,
 
     // Material
     color: vec4,
-    textureId: string,
+    textureId: number,
     shaders: {
-        vertexShaderId:string,
-        fragmentShaderId:string,
+        vertexShaderId:number,
+        fragmentShaderId:number,
     }
 }
 

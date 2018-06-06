@@ -4,18 +4,18 @@ import { vertexShaderBase } from "./Shaders/vertexShaders";
 
 
 export class ShaderLibrary{
-    private vertexShaders: Map<string, IShader>
-    private fragmentShaders: Map<string, IShader>
+    private vertexShaders: Map<number, IShader>
+    private fragmentShaders: Map<number, IShader>
 
     constructor() {
-        this.vertexShaders = new Map<string, IShader>();
-        this.fragmentShaders = new Map<string, IShader>();
+        this.vertexShaders = new Map<number, IShader>();
+        this.fragmentShaders = new Map<number, IShader>();
 
-        this.vertexShaders.set('vertexBase', vertexShaderBase);
-        this.fragmentShaders.set('fragmentBase', fragmentShaderBase);
+        this.vertexShaders.set(vertexShaderBase.shaderId, vertexShaderBase);
+        this.fragmentShaders.set(fragmentShaderBase.shaderId, fragmentShaderBase);
     }
 
-    public initShaderProgram(gl: WebGLRenderingContext, vertexShaderId: string, fragmentShaderId: string): IShaderProgram|null {
+    public initShaderProgram(gl: WebGLRenderingContext, vertexShaderId: number, fragmentShaderId: number): IShaderProgram|null {
         
         const vertexShaderData: IShader|undefined = this.vertexShaders.get(vertexShaderId);
         const fragmentShaderData: IShader|undefined = this.fragmentShaders.get(fragmentShaderId);

@@ -38,18 +38,18 @@ function addTestObjects(){
 
     const vc1: IVisible = {
         color: vec4.fromValues(1.0, 0.0, 0.0, 1.0),
-        componentId: 'C1',
+        componentId: 1,
         componentType: ComponentType.VISIBLE,
-        modelId: 'Cube',
+        modelId: 1,
         shaders: {
-            fragmentShaderId: 'fragmentBase',
-            vertexShaderId: 'vertexBase'
+            fragmentShaderId: 1,
+            vertexShaderId: 1
         },
-        textureId: 'none',
+        textureId: 0,
     }
 
     const tc1: ITransform = {
-        componentId: 'C2',
+        componentId: 2,
         componentType: ComponentType.TRANSFORM,
         direction: vec3.fromValues(50.0, 23.0, 10.0),
         position: vec3.fromValues(300,200,0),
@@ -58,36 +58,36 @@ function addTestObjects(){
 
     const mc1: IMovable = {
         acceleration: vec3.fromValues(1.0, 1.0, 1.0),
-        componentId: 'C3',
+        componentId: 3,
         componentType: ComponentType.MOVABLE,
         maxSpeed: 3,
         velocity: vec3.fromValues(0.0, 0.0, 0.0)
     }
 
     const playerComp: IPlayer = {
-        componentId: 'C6',
+        componentId: 6,
         componentType: ComponentType.PLAYER,
         playerName: 'Huggo'
     }
 
     const components1: IComponent[] = [vc1,tc1,mc1, playerComp];
     
-    const entity1: Entity = new Entity('E1', components1);
+    const entity1: Entity = new Entity(1, components1);
 
     const vc2: IVisible = {
         color: vec4.fromValues(1.0, 0.0, 5.0, 1.0),
-        componentId: 'C4',
+        componentId: 4,
         componentType: ComponentType.VISIBLE,
-        modelId: 'Test',
+        modelId: 2,
         shaders: {
-            fragmentShaderId: 'fragmentBase',
-            vertexShaderId: 'vertexBase'
+            fragmentShaderId: 1,
+            vertexShaderId: 1
         },
-        textureId: 'none',
+        textureId: 0,
     }
 
     const tc2: ITransform = {
-        componentId: 'C5',
+        componentId: 5,
         componentType: ComponentType.TRANSFORM,
         direction: vec3.fromValues(0.0, 0.0, 0.0),
         position: vec3.fromValues(0.0, 0.0, 0.0),
@@ -96,7 +96,7 @@ function addTestObjects(){
 
     const components2: IComponent[] = [vc2,tc2];
     
-    const entity2: Entity = new Entity('E2', components2);
+    const entity2: Entity = new Entity(2, components2);
 
     entityManager.AddEntity(entity1);
     entityManager.AddEntity(entity2);

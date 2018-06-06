@@ -2,10 +2,10 @@ import { ComponentType, IComponent } from "../Components";
 
 export default class Entity{
     
-    protected entityId: string;
+    protected entityId: number;
     protected components: Map<ComponentType,IComponent>;
 
-    constructor(entityId:string, components:IComponent[])
+    constructor(entityId:number, components:IComponent[])
     {
         this.entityId = entityId;
         this.components = new Map<ComponentType,IComponent>();
@@ -13,7 +13,7 @@ export default class Entity{
         this.registerComponents(components);
     }
 
-    public getEntityId(): string {
+    public getEntityId(): number {
         return this.entityId;
     }
 

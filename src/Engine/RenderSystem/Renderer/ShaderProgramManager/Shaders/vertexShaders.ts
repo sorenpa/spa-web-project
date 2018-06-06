@@ -5,7 +5,7 @@ import { IShader, ShaderType } from "./interfaces";
       {name:'a_VertexPosition', type: 'vec4'}
     ],
     header: '#version 300 es',
-    shaderId: 'VertexShaderBase',
+    shaderId: 1,
     shaderType: ShaderType.VERTEX,
     source: `void main() {
       gl_Position = u_ProjectionMatrix * a_VertexPosition;

@@ -5,11 +5,11 @@ import Entity from "./Entity";
 
 export default class EntityManager{
 
-    private entities: Map<string, Entity>;
+    private entities: Map<number, Entity>;
     private entity$: Subject<IEntityEvent>
 
     constructor(entity$:Subject<IEntityEvent>){
-        this.entities = new Map<string,Entity>()
+        this.entities = new Map<number,Entity>()
         this.entity$ = entity$;
     }
 

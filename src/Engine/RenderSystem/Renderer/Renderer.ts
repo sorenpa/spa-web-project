@@ -10,13 +10,13 @@ export default class Renderer {
 
     private renderContext: RenderContext
 
-    private sceneEntities: Map<string, Map<string, RenderEntity[]>>;
+    private sceneEntities: Map<number, Map<number, RenderEntity[]>>;
 
     private renderModelManager: RenderModelManager;
     private shaderProgramManager: ShaderProgramManager;
 
     constructor() {
-        this.sceneEntities = new Map<string, Map<string, RenderEntity[]>>();
+        this.sceneEntities = new Map<number, Map<number, RenderEntity[]>>();
         this.renderContext = new RenderContext();
         this.renderModelManager = new RenderModelManager();
         this.shaderProgramManager = new ShaderProgramManager();
@@ -123,7 +123,7 @@ export default class Renderer {
     public registerEntity(entity:RenderEntity) {
         const gl = this.renderContext.getContext();
 
-        const programId: string = this.shaderProgramManager.registerShader(gl, entity.shaders);
+        const programId: number = this.shaderProgramManager.registerShader(gl, entity.shaders);
 
         // TODO: Register the model and bind VAO, perhaps create a buffer for the entity ?
         this.renderModelManager.registerModel(gl, entity.modelId);
@@ -137,10 +137,10 @@ export default class Renderer {
         entity.positionBufffer = positionBuffer;
 
         console.log('RENDER: Adding entity to scenegraph', entity);
-        let modelMap: Map<string, RenderEntity[]> | undefined = this.sceneEntities.get(programId);
+        let modelMap: Map<number, RenderEntity[]> | undefined = this.sceneEntities.get(programId);
 
         if (modelMap === undefined) {
-            modelMap = new Map<string, RenderEntity[]>();
+            modelMap = new Map<number, RenderEntity[]>();
             this.sceneEntities.set(programId, modelMap);
         }
 

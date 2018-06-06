@@ -4,7 +4,7 @@ export enum ShaderType {
 }
 
 export interface IShader {
-    shaderId: string,
+    shaderId: number,
     header: string,
     shaderType: ShaderType,
     attributes: IShaderVariable[],
@@ -19,15 +19,15 @@ export interface IShaderVariable{
 }
 
 export interface IShaderProgram {
-    progamId: string,
-    fragmentShaderId: string,
-    vertexShaderId: string,
+    progamId: number,
+    fragmentShaderId: number,
+    vertexShaderId: number,
     program: WebGLProgram|null,
     attributeLocations: Map<string,number>,
     uniformLocations: Map<string,WebGLUniformLocation|null>,
 }
 
 export interface IShaderPair {
-    vertexShaderId: string,
-    fragmentShaderId: string, 
+    vertexShaderId: number,
+    fragmentShaderId: number, 
 }
