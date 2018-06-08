@@ -9,11 +9,8 @@ export default interface IRenderEntity {
     // Material
     color: vec4,
     textureId: number,
-    shaders: {
-        vertexShaderId:number,
-        fragmentShaderId:number,
-    }
     position: vec3,
     direction: vec3,
     scale: vec3,
+    shaderProgramId: number,
 }

@@ -42,8 +42,17 @@ Project Development Plan
                 - [SHADOW SYSTEM] Some functionality that controls shadows
 
         we have perhaps
-        No we create a render queue that is generated EVERY frame, processed, and discarded.
-        Its sorted by a bitKey typically by Shader -> Texture -> (VBO -> Translucent -> Depth)?
+        No we create a render queue that is 
+
+        So we have a SceneManager with:
+            - Map<Number,IRenderEntity> :: 
+                Stores the raw data
+            - SceneGraph :: 
+                Specifying the geometrical/Spatial heirachy for transform matrices Culling etc
+            - RenderQueue :: 
+                ordered/sorted list of IRenderEntity IDs that specify the render order. 
+                generated EVERY frame, processed, and discarded. 
+                Its sorted by a bitKey typically by Shader -> Texture -> (VBO -> Translucent -> Depth)?
     =============================================================================================
     Done Tasks
     =============================================================================================

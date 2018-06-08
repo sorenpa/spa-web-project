@@ -57,11 +57,11 @@ function addTestObjects(){
     }
 
     const mc1: IMovable = {
-        acceleration: vec3.fromValues(1.0, 1.0, 1.0),
+        acceleration: vec3.fromValues(0.5, 0.5, 0.5),
         componentId: 3,
         componentType: ComponentType.MOVABLE,
         maxSpeed: 3,
-        velocity: vec3.fromValues(0.0, 0.0, 0.0)
+        velocity: vec3.fromValues(25.0, 17.0, 0.0)
     }
 
     const playerComp: IPlayer = {
@@ -86,6 +86,14 @@ function addTestObjects(){
         textureId: 0,
     }
 
+    const mc2: IMovable = {
+        acceleration: vec3.fromValues(0.1, 0.1, 0.1),
+        componentId: 3,
+        componentType: ComponentType.MOVABLE,
+        maxSpeed: 3,
+        velocity: vec3.fromValues(0.1, 0.1, 0.0)
+    }
+
     const tc2: ITransform = {
         componentId: 5,
         componentType: ComponentType.TRANSFORM,
@@ -94,7 +102,7 @@ function addTestObjects(){
         scale: vec3.fromValues(1.0, 1.0, 1.0),
     }
 
-    const components2: IComponent[] = [vc2,tc2];
+    const components2: IComponent[] = [vc2,tc2,mc2];
     
     const entity2: Entity = new Entity(2, components2);
 

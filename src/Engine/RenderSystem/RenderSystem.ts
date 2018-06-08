@@ -42,11 +42,11 @@ export default class RenderSystem {
                     position: transformComponent.position,
                     positionBufffer: null,
                     scale: transformComponent.scale,
-                    shaders:visibleComponent.shaders,
+                    shaderProgramId: 0, // TODO: is this Default ok?
                     textureId:visibleComponent.textureId,
                 }
 
-                this.renderer.registerEntity(renderEntity);
+                this.renderer.registerEntity(renderEntity, visibleComponent.shaders);
                 
             }
         }
