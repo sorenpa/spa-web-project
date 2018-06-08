@@ -26,42 +26,28 @@ export default class KeyboardInputService {
     // TODO: Acceleration/Deacceleration should be handled in the PhysicsSystem
     public update(movableComponent:IMovable) {
         
-        const { velocity, acceleration, maxSpeed } = movableComponent;
+        const { deltaVelocity, acceleration } = movableComponent;
 
             const {up ,down,left,right} = this.inputs;
 
             if(left === right){
-                if(velocity[0] > acceleration[0]) {
-                    velocity[0] -= acceleration[0]
-                }
-                else if(velocity[0] < -acceleration[0]){
-                    velocity[0] += acceleration[0]
-                } else {
-                    velocity[0] = 0;
-                }
+                deltaVelocity[0] = 0;
             }
             else if (left){
-                velocity[0] = velocity[0] > -maxSpeed ? velocity[0] - acceleration[0] : -maxSpeed;
+                deltaVelocity[0] = - acceleration[0];
             }
             else{
-                velocity[0] = velocity[0] < maxSpeed ? velocity[0] + acceleration[0] : maxSpeed;
+                deltaVelocity[0] = acceleration[0];
             }
                 
             if(up === down){
-                if(velocity[1] > acceleration[1]) {
-                    velocity[1] -= acceleration[1]
-                }
-                else if(velocity[1] < -acceleration[1]){
-                    velocity[1] += acceleration[1]
-                } else {
-                    velocity[1] = 0;
-                }
+                deltaVelocity[1] = 0;
             }
             else if (up){
-                velocity[1] = velocity[1] > -maxSpeed ? velocity[1] - acceleration[1] : -maxSpeed;
+                deltaVelocity[1] = - acceleration[1];
             }
             else{
-                velocity[1] = velocity[1] < maxSpeed ? velocity[1] + acceleration[1] : maxSpeed;
+                deltaVelocity[1] = + acceleration[1];
             }
     }
 

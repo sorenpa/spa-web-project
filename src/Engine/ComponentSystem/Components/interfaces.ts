@@ -35,6 +35,7 @@ export interface ITransform extends IComponent {
 export interface IMovable extends IComponent {
     acceleration: vec3,
     velocity: vec3,
+    deltaVelocity: vec3
     maxSpeed: number;
 }
 

@@ -57,11 +57,12 @@ function addTestObjects(){
     }
 
     const mc1: IMovable = {
-        acceleration: vec3.fromValues(0.5, 0.5, 0.5),
+        acceleration: vec3.fromValues(0.05, 0.05, 0.05),
         componentId: 3,
         componentType: ComponentType.MOVABLE,
+        deltaVelocity: vec3.fromValues(0.0, 0.0, 0.0),
         maxSpeed: 3,
-        velocity: vec3.fromValues(25.0, 17.0, 0.0)
+        velocity: vec3.fromValues(1.0, 1.0, 0.0)
     }
 
     const playerComp: IPlayer = {
@@ -87,11 +88,12 @@ function addTestObjects(){
     }
 
     const mc2: IMovable = {
-        acceleration: vec3.fromValues(0.1, 0.1, 0.1),
+        acceleration: vec3.fromValues(0.05, 0.05, 0.05),
         componentId: 3,
         componentType: ComponentType.MOVABLE,
+        deltaVelocity: vec3.fromValues(0.0, 0.0, 0.0),
         maxSpeed: 3,
-        velocity: vec3.fromValues(0.1, 0.1, 0.0)
+        velocity: vec3.fromValues(7.0, 5.0, 0.0)
     }
 
     const tc2: ITransform = {
