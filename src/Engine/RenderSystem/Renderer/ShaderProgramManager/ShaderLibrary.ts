@@ -1,7 +1,4 @@
-import { IShader, IShaderProgram, ShaderType } from "./Shaders";
-import { fragmentShaderBase } from "./Shaders/fragmentShaders";
-import { vertexShaderBase } from "./Shaders/vertexShaders";
-
+import { fragmentShaderBase, IShader, IShaderProgram, ShaderType, vertexShaderBase } from "./Shaders";
 
 export class ShaderLibrary{
     private vertexShaders: Map<number, IShader>

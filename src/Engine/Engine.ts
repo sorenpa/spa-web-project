@@ -3,8 +3,8 @@ import { entity$, gameloop$, keyboardInput$ } from './EventSystem';
 import RenderSystem from './RenderSystem';
 
 import { ComponentType, Entity, EntityManager, IComponent, IMovable, IPlayer, ITransform, IVisible } from './ComponentSystem';
-import InputSystem from './InputSystem/InputSystem';
-import PhysicsSystem from './PhysicsSystem/PysicsSystem';
+import InputSystem from './InputSystem';
+import PhysicsSystem from './PhysicsSystem';
 
 
 

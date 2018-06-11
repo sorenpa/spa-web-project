@@ -1,4 +1,4 @@
-import {Entity} from '../ComponentSystem/';
+import {Entity} from '../ComponentSystem';
 
 export enum EntityEventType
 {

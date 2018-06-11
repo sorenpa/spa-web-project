@@ -6,7 +6,7 @@ import RenderModelManager, { RenderModel } from "./RenderModelManager";
 import SceneManager from "./SceneManager";
 import ShaderProgramManager, { IShaderPair, IShaderProgram } from "./ShaderProgramManager";
 
-import { degToRad } from "./Utilities/webGlUtils";
+import Utils  from "./Utilities";
 
 
 export default class Renderer {
@@ -89,9 +89,9 @@ export default class Renderer {
                 -1, 1, 0, 1,
             );
             mat4.translate(mvMat, mvMat, entity.position);
-            mat4.rotate(mvMat, mvMat, degToRad(entity.direction[0]), [1, 0, 0]);
-            mat4.rotate(mvMat, mvMat, degToRad(entity.direction[1]), [0, 1, 0]);
-            mat4.rotate(mvMat, mvMat, degToRad(entity.direction[2]), [0, 0, 1]);
+            mat4.rotate(mvMat, mvMat, Utils.degToRad(entity.direction[0]), [1, 0, 0]);
+            mat4.rotate(mvMat, mvMat, Utils.degToRad(entity.direction[1]), [0, 1, 0]);
+            mat4.rotate(mvMat, mvMat, Utils.degToRad(entity.direction[2]), [0, 0, 1]);
             mat4.scale(mvMat, mvMat, entity.scale);
             const projectionLocation: WebGLUniformLocation | null | undefined = shaderProgram.uniformLocations.get('u_ProjectionMatrix');
 
