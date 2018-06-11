@@ -1,5 +1,7 @@
+import Material from "./Material";
 import { ShaderLibrary } from "./ShaderLibrary";
 import { IShaderPair, IShaderProgram } from "./Shaders";
+
 
 
 export default class ShaderProgramManager {
@@ -7,32 +9,36 @@ export default class ShaderProgramManager {
     
     private shaderLibrary: ShaderLibrary;
 
-    private shaderPrograms: Map<number,IShaderProgram>;
+    private materials: Map<number,Material>;
 
     private idCounter: number = 0;
 
     constructor(){
         this.shaderLibrary = new ShaderLibrary();
 
-        this.shaderPrograms = new Map<number,IShaderProgram>();
+        this.materials = new Map<number,Material>();
     }
 
     public registerShader(gl:WebGL2RenderingContext, shaderPair:IShaderPair): number {
 
-        const programId: number = this.idCounter++;
+        const materialId: number = this.idCounter++;
 
-        if(this.shaderPrograms.has(programId)) { return programId; }
+        if(this.materials.has(materialId)) { return materialId; }
 
         const program: IShaderProgram|null = this.shaderLibrary.initShaderProgram(gl, shaderPair.vertexShaderId,shaderPair.fragmentShaderId);
 
         if(program === null) { return 0; }
 
-        this.shaderPrograms.set(programId, program);
+        const material: Material = {
+            shaderProgram: program
+        }
 
-        return programId;
+        this.materials.set(materialId, material );
+
+        return materialId;
     }
 
-    public getShader(programId:number) : IShaderProgram|undefined {
-        return this.shaderPrograms.get(programId);
+    public getShader(programId:number) : Material|undefined {
+        return this.materials.get(programId);
     }
 }

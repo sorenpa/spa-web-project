@@ -1,6 +1,6 @@
-import { RenderModel } from "./RenderModel";
+import Geometry from "./Geometry";
 
-export default class TestModel extends RenderModel {
+export default class TestGeometry extends Geometry {
 
     public vertexSize = 3; // Bad name, but represents the number of floats used per vertex
     public vertexCount = 6*3; // 6 sides, each with 4 points

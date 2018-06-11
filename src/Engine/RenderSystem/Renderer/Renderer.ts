@@ -2,24 +2,24 @@ import { mat4 } from "gl-matrix";
 
 import RenderContext from "./RenderContext";
 import IRenderEntity from "./RenderEntity";
-import RenderModelManager, { RenderModel } from "./RenderModelManager";
+import { Geometry, GeometryManager, IMaterial, IShaderPair, MaterialManager } from './ResourceManager';
 import SceneManager from "./SceneManager";
-import ShaderProgramManager, { IShaderPair, IShaderProgram } from "./ShaderProgramManager";
 
 import Utils  from "./Utilities";
+
 
 
 export default class Renderer {
 
     private renderContext: RenderContext
-    private renderModelManager: RenderModelManager;
-    private shaderProgramManager: ShaderProgramManager;
+    private renderModelManager: GeometryManager;
+    private materialManager: MaterialManager;
     private SceneManager: SceneManager;
 
     constructor() {
         this.renderContext = new RenderContext();
-        this.renderModelManager = new RenderModelManager();
-        this.shaderProgramManager = new ShaderProgramManager();
+        this.renderModelManager = new GeometryManager();
+        this.materialManager = new MaterialManager();
         this.SceneManager = new SceneManager();
     }
 
@@ -38,17 +38,19 @@ export default class Renderer {
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
         this.SceneManager.getRenderQueue().forEach((entity: IRenderEntity) => {
-            const shaderProgram: IShaderProgram | undefined = this.shaderProgramManager.getShader(entity.shaderProgramId);
+            const material: IMaterial | undefined = this.materialManager.getShader(entity.materialId);
 
-            if (shaderProgram === undefined) {
+            if (material === undefined) {
                 console.log('RenderSystem.render: shaderProgram is undefined');
                 return;
             }
 
+            const {shaderProgram} = material;
+
             gl.useProgram(shaderProgram.program);
 
 
-            const model: RenderModel | undefined = this.renderModelManager.getModel(entity.modelId)
+            const model: Geometry | undefined = this.renderModelManager.getModel(entity.geometryId)
             if (model === undefined) {
                 console.log('RenderSystem.render: Model is undefined')
                 return;
@@ -120,10 +122,10 @@ export default class Renderer {
     public registerEntity(entity: IRenderEntity, shaders: IShaderPair) {
         const gl = this.renderContext.getContext();
 
-        entity.shaderProgramId = this.shaderProgramManager.registerShader(gl, shaders);
+        entity.materialId = this.materialManager.registerShader(gl, shaders);
 
         // TODO: Register the model and bind VAO, perhaps create a buffer for the entity ?
-        this.renderModelManager.registerModel(gl, entity.modelId);
+        this.renderModelManager.registerModel(gl, entity.geometryId);
 
         const positionBuffer = gl.createBuffer();
         if (positionBuffer === null) { return; }

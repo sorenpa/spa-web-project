@@ -18,7 +18,6 @@ export default class SceneManager {
         return entityId;
     }
 
-    
     public getRenderQueue(): IRenderEntity[] {
         return Array.from(this.sceneEntities.values()); // TODO this needs further work
     }

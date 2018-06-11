@@ -1,10 +1,10 @@
-import { CubeModel, RenderModel, TestModel } from './Models'
+import { CubeGeometry, Geometry, TestGeometry } from './Geometry'
 
 export default class RenderModelService{
 
-    private Models: Map<number,RenderModel>;
+    private Models: Map<number,Geometry>;
     constructor(){
-        this.Models = new Map<number,RenderModel>();
+        this.Models = new Map<number,Geometry>();
     }
 
     public registerModel(gl:WebGL2RenderingContext, modelId:number): number {
@@ -13,11 +13,11 @@ export default class RenderModelService{
 
         switch(modelId) {
             case 1:{
-                this.Models.set(modelId,new CubeModel(gl.createVertexArray()))
+                this.Models.set(modelId,new CubeGeometry(gl.createVertexArray()))
                 return 1;
             }
             case 2: {
-                this.Models.set(modelId,new TestModel(gl.createVertexArray()))
+                this.Models.set(modelId,new TestGeometry(gl.createVertexArray()))
                 return 2;
             }
         }
@@ -25,7 +25,7 @@ export default class RenderModelService{
         return 0;
     }
 
-    public getModel(id:number):RenderModel|undefined{
+    public getModel(id:number):Geometry|undefined{
         return this.Models.get(id);
     }
 }

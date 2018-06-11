@@ -1,5 +1,5 @@
 // Should this contain the vertice count, stride, GL_TRINAGLE, GL_STATIC_DRAW etc?
-export abstract class RenderModel{
+export default abstract class Geometry{
     
     public vao: WebGLVertexArrayObject|null;
     public vertexSize: number;

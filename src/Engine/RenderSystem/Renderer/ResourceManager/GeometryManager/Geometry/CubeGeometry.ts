@@ -1,7 +1,7 @@
-import { RenderModel } from "./RenderModel";
+import Geometry from "./Geometry";
 
 
-export default class CubeModel extends RenderModel {
+export default class CubeGeometry extends Geometry {
 
     public vertexSize = 3; // Bad name, but represents the number of floats used per vertex
     public vertexCount = 4*6; // 6 sides, each with 4 points

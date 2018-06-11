@@ -1,8 +1,7 @@
 import * as Rx from 'rxjs';
 
-import { EntityEventType, IEntityEvent } from '../EventSystem';
-
 import { ComponentType, ITransform, IVisible } from '../ComponentSystem';
+import { EntityEventType, IEntityEvent } from '../EventSystem';
 import Renderer, { IRenderEntity } from './Renderer';
 
 /*
@@ -38,16 +37,14 @@ export default class RenderSystem {
                     color: visibleComponent.color,
                     direction: transformComponent.direction,
                     entityId: entity.getEntityId(),
-                    modelId:visibleComponent.modelId,
+                    geometryId:visibleComponent.modelId,
+                    materialId: 0, // TODO: is this Default ok?
                     position: transformComponent.position,
                     positionBufffer: null,
                     scale: transformComponent.scale,
-                    shaderProgramId: 0, // TODO: is this Default ok?
-                    textureId:visibleComponent.textureId,
                 }
 
                 this.renderer.registerEntity(renderEntity, visibleComponent.shaders);
-                
             }
         }
     }
