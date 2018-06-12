@@ -1,5 +1,5 @@
-import { Geometry } from './Geometry';
+import { IGeometry } from './Geometry';
 import GeometryManager from './GeometryManager';
 
 export default GeometryManager;
-export { Geometry };
+export { IGeometry };

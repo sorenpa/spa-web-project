@@ -1,9 +1,9 @@
-import GeometryManager, {Geometry} from './GeometryManager';
+import GeometryManager, {IGeometry} from './GeometryManager';
 import MaterialManager, {IMaterial, IShaderPair,IShaderProgram} from './MaterialManager';
 
 export {
     GeometryManager,
-    Geometry,
+    IGeometry,
     MaterialManager,
     IMaterial,
     IShaderPair,

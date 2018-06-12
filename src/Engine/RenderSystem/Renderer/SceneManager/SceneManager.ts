@@ -1,6 +1,5 @@
 import IRenderEntity from "../RenderEntity";
 
-
 export default class SceneManager {
     private sceneEntities: Map<number,IRenderEntity>;
 

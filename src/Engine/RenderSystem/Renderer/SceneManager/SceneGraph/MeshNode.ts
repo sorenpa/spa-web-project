@@ -1,17 +1,19 @@
 import { IMaterial } from "../../ResourceManager/";
+import ModelNode from "./ModelNode";
 import SceneNode, { SceneNodeType } from "./SceneNode";
 
- 
 export default class MeshNode extends SceneNode{
+
+    private modelNode: ModelNode;
 
     private vertBufStartIndex: number;
     private vertBufEndIndex: number;
 
     private material: IMaterial;
 
-    constructor(vertStart: number, vertEnd: number, material:IMaterial) {
-        super(SceneNodeType.MESH);
-
+    constructor(entityId:number, parent:SceneNode, children:SceneNode[], modelNode: ModelNode, vertStart: number, vertEnd: number, material:IMaterial) {
+        super(entityId, SceneNodeType.MESH, parent, children);
+        this.modelNode = modelNode;
         this.vertBufStartIndex = vertStart;
         this.vertBufEndIndex = vertEnd;
         this.material = material;
@@ -27,5 +29,9 @@ export default class MeshNode extends SceneNode{
 
     public getMaterial():IMaterial {
         return this.material;
+    }
+
+    public getModelNode(): ModelNode {
+        return this.modelNode;
     }
 }

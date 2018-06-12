@@ -1,7 +1,8 @@
-import Geometry from "./Geometry";
+import IGeometry from "./Geometry";
 
-export default class TestGeometry extends Geometry {
-
+export default class TestGeometry implements IGeometry {
+    public id: number;
+    public vao: WebGLVertexArrayObject|null;
     public vertexSize = 3; // Bad name, but represents the number of floats used per vertex
     public vertexCount = 6*3; // 6 sides, each with 4 points
     public vertices = [
@@ -28,4 +29,8 @@ export default class TestGeometry extends Geometry {
          30,  90,  0,
          67,  60,  0,
          67,  90,  0];
+
+         constructor(id: number, vao:WebGLVertexArrayObject|null) {
+            this.vao = vao;
+        }
  }

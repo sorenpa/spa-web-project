@@ -1,13 +1,9 @@
 import { mat4 } from "gl-matrix";
-
 import RenderContext from "./RenderContext";
-import IRenderEntity from "./RenderEntity";
-import { Geometry, GeometryManager, IMaterial, IShaderPair, MaterialManager } from './ResourceManager';
+import IRenderEntity, { IRenderEntityBase } from "./RenderEntity";
+import { GeometryManager, IShaderPair, MaterialManager } from './ResourceManager';
 import SceneManager from "./SceneManager";
-
 import Utils  from "./Utilities";
-
-
 
 export default class Renderer {
 
@@ -38,32 +34,21 @@ export default class Renderer {
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
         this.SceneManager.getRenderQueue().forEach((entity: IRenderEntity) => {
-            const material: IMaterial | undefined = this.materialManager.getShader(entity.materialId);
-
-            if (material === undefined) {
-                console.log('RenderSystem.render: shaderProgram is undefined');
-                return;
-            }
-
-            const {shaderProgram} = material;
+            const {shaderProgram} = entity.material;
 
             gl.useProgram(shaderProgram.program);
 
 
-            const model: Geometry | undefined = this.renderModelManager.getModel(entity.geometryId)
-            if (model === undefined) {
-                console.log('RenderSystem.render: Model is undefined')
-                return;
-            }
+            const geometry = entity.geometry; 
 
-            gl.bindBuffer(gl.ARRAY_BUFFER, entity.positionBufffer);
+            gl.bindBuffer(gl.ARRAY_BUFFER, entity.positionBuffer);
 
             gl.bufferData(
                 gl.ARRAY_BUFFER,
-                new Float32Array(model.vertices),
+                new Float32Array(geometry.vertices),
                 gl.STATIC_DRAW);
 
-            gl.bindVertexArray(model.vao);
+            gl.bindVertexArray(geometry.vao);
 
             const positionAttributeLocation = shaderProgram.attributeLocations.get('a_VertexPosition');
 
@@ -74,7 +59,7 @@ export default class Renderer {
 
             gl.enableVertexAttribArray(positionAttributeLocation);
 
-            const size = model.vertexSize;          // 2 components per iteration
+            const size = geometry.vertexSize;          // 2 components per iteration
             const type = gl.FLOAT;   // the data is 32bit floats
             const normalize = false; // don't normalize the data
             const stride = 0;        // 0 = move forward size * sizeof(type) each iteration to get the next position
@@ -114,22 +99,26 @@ export default class Renderer {
 
             const primitiveType = gl.TRIANGLES;
             const offset2 = 0;
-            const count = model.vertexCount;
+            const count = geometry.vertexCount;
             gl.drawArrays(primitiveType, offset2, count);
         });
     }
 
-    public registerEntity(entity: IRenderEntity, shaders: IShaderPair) {
+    public registerEntity(entityBase: IRenderEntityBase, geometryId:number, shaders: IShaderPair) {
         const gl = this.renderContext.getContext();
 
-        entity.materialId = this.materialManager.registerShader(gl, shaders);
-
-        // TODO: Register the model and bind VAO, perhaps create a buffer for the entity ?
-        this.renderModelManager.registerModel(gl, entity.geometryId);
-
+        const material = this.materialManager.registerMaterial(gl, shaders);
+        const geometry = this.renderModelManager.registerModel(gl, geometryId);
         const positionBuffer = gl.createBuffer();
-        if (positionBuffer === null) { return; }
-        entity.positionBufffer = positionBuffer;
+
+        if(material === undefined || geometry === undefined || positionBuffer === null) { return };
+
+        const entity: IRenderEntity = {
+            ...entityBase,
+            geometry,
+            material,
+            positionBuffer
+        }
 
         this.SceneManager.registerRenderEntitiy(entity);
     }

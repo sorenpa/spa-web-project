@@ -2,7 +2,7 @@ import * as Rx from 'rxjs';
 
 import { ComponentType, ITransform, IVisible } from '../ComponentSystem';
 import { EntityEventType, IEntityEvent } from '../EventSystem';
-import Renderer, { IRenderEntity } from './Renderer';
+import Renderer, { IRenderEntityBase } from './Renderer';
 
 /*
     This class is meant to handle the rendering of the game
@@ -33,18 +33,15 @@ export default class RenderSystem {
                 const visibleComponent = entity.getCompoenent(ComponentType.VISIBLE) as IVisible;
                 const transformComponent = entity.getCompoenent(ComponentType.TRANSFORM) as ITransform;
 
-                const renderEntity: IRenderEntity = {
+                const entityBase: IRenderEntityBase = {
                     color: visibleComponent.color,
                     direction: transformComponent.direction,
                     entityId: entity.getEntityId(),
-                    geometryId:visibleComponent.modelId,
-                    materialId: 0, // TODO: is this Default ok?
                     position: transformComponent.position,
-                    positionBufffer: null,
                     scale: transformComponent.scale,
                 }
 
-                this.renderer.registerEntity(renderEntity, visibleComponent.shaders);
+                this.renderer.registerEntity(entityBase, visibleComponent.modelId, visibleComponent.shaders);
             }
         }
     }
