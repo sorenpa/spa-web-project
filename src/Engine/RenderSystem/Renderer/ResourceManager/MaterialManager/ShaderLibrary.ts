@@ -1,26 +1,29 @@
 import { fragmentShaderBase, IShader, IShaderProgram, ShaderType, vertexShaderBase } from "./Shaders";
 
+export interface IProgramSource {
+    fragmentSource: IShader,
+    vertexSource: IShader
+}
+
 export class ShaderLibrary{
-    private vertexShaders: Map<number, IShader>
-    private fragmentShaders: Map<number, IShader>
+    private materialSources: Map<number, IProgramSource>
 
     constructor() {
-        this.vertexShaders = new Map<number, IShader>();
-        this.fragmentShaders = new Map<number, IShader>();
+        this.materialSources = new Map<number, IProgramSource>();
 
-        this.vertexShaders.set(vertexShaderBase.shaderId, vertexShaderBase);
-        this.fragmentShaders.set(fragmentShaderBase.shaderId, fragmentShaderBase);
+        this.materialSources.set(1,{fragmentSource: fragmentShaderBase, vertexSource: vertexShaderBase});
     }
 
-    public initShaderProgram(gl: WebGLRenderingContext, vertexShaderId: number, fragmentShaderId: number): IShaderProgram|null {
-        
-        const vertexShaderData: IShader|undefined = this.vertexShaders.get(vertexShaderId);
-        const fragmentShaderData: IShader|undefined = this.fragmentShaders.get(fragmentShaderId);
+    public initShaderProgram(gl: WebGLRenderingContext, materialId:number): IShaderProgram|null {
 
-        if(vertexShaderData === undefined || fragmentShaderData === undefined) { return null; }
+        const materialSources = this. materialSources.get(materialId);
 
-        const vertexShaderSource = this.assembleShader(vertexShaderData);
-        const fragmentShaderSource = this.assembleShader(fragmentShaderData);
+        if(materialSources === undefined){ return null; }
+
+        const { vertexSource, fragmentSource } = materialSources;
+
+        const vertexShaderSource = this.assembleShader(vertexSource);
+        const fragmentShaderSource = this.assembleShader(fragmentSource);
         
         const vertexShader: WebGLShader|null = this.loadShader(gl, ShaderType.VERTEX, vertexShaderSource);
         const fragmentShader: WebGLShader|null = this.loadShader(gl, ShaderType.FRAGMENT, fragmentShaderSource);
@@ -40,21 +43,19 @@ export class ShaderLibrary{
         const uniformLocations: Map<string,WebGLUniformLocation|null> = new Map<string,number>();
 
         // TODO: This means that the same variable name cannot be used on the shaders!
-        vertexShaderData.attributes.concat(fragmentShaderData.attributes).forEach(attribute => {
+        vertexSource.attributes.concat(fragmentSource.attributes).forEach(attribute => {
             attributeLocations.set(attribute.name, gl.getAttribLocation(shaderProgram, attribute.name));
         })
 
-        vertexShaderData.uniforms.concat(fragmentShaderData.uniforms).forEach(uniform => {
+        vertexSource.uniforms.concat(fragmentSource.uniforms).forEach(uniform => {
             uniformLocations.set(uniform.name, gl.getUniformLocation(shaderProgram, uniform.name));
         })
 
         const program: IShaderProgram = {
             attributeLocations,
-            fragmentShaderId,
-            progamId: vertexShaderId+fragmentShaderId,
+            progamId: materialId,
             program: shaderProgram,
             uniformLocations,
-            vertexShaderId,
         }
 
         return program;

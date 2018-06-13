@@ -19,11 +19,7 @@ export interface IVisible extends IComponent {
 
     // Material
     color: vec4,
-    textureId: number,
-    shaders: {
-        vertexShaderId:number,
-        fragmentShaderId:number,
-    }
+    materialId: number
 }
 
 export interface ITransform extends IComponent {

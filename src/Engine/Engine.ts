@@ -41,12 +41,8 @@ function addTestObjects(){
         color: vec4.fromValues(1.0, 0.0, 0.0, 1.0),
         componentId: 1,
         componentType: ComponentType.VISIBLE,
+        materialId: 1,
         modelId: 1,
-        shaders: {
-            fragmentShaderId: 1,
-            vertexShaderId: 1
-        },
-        textureId: 0,
     }
 
     const tc1: ITransform = {
@@ -80,12 +76,8 @@ function addTestObjects(){
         color: vec4.fromValues(1.0, 0.0, 5.0, 1.0),
         componentId: 4,
         componentType: ComponentType.VISIBLE,
+        materialId: 1,
         modelId: 2,
-        shaders: {
-            fragmentShaderId: 1,
-            vertexShaderId: 1
-        },
-        textureId: 0,
     }
 
     const mc2: IMovable = {

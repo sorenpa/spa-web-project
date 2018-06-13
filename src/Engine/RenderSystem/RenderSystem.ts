@@ -51,7 +51,7 @@ export default class RenderSystem {
                             scale: transformComponent.scale,
                         }
                         
-                        this.renderer.registerModelEntity(entityBase, visibleComponent.color, visibleComponent.modelId, visibleComponent.shaders);
+                        this.renderer.registerModelEntity(entityBase, visibleComponent.color, visibleComponent.modelId, visibleComponent.materialId);
                     break;
                 }
             return;

@@ -1,7 +1,7 @@
 import { mat4, vec4 } from "gl-matrix";
 import RenderContext from "./RenderContext";
 import { IModelEntity, IRenderEntityBase } from "./RenderEntity";
-import { GeometryManager, IShaderPair, MaterialManager } from './ResourceManager';
+import { GeometryManager, MaterialManager } from './ResourceManager';
 import SceneManager from "./SceneManager";
 import Utils  from "./Utilities";
 
@@ -103,10 +103,10 @@ export default class Renderer {
         });
     }
 
-    public registerModelEntity(entityBase: IRenderEntityBase, color:vec4, geometryId:number, shaders: IShaderPair) {
+    public registerModelEntity(entityBase: IRenderEntityBase, color:vec4, geometryId:number, materialId:number) {
         const gl = this.renderContext.getContext();
 
-        const material = this.materialManager.registerMaterial(gl, shaders);
+        const material = this.materialManager.registerMaterial(gl, materialId);
         const geometry = this.renderModelManager.registerModel(gl, geometryId);
         const positionBuffer = gl.createBuffer();
 

@@ -1,11 +1,10 @@
 import GeometryManager, {IGeometry} from './GeometryManager';
-import MaterialManager, {IMaterial, IShaderPair,IShaderProgram} from './MaterialManager';
+import MaterialManager, {IMaterial, IShaderProgram} from './MaterialManager';
 
 export {
     GeometryManager,
     IGeometry,
     MaterialManager,
     IMaterial,
-    IShaderPair,
     IShaderProgram
 }
