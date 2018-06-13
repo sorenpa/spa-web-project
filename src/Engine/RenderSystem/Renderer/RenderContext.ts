@@ -17,6 +17,7 @@ export default class RenderContext {
             const ctx: WebGL2RenderingContext | null = this.canvas.getContext("webgl2")
             if (ctx !== null) {
                 this.gl = ctx;
+                this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
             }
             else {
                 alert("Unable to initialize WebGL. Your browser or machine may not support it.");

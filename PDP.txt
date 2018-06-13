@@ -121,14 +121,13 @@ Project Development Plan
                             - Joint
                             - Mesh (Material Resource) - can only live with a model as parent.
                             - Model
-            - RenderQ derived fro mthe SceneGraph
-        2. - Find good final names for:
-                - SceneNode/RenderEntity we have both:
-                    - A sceneNode is basically a tree node, with a type and a reference to the render entity
-                    - The renderQ is then just an ordered list of RenderEntity pointers.
-                - Geometry/Model/Mesh 
-                    - lets just use the same names, seems like thats whats often used
-        3. - Use the new component-bit-key everywhere
+            - RenderQ derived from the SceneGraph
+        2. Figure out the relationship between nodes in the scene graph
+            - How do you populate it? How do you know what the parent node is?
+            - How do you generate MeshNodes?
+            - How do you generate a renderQ from the graph? Or is it done elsewhere ?
+            - Develop render functions for Model/Mesh
+            - Import from blender or likewise
 
     =============================================================================================
     Done Tasks

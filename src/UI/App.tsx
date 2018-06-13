@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './App.css';
 
-import {Canvas } from './components/';
+import {Canvas, Modal } from './components/';
 
 
 interface IState{
@@ -18,19 +18,22 @@ class App extends React.Component<IProps, IState> {
 
   constructor(props:any) {
     super(props);
-    this.state = { width: 0, height: 0, showModal: true };
+    this.state = { width: 0, height: 0, showModal: false };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+
+  public componentWillMount() {
+    this.updateWindowDimensions();
   }
   
   public componentDidMount() {
-    this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
     this.ModalOnClose = this.ModalOnClose.bind(this);
     this.ModalOnAccept = this.ModalOnAccept.bind(this);
     
     this.props.initializeCallback();
   }
-  
+
   public componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
   }
@@ -60,14 +63,14 @@ class App extends React.Component<IProps, IState> {
    
     return (
       <div id='App' className='App'>
-        {/* <Modal 
+        <Modal 
           top={this.state.height/2}
           left={this.state.width/2}
           show={this.state.showModal} 
           onClose={this.ModalOnClose} 
           onAccept={this.ModalOnAccept}>
           <h2>The spag game wants to enter full-screen mode. Do you want to accept ?</h2>
-        //</Modal> */}
+        </Modal>
         
         <Canvas width={width} height={height}/>
       </div>

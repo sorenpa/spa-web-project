@@ -21,6 +21,7 @@ export default function boot(): boolean{
     if(!inputSystem.init()) {initSuccess = false;};
     
     if(initSuccess) {
+        renderSystem.init();
         gameloop$.subscribe(gameLoop);
         addTestObjects()    
     }

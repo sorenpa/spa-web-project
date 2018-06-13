@@ -24,14 +24,13 @@ export default class Renderer {
         return this.renderContext.isInitialized();
     }
 
+
+
     // TODO: Need to split this function
     public render() {
         const gl = this.renderContext.getContext();
 
-        // Clear the canvas
-        gl.clearColor(0, 0, 0, 0);
-        gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+        this.preRender(gl);
 
         this.SceneManager.getRenderQueue().forEach((entity: IModelEntity) => {
             const {shaderProgram} = entity.material;
@@ -122,5 +121,11 @@ export default class Renderer {
         }
 
         this.SceneManager.registerRenderEntitiy(entity);
+    }
+
+    private preRender(gl:WebGL2RenderingContext) {
+        // Clear the canvas
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
     }
 }
