@@ -23,7 +23,6 @@ export default class KeyboardInputService {
         return true;
     }
 
-    // TODO: Acceleration/Deacceleration should be handled in the PhysicsSystem
     public update(movableComponent:IMovable) {
         
         const { deltaVelocity, acceleration } = movableComponent;

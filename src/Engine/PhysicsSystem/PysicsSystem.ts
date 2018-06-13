@@ -24,7 +24,7 @@ export default class PhysicsSystem{
     public update() {
         this.entities.forEach(entity => {
             // Check collissions
-            if(entity.hasComponents([ComponentType.MOVABLE])){
+            if((entity.getComponentKey() & ComponentType.MOVABLE) > 0 ){
                 
                 this.moveEntity(entity);
             }
@@ -32,11 +32,17 @@ export default class PhysicsSystem{
     }
 
     private onEntityEvent(event:IEntityEvent){
-        console.log('PHYSICS: ', event)
-        if(event.entity.hasComponents([ComponentType.TRANSFORM])){
-            console.log('PHYSICS: Adding entity to physics', event.entity);
-            this.entities.push(event.entity);
-        }
+        
+        // Filter the component key
+        const componentKey = event.entity.getComponentKey();
+        const bitMask = ComponentType.TRANSFORM;
+        const filteredKey = componentKey & bitMask;
+
+        // Filter out all entities withough the wanted components.
+        if(filteredKey !== bitMask) {return;}
+        
+        console.log('PHYSICS: Adding entity to physics', event.entity);
+        this.entities.push(event.entity);
     }
 
 

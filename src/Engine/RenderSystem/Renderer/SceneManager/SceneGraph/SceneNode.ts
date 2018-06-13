@@ -34,7 +34,6 @@ export default abstract class SceneNode {
         this.children.forEach(child => {
             child.insertNode(node, parentEntityId);
         });
-        
     }
 
     public addChild(child:SceneNode):void {

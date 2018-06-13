@@ -37,9 +37,14 @@ export default class InputSystem{
     }
 
     private onEntityEvent(event:IEntityEvent){
-        if(event.entity.hasComponents([ComponentType.PLAYER, ComponentType.MOVABLE, ComponentType.TRANSFORM])){
-            this.entities.push(event.entity);
-        }
+        
+        const componentKey: number = event.entity.getComponentKey();
+        const bitMask = ComponentType.PLAYER | ComponentType.MOVABLE | ComponentType.TRANSFORM;
+        const filteredKey = componentKey & bitMask;
+        
+        if(filteredKey !== bitMask) { return; }
+
+        this.entities.push(event.entity);
     }
 
 

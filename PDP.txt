@@ -11,7 +11,7 @@ Project Development Plan
     T0008 Create Animations when moving - Animations should not affect physics?
     T0010 we need to model time somehow other than saying 1 fram = 16ms
     T0011 Implement a logging system for debugging and fault finding. Could prop just be an RxSubject.
-    T0012 We might need a content loader system
+    T0012 We need a content loader system
     T0013 Implement a Camera with Keys/Mouse control
     =============================================================================================
     Current Task

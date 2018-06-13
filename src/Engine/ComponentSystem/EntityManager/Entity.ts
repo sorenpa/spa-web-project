@@ -17,19 +17,6 @@ export default class Entity{
         return this.entityId;
     }
 
-    public hasComponents(componentTypes:ComponentType[]):boolean {
-        let result: boolean = true;
-        componentTypes.forEach(ct => {
-            if(!this.components.has(ct))
-            {   
-                result = false;
-                return
-            }
-        })
-
-        return result;
-    }
-
     public getComponentKey(): number {
         let key: number = 0b0;
 
