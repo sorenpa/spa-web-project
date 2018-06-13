@@ -122,24 +122,13 @@ Project Development Plan
                             - Mesh (Material Resource) - can only live with a model as parent.
                             - Model
             - RenderQ derived fro mthe SceneGraph
-        2. Combine Texture/Shader into Material
-        4. Create Managers:
-            - Scene ->
-                - BaseEntityPool - Raw data objects of stuff
-                - SceneGraph - Relationship of matrices
-                - RenderQ - controls render order
-            - Resource ->
-                - Shader - submgr
-                - Texture - submgr
-                - Model - submgr
-        
-        5. - Find good final names for:
+        2. - Find good final names for:
                 - SceneNode/RenderEntity we have both:
                     - A sceneNode is basically a tree node, with a type and a reference to the render entity
                     - The renderQ is then just an ordered list of RenderEntity pointers.
                 - Geometry/Model/Mesh 
                     - lets just use the same names, seems like thats whats often used
-
+        3. - Use the new component-bit-key everywhere
 
     =============================================================================================
     Done Tasks

@@ -1,10 +1,10 @@
 import { vec3, vec4 } from "gl-matrix";
 
 export enum ComponentType{
-    VISIBLE,
-    TRANSFORM,
-    MOVABLE,
-    PLAYER,
+    VISIBLE     = 0b1,
+    TRANSFORM   = 0b10,
+    MOVABLE     = 0b100,
+    PLAYER      = 0b1000,
 }
 
 export interface IComponent {

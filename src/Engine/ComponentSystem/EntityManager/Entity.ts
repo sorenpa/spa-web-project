@@ -30,6 +30,16 @@ export default class Entity{
         return result;
     }
 
+    public getComponentKey(): number {
+        let key: number = 0b0;
+
+        this.components.forEach(c => {
+            key = key | c.componentType;
+        })
+
+        return key;
+    }
+
     public getCompoenent(type:ComponentType): IComponent|undefined {
         return this.components.get(type);
     }

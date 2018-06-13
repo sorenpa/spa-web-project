@@ -1,3 +1,5 @@
+import { IRenderEntityBase } from "../..";
+
 export enum SceneNodeType {
     UNDEFINED = 0,
     ROOT,
@@ -8,20 +10,20 @@ export enum SceneNodeType {
 }
 
 export default abstract class SceneNode {
-    protected entityId: number;
+    protected entity: IRenderEntityBase;
     protected nodeType: SceneNodeType;
     protected parent: SceneNode|null;
     protected children: SceneNode[] = new Array<SceneNode>();
 
-    protected constructor(entityId:number, nodeType:SceneNodeType=SceneNodeType.UNDEFINED, parent:SceneNode|null=null, children:SceneNode[]=[]){
-        this.entityId = entityId;
+    protected constructor(entity: IRenderEntityBase, nodeType:SceneNodeType=SceneNodeType.UNDEFINED, parent:SceneNode|null=null, children:SceneNode[]=[]){
+        this.entity = entity;
         this.nodeType = nodeType;
         this.children = children;
         this.parent = parent;
     }
 
     public insertNode(node:SceneNode, parentEntityId:number):void {
-        if(parentEntityId === this.entityId){
+        if(parentEntityId === this.entity.entityId){
             this.addChild(node);
             return;
         }
@@ -51,7 +53,7 @@ export default abstract class SceneNode {
         return this.children;
     }
 
-    public getId():number {
-        return this.entityId;
+    public getEntity(): IRenderEntityBase {
+        return this.entity;
     }
 }

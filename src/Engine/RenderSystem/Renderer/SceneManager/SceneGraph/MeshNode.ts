@@ -1,6 +1,8 @@
+import { IRenderEntityBase } from "../../RenderEntity";
 import { IMaterial } from "../../ResourceManager/";
 import ModelNode from "./ModelNode";
 import SceneNode, { SceneNodeType } from "./SceneNode";
+
 
 export default class MeshNode extends SceneNode{
 
@@ -11,8 +13,8 @@ export default class MeshNode extends SceneNode{
 
     private material: IMaterial;
 
-    constructor(entityId:number, parent:SceneNode, children:SceneNode[], modelNode: ModelNode, vertStart: number, vertEnd: number, material:IMaterial) {
-        super(entityId, SceneNodeType.MESH, parent, children);
+    constructor(entity:IRenderEntityBase, parent:SceneNode, children:SceneNode[], modelNode: ModelNode, vertStart: number, vertEnd: number, material:IMaterial) {
+        super(entity, SceneNodeType.MESH, parent, children);
         this.modelNode = modelNode;
         this.vertBufStartIndex = vertStart;
         this.vertBufEndIndex = vertEnd;
@@ -34,4 +36,5 @@ export default class MeshNode extends SceneNode{
     public getModelNode(): ModelNode {
         return this.modelNode;
     }
+    
 }

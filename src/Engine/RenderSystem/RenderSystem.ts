@@ -3,6 +3,7 @@ import * as Rx from 'rxjs';
 import { ComponentType, ITransform, IVisible } from '../ComponentSystem';
 import { EntityEventType, IEntityEvent } from '../EventSystem';
 import Renderer, { IRenderEntityBase } from './Renderer';
+import { RenderEntityType } from './Renderer/RenderEntity';
 
 /*
     This class is meant to handle the rendering of the game
@@ -25,25 +26,37 @@ export default class RenderSystem {
     }
 
     private onEntityEvent(event: IEntityEvent) {
-        const { entity } = event;
-        
-        if (entity.hasComponents([ComponentType.VISIBLE, ComponentType.TRANSFORM])) {
-            if(event.eventType === EntityEventType.CREATE) {
-                
-                const visibleComponent = entity.getCompoenent(ComponentType.VISIBLE) as IVisible;
-                const transformComponent = entity.getCompoenent(ComponentType.TRANSFORM) as ITransform;
+        const { entity, eventType } = event;
 
-                const entityBase: IRenderEntityBase = {
-                    color: visibleComponent.color,
-                    direction: transformComponent.direction,
-                    entityId: entity.getEntityId(),
-                    position: transformComponent.position,
-                    scale: transformComponent.scale,
+        // Filter the component key
+        const componentKey = entity.getComponentKey();
+        const bitMask = 0b11;
+        const filteredKey = componentKey & bitMask;
+
+        // Filter out all entities withough the wanted components.
+        if(filteredKey === 0b0) {return;}
+
+        switch(eventType) {
+            case EntityEventType.CREATE:
+                switch(filteredKey) {
+                    case 0b11: // Components: Transform, Visible -> ModelNode
+                        const transformComponent = entity.getCompoenent(ComponentType.TRANSFORM) as ITransform;
+                        const visibleComponent = entity.getCompoenent(ComponentType.VISIBLE) as IVisible;
+
+                        const entityBase: IRenderEntityBase = {
+                            direction: transformComponent.direction,
+                            entityId: entity.getEntityId(),
+                            position: transformComponent.position,
+                            renderType: RenderEntityType.MODEL,
+                            scale: transformComponent.scale,
+                        }
+                        
+                        this.renderer.registerModelEntity(entityBase, visibleComponent.color, visibleComponent.modelId, visibleComponent.shaders);
+                    break;
                 }
-
-                this.renderer.registerEntity(entityBase, visibleComponent.modelId, visibleComponent.shaders);
-            }
+            return;
+            default:
+            return;
         }
     }
-
 }
