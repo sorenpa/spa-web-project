@@ -1,29 +1,14 @@
 {
-  "name": "spag",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "gl-matrix": "^2.6.1",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "react-scripts-ts": "2.16.0",
-    "redux": "^4.0.0",
-    "rxjs": "^6.1.0",
-    "yarn": "^1.6.0"
-  },
-  "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
-  },
-  "devDependencies": {
-    "@types/gl-matrix": "^2.4.0",
-    "@types/jest": "^22.2.3",
-    "@types/node": "^10.0.8",
-    "@types/react": "^16.3.14",
-    "@types/react-dom": "^16.0.5",
-    "@types/webgl2": "0.0.4",
-    "typescript": "^2.8.3"
-  }
+	"private": true,
+	"scripts": {
+		"start": "lerna bootstrap && lerna run build && lerna run start:react"
+	},
+	"devDependencies": {
+		"lerna": "^2.11.0",
+		"tslint": "^5.9.1",
+		"typescript": "^2.7.2"
+	},
+	"workspaces": [
+		"packages/*"
+	  ]
 }

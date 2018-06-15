@@ -1,0 +1,24 @@
+{
+  "name": "spage-render-system",
+  "version": "0.1.0",
+  "description": "SPA Game Engine - renderer",
+  "author": "SPA",
+  "license": "ISC",
+  "main": "./lib/index.js",
+  "types": "index.d.ts",
+  "private":true,
+  "scripts": {
+    "build" : "tsc -p tsconfig.build.json",
+    "prepublish" : "yarn run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "spage-shared-interfaces": "^0.1.0",
+    "spage-event-system": "^0.1.0",
+    "rxjs": "^6.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^2.8.3"
+  }
+
+}

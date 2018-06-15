@@ -18,13 +18,9 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true
   },
-  "include": [
-    "./packages/**/index.ts",
-    "./packages/**/src/**/*.ts"
-  ],
   "exclude": [
     "node_modules",
-    "build",
+    "lib",
     "scripts",
     "acceptance-tests",
     "webpack",
