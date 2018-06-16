@@ -1,0 +1,13 @@
+Files:
+- Packages.svg : Overview of the project top lvl
+- [package-name].svg : Overview of the package
+
+color codes:
+spage-engine-core: #37abc8
+spage-event-system: #8787de
+spage-render-system: #87decd
+spage-physics-system: #ff9955
+spage-react-frontend: #5599ff
+spage-input-system: #d3bc5f
+spage-shared-interfaces: undefined
+

@@ -1,6 +1,8 @@
 export interface IKeyboardInputData {
-    up: boolean,
-    down: boolean,
-    left: boolean,
-    right:boolean
+    w: boolean,
+    s: boolean,
+    a: boolean,
+    d:boolean,
+    q: boolean,
+    e: boolean,
 }

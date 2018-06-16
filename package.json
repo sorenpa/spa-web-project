@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"scripts": {
-		"start": "lerna bootstrap && lerna run build && lerna run start:react"
+		"start": "lerna bootstrap && lerna run build --parallel --stream && lerna run start:react"
 	},
 	"devDependencies": {
 		"lerna": "^2.11.0",

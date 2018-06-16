@@ -1,0 +1,226 @@
+=================================================================================================
+Project Development Plan
+=================================================================================================
+
+    =============================================================================================
+    Tasks
+    =============================================================================================
+
+    T0004 Create a factory for entities/ComponentSystem
+    T0007 Create better physics with acceleration/collision.
+    T0008 Create Animations when moving - Animations should not affect physics?
+    T0010 we need to model time somehow other than saying 1 fram = 16ms
+    T0011 Implement a logging system for debugging and fault finding. Could prop just be an RxSubject.
+    T0012 We need a content loader system
+    T0013 Implement a Camera with Keys/Mouse control
+    =============================================================================================
+    Current Task
+    =============================================================================================
+
+
+    T0006 Create a basic 3D RenderSystem
+        - Design a structure for setting up GL environment, Rendering multiple game objects with different models and materials
+        - Perhaps a more flexible way to generate shaders. Something that sets uniforms, attribs and varyings -> Info object
+
+        Design principles:
+        ------------------
+        - 100% decoupling from the ECS (Entity Component System) part of the engine.
+            - We need 1 simple interface thats basically CRUD for Entity->RenderItem + render frame
+            - We need to divide the render system into clear and selfcontained parts.
+                - render entity manager
+                    - Needs to register/deregister RenderEntities (A representation of an ECS render entity with relevant components)
+                    - Needs to be able to sort the entities by ShaderProgram -> Texture -> Model
+                - shader manager
+                    - need to register/deregister active shaders.
+                    - need to load/compile/link shaders into programs. 
+                - texture manager
+                    - Need to register/deregister active textures
+                    - Need to load textures from a file
+                - model manager
+                    - Need to register/deregister active models
+                    - We need to load models from a .dea files (COLLADA file format)
+                - [RENDERDEVICE] Some class that controls the rendering of the managed items/resources
+                - [SHADOW SYSTEM] Some functionality that controls shadows
+
+        we have perhaps
+        No we create a render queue that is 
+
+        So we have a SceneManager with:
+            - Map<Number,IRenderEntity> :: 
+                Stores the raw data
+            - SceneGraph :: 
+                Specifying the geometrical/Spatial heirachy for transform matrices Culling etc
+            - RenderQueue :: 
+                ordered/sorted list of IRenderEntity IDs that specify the render order. 
+                generated EVERY frame, processed, and discarded. 
+                Its sorted by a bitKey typically by Shader -> Texture -> (VBO -> Translucent -> Depth)?
+
+        *** Looks like the Resource and SceneNode are both basically just "pointer objects". They store references to
+        data located alsewhere. I.E a RenderEntityPool
+
+        - in H3D they keep a "RenderfunctionRegistry". Basically RenderEntity type (Mesh, Light, Camera ...) -> how to render it.
+            - ResourceManager
+                - Resource (egResource.h -> ResourceTypes)
+                    SceneGraph,
+                        - Not too interesting
+                    Geometry,
+                        - Vertex data, indexbuf, posVbuf, tanVbuf, staticBuf, AABB
+                        - Joints List <------- ??? hmm
+                        - Morph targets
+                    Animation,
+                    Material,
+                        - ShaderResource
+                        - TextureResource
+                    Code,
+                        - used for shader code,
+                    Shader, 
+                        codeRes list, blend, test, cull, shadercombination, shader context, 
+                    Texture,
+                        Just texture image data, and functions to load
+                    ParticleEffect,
+                    Pipeline,
+                    ComputeBuffer
+
+            Scenenode
+                - base
+                    - flags/type enums etc.
+                    - parent/child tree functionality
+                    - transformations
+                - modelNode
+                    - Geometry resources
+                    - MeshNode list
+                    - jointNode list
+                    - Animation stages
+                - lightNode
+                - GroupNode,
+                    - basically a simple grouping, not important right now
+                - MeshNode (Animateables.h implements IAnimatableNode),
+                    - Material resource,
+                    - vertRStart, vertRend, batchStart, batchEnd
+                    - BB
+                    - Points back to Modelnode.
+                - JointNode,
+                    - Points back to ModelNode
+                - LightNode,
+                    - light stuff
+                - CameraNode,
+                    - Camera stuff
+                - EmitterNode,
+                - ComputeNode
+
+        // TODOs
+        1. Create a structure:
+            - BaseEntityPool
+            - SceneGraph:
+                - SceneNodes
+                    - Light
+                    - Camera
+                    - Model (Geometry resource)
+                        - Children
+                            - Light
+                            - Joint
+                            - Mesh (Material Resource) - can only live with a model as parent.
+                            - Model
+            - RenderQ derived from the SceneGraph
+        2. Figure out the relationship between nodes in the scene graph
+            - How do you populate it? How do you know what the parent node is?
+            - How do you generate MeshNodes?
+            - How do you generate a renderQ from the graph? Or is it done elsewhere ?
+            - Develop render functions for Model/Mesh
+            - Import from blender or likewise
+
+    =============================================================================================
+    Done Tasks
+    =============================================================================================
+    T0001 Implement Redux (RETRACTED)
+    T0003 Design a structure for the game
+    T0002 Establish communication Between 2D and 3D UI parts 
+    T0009 Create The event system
+    T0005 Fix imports for systems. No deep imports.
+
+
+
+=================================================================================================
+Task Log
+=================================================================================================
+
+    =============================================================================================
+    T0005 Fix imports for systems. No deep imports. Everything should be ' import X {Y,Z, ...} from 'Path to System'
+    =============================================================================================
+    Done
+
+    =============================================================================================
+    T0009 Create The event system
+    =============================================================================================
+    The Event system have not been created as such, but a .ts file containing the Rx.Observalbes have been created
+    and the components can import them. More structure will be added as required throughout the projct.
+
+    =============================================================================================
+    T0002 Establish communication Between 2D and 3D UI parts 
+    =============================================================================================
+    It seems relatively easy and actual implementation can be postponed until later.
+
+    I did 2 different approaches to this:
+    1) Created an Rx.Observable fromevent on the element catched by ID. This is very easily done. However you get a mouse event from it
+    and that only contains screen coordinates so its hard to distinguish what UI element was clicked. Advantage is you can do it about
+    anywhere in the code.
+
+    2) You can define and export a Rx.Subject in the EventSystem (outside the class). Then you can import it in the root node of React and
+    pass it as props down the tree to React.Compoents that need to interact with the Engine. You will need to create some UIEvent interfaces
+    and manually link what button was pressed. - NB: Maybe you can simply import the RX stream fro mthe EventSystem
+
+    3) Alternatively we could investigate if Redux is a good way to do stuff. Some Redux/Rxjs hybrid.
+
+    conclussion is: Its possible and we are not shooting ourselves in the foot with the design.
+
+    =============================================================================================
+    T0003 Design a structure for the game
+    =============================================================================================
+    File structure
+    - A1 Engine                     //Engine for rendering 3D on the HTML5 canvas
+        - ComponentSystem
+        - RenderSystem
+            - AnimationManager
+            - RenderModelManager
+            - SceneGraph
+        - PhysiscsSystem
+        - GameSystem
+        - SoundSystem
+        - AISystem
+        - InputSystem
+        - Math
+        - EventSystem             
+        - Networking               
+    - A2 - UI                       //React code for the 2D UI overlay
+
+
+    Adopted a ECS based game engine system isntead of object heirachies.
+
+    The game state is a collection of entities. The entity class is basically just and entityId, with a hashMap of componentType => I[ComponentType].
+    entityId = 1
+    components = 
+    {
+        VISIBLE => instance of IVisible
+        MOVABLE => instance of IMovable
+    } 
+
+    The systems then manages an internal collection of the subset of entities that is relevant to that system. These are added/removed when stuff is added/removed
+    through the entity manager.
+
+    The SceneGraph is basically just the relationship between Entities that appear in the game-world.
+
+        World -> Character -> Sword -> Fire
+                        -> Shield
+
+    When the world moves, the character moves with it, when the character moves, the sword and shield moves 
+    with it. In essence each node/GObj in the graph only needs to place it self in relation to the parent.
+
+        worldMatrix = greatGrandParent * grandParent * parent * self(localMatrix)
+
+
+
+
+
+
+
+

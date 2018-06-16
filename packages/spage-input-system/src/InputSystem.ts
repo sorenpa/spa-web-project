@@ -1,5 +1,5 @@
 import { entity$, IEntityEvent, keyboardInput$ } from "spage-event-system";
-import { ComponentType, IEntity, IMovable } from 'spage-shared-interfaces';
+import { ComponentType, IEntity, IMovable, ITransform } from 'spage-shared-interfaces';
 
 import KeyboardInputService from './KeyboardInputService'
 
@@ -26,8 +26,8 @@ export default class InputSystem{
     public update() {
         this.entities.forEach(entity => {
             const movableComponent: IMovable = entity.getCompoenent(ComponentType.MOVABLE) as IMovable;
-           
-            this.keyboardInputService.update(movableComponent)
+            const transformComponent: ITransform = entity.getCompoenent(ComponentType.TRANSFORM) as ITransform;
+            this.keyboardInputService.update( movableComponent, transformComponent);
            
         });
     }
