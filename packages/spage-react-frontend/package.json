@@ -1,6 +1,6 @@
 {
   "name": "spage-react-frontend",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "private": true,
   "dependencies": {
     "gl-matrix": "^2.6.1",
@@ -9,7 +9,7 @@
     "react-scripts-ts": "2.16.0",
     "redux": "^4.0.0",
     "rxjs": "^6.1.0",
-    "spage-engine-core": "^0.1.4",
+    "spage-engine-core": "^0.1.6",
     "yarn": "^1.6.0"
   },
   "scripts": {

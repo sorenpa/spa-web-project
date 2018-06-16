@@ -1,6 +1,6 @@
 {
   "name": "spage-input-system",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "SPA Game Engine - input system",
   "author": "SPA",
   "license": "ISC",
@@ -13,8 +13,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "spage-event-system": "^0.1.4",
-    "spage-shared-interfaces": "^0.1.4"
+    "spage-event-system": "^0.1.6",
+    "spage-shared-interfaces": "^0.1.6"
   },
   "devDependencies": {
     "typescript": "^2.8.3"
