@@ -1,15 +1,15 @@
 {
   "name": "spage-shared-interfaces",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "SPA Game Engine - interfaces",
   "author": "SPA",
   "license": "ISC",
   "main": "./lib/index.js",
   "types": "index.d.ts",
-  "private":true,
+  "private": true,
   "scripts": {
-    "build" : "tsc -p tsconfig.build.json",
-    "prepublish" : "yarn run build",
+    "build": "tsc -p tsconfig.build.json",
+    "prepublish": "yarn run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -19,5 +19,4 @@
     "@types/gl-matrix": "^2.4.0",
     "typescript": "^2.8.3"
   }
-
 }
