@@ -61,34 +61,34 @@ export default class KeyboardInputService {
         if (e) {
             direction[1] += 1;
         }
-}
-
-    private onKeyboardInputEvent(event: Event) {
-    const keyEvent: KeyboardEvent = event as KeyboardEvent;
-
-    switch (keyEvent.key) {
-        case "w":
-            this.inputs.w = keyEvent.type === 'keydown';
-            break;
-        case "a":
-            this.inputs.a = keyEvent.type === 'keydown';
-            break;
-        case "s":
-            this.inputs.s = keyEvent.type === 'keydown';
-            break;
-        case "d":
-            this.inputs.d = keyEvent.type === 'keydown';
-            break;
-        case "q":
-            this.inputs.q = keyEvent.type === 'keydown';
-            break;
-        case "e":
-            this.inputs.e = keyEvent.type === 'keydown';
-            break;
-        default:
-            break;
     }
 
-}
+    private onKeyboardInputEvent(event: Event) {
+        const keyEvent: KeyboardEvent = event as KeyboardEvent;
+
+        switch (keyEvent.key) {
+            case "w":
+                this.inputs.w = keyEvent.type === 'keydown';
+                break;
+            case "a":
+                this.inputs.a = keyEvent.type === 'keydown';
+                break;
+            case "s":
+                this.inputs.s = keyEvent.type === 'keydown';
+                break;
+            case "d":
+                this.inputs.d = keyEvent.type === 'keydown';
+                break;
+            case "q":
+                this.inputs.q = keyEvent.type === 'keydown';
+                break;
+            case "e":
+                this.inputs.e = keyEvent.type === 'keydown';
+                break;
+            default:
+                break;
+        }
+
+    }
 
 }
