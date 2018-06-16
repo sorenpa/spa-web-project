@@ -1,6 +1,6 @@
 {
   "name": "spage-event-system",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "SPA Game Engine - event system",
   "author": "SPA",
   "license": "ISC",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "rxjs": "^6.1.0",
-    "spage-shared-interfaces": "^0.1.7"
+    "spage-shared-interfaces": "^0.1.8"
   },
   "devDependencies": {
     "typescript": "^2.8.3"
