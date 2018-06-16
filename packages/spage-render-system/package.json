@@ -1,6 +1,6 @@
 {
   "name": "spage-render-system",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "SPA Game Engine - renderer",
   "author": "SPA",
   "license": "ISC",
@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "rxjs": "^6.1.0",
-    "spage-event-system": "^0.1.2",
-    "spage-shared-interfaces": "^0.1.2"
+    "spage-event-system": "^0.1.3",
+    "spage-shared-interfaces": "^0.1.3"
   },
   "devDependencies": {
     "typescript": "^2.8.3"

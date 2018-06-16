@@ -1,6 +1,6 @@
 {
   "name": "spage-engine-core",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "SPA Game Engine - core",
   "author": "SPA",
   "license": "ISC",
@@ -15,11 +15,11 @@
   "dependencies": {
     "gl-matrix": "^2.6.1",
     "rxjs": "^6.1.0",
-    "spage-event-system": "^0.1.2",
-    "spage-input-system": "^0.1.2",
-    "spage-physics-system": "^0.1.2",
-    "spage-render-system": "^0.1.2",
-    "spage-shared-interfaces": "^0.1.2"
+    "spage-event-system": "^0.1.3",
+    "spage-input-system": "^0.1.3",
+    "spage-physics-system": "^0.1.3",
+    "spage-render-system": "^0.1.3",
+    "spage-shared-interfaces": "^0.1.3"
   },
   "devDependencies": {
     "@types/gl-matrix": "^2.4.0",
