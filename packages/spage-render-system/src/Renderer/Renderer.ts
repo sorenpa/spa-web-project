@@ -1,9 +1,11 @@
 import { mat4, vec4 } from "gl-matrix";
+
+import { IModelEntity, IRenderEntityBase } from "../RenderEntity";
 import RenderContext from "./RenderContext";
-import { IModelEntity, IRenderEntityBase } from "./RenderEntity";
-import { GeometryManager, MaterialManager } from './ResourceManager';
-import SceneManager from "./SceneManager";
-import Utils  from "./Utilities";
+
+import { GeometryManager, MaterialManager } from '../ResourceManager';
+import SceneManager from "../SceneManager";
+import Utils  from "../Utilities";
 
 export default class Renderer {
 
@@ -19,8 +21,8 @@ export default class Renderer {
         this.SceneManager = new SceneManager();
     }
 
-    public init() {
-        this.renderContext.init();
+    public init(canvasElement:HTMLCanvasElement) {
+        this.renderContext.init(canvasElement);
         return this.renderContext.isInitialized();
     }
 
@@ -107,7 +109,7 @@ export default class Renderer {
         const gl = this.renderContext.getContext();
 
         const material = this.materialManager.registerMaterial(gl, materialId);
-        const geometry = this.renderModelManager.registerModel(gl, geometryId);
+        const geometry = this.renderModelManager.registerGeometry(gl, geometryId);
         const positionBuffer = gl.createBuffer();
 
         if(material === undefined || geometry === undefined || positionBuffer === null) { return };

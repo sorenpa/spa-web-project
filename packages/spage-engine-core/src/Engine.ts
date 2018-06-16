@@ -13,10 +13,10 @@ const renderSystem: RenderSystem = new RenderSystem();
 const entityManager: EntityManager = new EntityManager();
 const physicsSystem: PhysicsSystem = new PhysicsSystem();
 
-export default function boot(): boolean{
+export default function boot(canvasElement:HTMLCanvasElement): boolean{
     let initSuccess = true;
 
-    if(!renderSystem.init()) { initSuccess = false;};
+    if(!renderSystem.init(canvasElement)) { initSuccess = false;};
     if(!physicsSystem.init()) {initSuccess = false;};
     if(!inputSystem.init()) {initSuccess = false;};
     

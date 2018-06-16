@@ -9,7 +9,12 @@ import App from './UI';
 // Boot the game engine once the DOM has been generated.
 // TODO Possibly transform into an observable passed to App/Engine
 function initializeCallBack(){
-  EngineBootFunction();
+  const canvasElement: HTMLCanvasElement|null = document.getElementById('glCanvas') as HTMLCanvasElement
+  if(canvasElement === null) {
+    alert("Cannot find DOM canvas element");
+    return;
+  }
+  EngineBootFunction(canvasElement);
 }
 
 ReactDOM.render(

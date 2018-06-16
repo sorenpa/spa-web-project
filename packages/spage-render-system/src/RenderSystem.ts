@@ -2,7 +2,7 @@ import { entity$, EntityEventType, IEntityEvent } from 'spage-event-system';
 import { ComponentType, ITransform, IVisible } from 'spage-shared-interfaces';
 
 import { IRenderEntityBase, RenderEntityType } from './RenderEntity';
-import Renderer from './Renderer';
+import Renderer from './Renderer/Renderer';
 
 /*
     This class is meant to handle the rendering of the game
@@ -16,8 +16,8 @@ export default class RenderSystem {
         this.renderer = new Renderer();
     }
 
-    public init(): boolean {
-        return this.renderer.init();
+    public init(canvasElement:HTMLCanvasElement): boolean {
+        return this.renderer.init(canvasElement);
     }
 
     public render() {

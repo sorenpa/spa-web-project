@@ -1,12 +1,14 @@
 {
 	"private": true,
 	"scripts": {
-		"start": "lerna bootstrap && lerna run build --parallel --stream && lerna run start:react"
+		"clean": "lerna clean & rimraf packages/*/lib", 
+		"start": "lerna bootstrap && lerna run build --parallel --stream && lerna run start"
 	},
 	"devDependencies": {
 		"lerna": "^2.11.0",
 		"tslint": "^5.9.1",
-		"typescript": "^2.7.2"
+		"typescript": "^2.7.2",
+		"rimraf": "^2.6.2"
 	},
 	"workspaces": [
 		"packages/*"

@@ -7,7 +7,7 @@ export default class RenderModelService{
         this.Models = new Map<number,IGeometry>();
     }
 
-    public registerModel(gl:WebGL2RenderingContext, modelId:number): IGeometry|undefined {
+    public registerGeometry(gl:WebGL2RenderingContext, modelId:number): IGeometry|undefined {
 
         if(this.Models.has(modelId)) { return this.getModel(modelId); }
 
