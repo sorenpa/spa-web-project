@@ -108,6 +108,66 @@ Project Development Plan
                 - EmitterNode,
                 - ComputeNode
 
+Add resource:
+------------------------------------------------------
+h3dAddResource(int type, const char *name, int flags): ResHanlde
+	-> ResourceManager.addResource( type, string, flags, true)
+	
+This means that a resource in this case is pre-registered!
+Modules
+	->registerResType( ResourceTypes::Material, "Material", 0x0, 0x0, MaterialResource::factoryFunc );
+		// factoryFunc is simply just pointing to the MaterialResource class constructor.
+		
+The ResourceManager holds a Map<int, ResRegEntry>
+
+the RegEntry looks as follows:
+struct ResourceRegEntry
+{
+	std::string                typeString;
+	ResTypeInitializationFunc  initializationFunc;  // Called when type is registered
+	ResTypeReleaseFunc         releaseFunc;  // Called when type is unregistered
+	ResTypeFactoryFunc         factoryFunc;  // Factory to create resource object
+};
+
+So basically pointers to Register/Un-Register and create functions.
+
+It also holds a list of the actual Resourcee objects
+
+When a resource is added its added to the Resource list (if it passes some validation checks - that it is of a registered type)
+
+---- Where is the MEAT ? The thing that makes one material resource differ from another?
+	-> its the "name". The name is a path to a disk file containing the data.
+
+So my models and materials are registered/loaded into the system from outside the renderer.
+
+
+AddNodes(NodeHandle parent, ResHandle sceneGraphRes)
+------------------------------------------------------
+A SGR is basically alot of wrapper functionality for a sub tree of SceneNodes
+
+
+gl buffers should be managed by the RenderContext. This is done when the geometry resource is loaded.
+
+------------------------------------------------------
+So all in all theres a resource system, where you register a resource, and from there it can be loaded.
+
+This is what we have in the RDI (RenderContext):
+	RDIVertexLayout                    _vertexLayouts[MaxNumVertexLayouts];
+	RDIObjects< RDIBufferGL4 >         _buffers;
+	RDIObjects< RDITextureGL4 >        _textures;
+	RDIObjects< RDITextureBufferGL4 >  _textureBuffs;
+	RDIObjects< RDIShaderGL4 >         _shaders;
+	RDIObjects< RDIRenderBufferGL4 >   _rendBufs;
+	RDIObjects< RDIGeometryInfoGL4 >   _vaos;
+	std::vector< RDIShaderStorageGL4 > _storageBufs;
+
+    Resources needs to go outside the renderer. Prop to the Engine Core lvl.
+    - We need to create the resource system. Or at least a scaleable version
+    - We need to generate the GL setup in RenderContext.
+    - Would be nice to load the resources from a file
+    - We need to be able to draw a model that is read and put into the system.
+        basically a ScneGraphResource
+
         // TODOs
         1. Create a structure:
             - BaseEntityPool
