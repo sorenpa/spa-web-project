@@ -3,6 +3,8 @@ import { ComponentType, ITransform, IVisible } from 'spage-shared-interfaces';
 
 import { IRenderEntityBase, RenderEntityType } from './RenderEntity';
 import Renderer from './Renderer/Renderer';
+import ResourceManager from './ResourceManager/ResourceManager';
+import { ResourceType } from './ResourceManager/Resources';
 
 /*
     This class is meant to handle the rendering of the game
@@ -10,10 +12,14 @@ import Renderer from './Renderer/Renderer';
 export default class RenderSystem {
 
     private renderer: Renderer;
+    private resourceManager: ResourceManager;
 
     constructor() {
         entity$.subscribe(this.onEntityEvent.bind(this));
         this.renderer = new Renderer();
+        this.resourceManager = new ResourceManager();
+
+        this.resourceManager.addResource(ResourceType.Material, "Path/To/Resource.xml", 0, false);
     }
 
     public init(canvasElement:HTMLCanvasElement): boolean {
