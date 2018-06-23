@@ -6,9 +6,10 @@ const LOOP_INTERVAL = 16;
 
 // Streams
 export const gameloop$ : Observable<number> = interval(LOOP_INTERVAL);
-
 export const entity$ : Subject<IEntityEvent> = new Subject<IEntityEvent>()
 
+// Input
 export const keydown$ : Observable<Event> = fromEvent(document,'keydown');
 export const keyup$ : Observable<Event> = fromEvent(document,'keyup');
 export const keyboardInput$ : Observable<Event> = merge(keydown$, keyup$);
+

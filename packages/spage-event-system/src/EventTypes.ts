@@ -16,3 +16,4 @@ export interface IEntityEvent
 export interface IUserInputEvent{
     event: KeyboardEvent
 }
+

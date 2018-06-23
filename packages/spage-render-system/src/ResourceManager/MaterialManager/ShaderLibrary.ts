@@ -118,8 +118,6 @@ export class ShaderLibrary{
         // Add main shader code
         result += shader.source
 
-        console.log(result);
-
         return result;
     }
 

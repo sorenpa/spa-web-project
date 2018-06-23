@@ -8,10 +8,11 @@ declare module "spage-event-system" {
     // Streams
     export const gameloop$: Observable<number>;
     export const entity$: Subject<IEntityEvent>;
+    // Input
     export const keydown$: Observable<Event>;
     export const keyup$: Observable<Event>;
     export const keyboardInput$: Observable<Event>;
-
+ 
     export enum EntityEventType {
         CREATE,
         UPDATE,
@@ -26,7 +27,6 @@ declare module "spage-event-system" {
     export interface IUserInputEvent {
         event: KeyboardEvent
     }
+
 }
-
-
 

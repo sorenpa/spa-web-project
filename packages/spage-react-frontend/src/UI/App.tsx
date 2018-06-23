@@ -43,12 +43,10 @@ class App extends React.Component<IProps, IState> {
   }
 
   public ModalOnClose(){
-    console.log('Close');
     this.setState({showModal: false});
   }
 
   public ModalOnAccept(){
-    console.log('Accept');
     this.setState({showModal: false});
     const element: HTMLElement|null = document.getElementById('App');
     

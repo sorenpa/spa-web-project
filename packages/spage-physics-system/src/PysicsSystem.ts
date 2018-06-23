@@ -38,7 +38,6 @@ export default class PhysicsSystem{
         // Filter out all entities withough the wanted components.
         if(filteredKey !== bitMask) {return;}
         
-        console.log('PHYSICS: Adding entity to physics', event.entity);
         this.entities.push(event.entity);
     }
 

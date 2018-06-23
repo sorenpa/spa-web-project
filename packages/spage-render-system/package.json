@@ -15,7 +15,8 @@
   "dependencies": {
     "rxjs": "^6.1.0",
     "spage-event-system": "^0.1.8",
-    "spage-shared-interfaces": "^0.1.8"
+    "spage-shared-interfaces": "^0.1.8",
+    "spage-logging-system": "^0.1.8"
   },
   "devDependencies": {
     "typescript": "^2.8.3"

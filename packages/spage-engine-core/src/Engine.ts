@@ -13,28 +13,28 @@ const renderSystem: RenderSystem = new RenderSystem();
 const entityManager: EntityManager = new EntityManager();
 const physicsSystem: PhysicsSystem = new PhysicsSystem();
 
-export default function boot(canvasElement:HTMLCanvasElement): boolean{
+export default function boot(canvasElement: HTMLCanvasElement): boolean {
     let initSuccess = true;
 
-    if(!renderSystem.init(canvasElement)) { initSuccess = false;};
-    if(!physicsSystem.init()) {initSuccess = false;};
-    if(!inputSystem.init()) {initSuccess = false;};
-    
-    if(initSuccess) {
+    if (!renderSystem.init(canvasElement)) { initSuccess = false; };
+    if (!physicsSystem.init()) { initSuccess = false; };
+    if (!inputSystem.init()) { initSuccess = false; };
+
+    if (initSuccess) {
         gameloop$.subscribe(gameLoop);
-        addTestObjects()    
+        addTestObjects();
     }
 
-    return true;
+    return initSuccess;
 }
 
-function gameLoop(frame: number){
+function gameLoop(frame: number) {
     inputSystem.update();
     physicsSystem.update();
     renderSystem.render();
 }
 
-function addTestObjects(){
+function addTestObjects() {
 
     const vc1: IVisible = {
         color: vec4.fromValues(1.0, 0.0, 0.0, 1.0),
@@ -48,7 +48,7 @@ function addTestObjects(){
         componentId: 2,
         componentType: ComponentType.TRANSFORM,
         direction: vec3.fromValues(50.0, 23.0, 10.0),
-        position: vec3.fromValues(300,200,0),
+        position: vec3.fromValues(300, 200, 0),
         scale: vec3.fromValues(50.0, 50.0, 50.0),
     }
 
@@ -67,8 +67,8 @@ function addTestObjects(){
         playerName: 'Huggo'
     }
 
-    const components1: IComponent[] = [vc1,tc1,mc1, playerComp];
-    
+    const components1: IComponent[] = [vc1, tc1, mc1, playerComp];
+
     const entity1: Entity = new Entity(1, components1);
 
     const vc2: IVisible = {
@@ -96,8 +96,8 @@ function addTestObjects(){
         scale: vec3.fromValues(1.0, 1.0, 1.0),
     }
 
-    const components2: IComponent[] = [vc2,tc2,mc2];
-    
+    const components2: IComponent[] = [vc2, tc2, mc2];
+
     const entity2: Entity = new Entity(2, components2);
 
     entityManager.AddEntity(entity1);

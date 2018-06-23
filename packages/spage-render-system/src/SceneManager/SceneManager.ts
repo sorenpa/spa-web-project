@@ -1,5 +1,8 @@
+import { log, LogEntryModule, LogEntryType } from "spage-logging-system";
+
 import { IModelEntity, IRenderEntityBase, RenderEntityType,  } from "../RenderEntity";
 import { ModelNode, RootNode, SceneNode,  } from "./SceneGraph";
+
 
 export default class SceneManager {
     private sceneEntities: Map<number,IRenderEntityBase>;
@@ -26,7 +29,7 @@ export default class SceneManager {
 
         if(node !== null) {
             this.sceneGraph.insertNode(node, -1 );
-            console.log(this.sceneGraph);
+            log(LogEntryType.INFO, LogEntryModule.RENDERER, this.sceneGraph);
         }
         
 

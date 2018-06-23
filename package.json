@@ -2,12 +2,13 @@
 	"private": true,
 	"scripts": {
 		"clean": "lerna clean & rimraf packages/*/lib",
-		"build": "lerna bootstrap && lerna run build --since master --parallel --watch --stream",
+		"build": "lerna bootstrap && lerna run build --parallel --watch --stream",
 		"start": "concurrently --kill-others \"lerna run start --stream\" \"yarn watch\" ",
-		"watch": "concurrently --kill-others \"yarn run watch:core\" \"yarn run watch:event\" \"yarn run watch:input\" \"yarn run watch:physics\" \"yarn run watch:frontend\" \"yarn run watch:renderer\" ",
+		"watch": "concurrently --kill-others \"yarn run watch:core\" \"yarn run watch:event\" \"yarn run watch:input\" \"yarn run watch:logging\" \"yarn run watch:physics\" \"yarn run watch:frontend\" \"yarn run watch:renderer\"",
 		"watch:core": "onchange \"packages/spage-engine-core/src/**/*.ts\" -- lerna run build --scope spage-engine-core",
 		"watch:event": "onchange \"packages/spage-event-system/src/**/*.ts\" -- lerna run build --scope spage-event-system",
 		"watch:input": "onchange \"packages/spage-input-system/src/**/*.ts\" -- lerna run build --scope spage-input-system",
+		"watch:logging": "onchange \"packages/spage-logging-system/src/**/*.ts\" -- lerna run build --scope spage-logging-system",
 		"watch:physics": "onchange \"packages/spage-physics-system/src/**/*.ts\" -- lerna run build --scope spage-physics-system",
 		"watch:frontend": "onchange \"packages/spage-react-frontend/src/**/*.ts\" -- lerna run build --scope spage-react-frontend",
 		"watch:renderer": "onchange \"packages/spage-render-system/src/**/*.ts\" -- lerna run build --scope spage-render-system"

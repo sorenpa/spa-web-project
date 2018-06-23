@@ -9,7 +9,6 @@ export default class EntityManager{
     private entity$: Subject<IEntityEvent>
 
     constructor(){
-        console.log("entity manager is created");
         this.entities = new Map<number,Entity>()
         this.entity$ = entity$;
     }
@@ -17,7 +16,6 @@ export default class EntityManager{
     public AddEntity(entity: Entity){
         this.entities.set(entity.getEntityId(), entity);
 
-        console.log("entity is added", entity);
         this.entity$.next({
             entity,
             eventType: EntityEventType.CREATE,

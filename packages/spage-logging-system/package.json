@@ -1,7 +1,7 @@
 {
-  "name": "spage-engine-core",
+  "name": "spage-logging-system",
   "version": "0.1.8",
-  "description": "SPA Game Engine - core",
+  "description": "SPA Game Engine - log",
   "author": "SPA",
   "license": "ISC",
   "main": "./lib/index.js",
@@ -13,13 +13,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "gl-matrix": "^2.6.1",
     "rxjs": "^6.1.0",
     "spage-event-system": "^0.1.8",
-    "spage-input-system": "^0.1.8",
-    "spage-logging-system": "^0.1.8",
-    "spage-physics-system": "^0.1.8",
-    "spage-render-system": "^0.1.8",
     "spage-shared-interfaces": "^0.1.8"
   },
   "devDependencies": {
