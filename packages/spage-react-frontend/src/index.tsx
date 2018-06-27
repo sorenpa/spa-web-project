@@ -10,10 +10,12 @@ import App from './UI';
 // TODO Possibly transform into an observable passed to App/Engine
 function initializeCallBack(){
   const canvasElement: HTMLCanvasElement|null = document.getElementById('glCanvas') as HTMLCanvasElement
+  
   if(canvasElement === null) {
     alert("Cannot find DOM canvas element");
     return;
   }
+  
   EngineBootFunction(canvasElement);
 }
 

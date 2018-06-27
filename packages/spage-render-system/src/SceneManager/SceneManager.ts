@@ -1,4 +1,4 @@
-import { log, LogEntryModule, LogEntryType } from "spage-logging-system";
+import { Log, LogLabel, ModuleLabel } from "spage-logging-system";
 
 import { IModelEntity, IRenderEntityBase, RenderEntityType,  } from "../RenderEntity";
 import { ModelNode, RootNode, SceneNode,  } from "./SceneGraph";
@@ -29,7 +29,7 @@ export default class SceneManager {
 
         if(node !== null) {
             this.sceneGraph.insertNode(node, -1 );
-            log(LogEntryType.INFO, LogEntryModule.RENDERER, this.sceneGraph);
+            Log.info(new LogLabel(ModuleLabel.RENDERER,'SceneManager.ts'), "Inserting node into SceneGraph:", node, this.sceneGraph)
         }
         
 

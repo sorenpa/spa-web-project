@@ -8,6 +8,8 @@ import InputSystem from 'spage-input-system';
 import PhysicsSystem from 'spage-physics-system';
 import RenderSystem from 'spage-render-system';
 
+import {Log,LogLabel,ModuleLabel} from 'spage-logging-system'
+
 const inputSystem: InputSystem = new InputSystem();
 const renderSystem: RenderSystem = new RenderSystem();
 const entityManager: EntityManager = new EntityManager();
@@ -24,6 +26,19 @@ export default function boot(canvasElement: HTMLCanvasElement): boolean {
         gameloop$.subscribe(gameLoop);
         addTestObjects();
     }
+
+    Log.info(new LogLabel(ModuleLabel.CORE,'L1','L2','L3'), "lots of labels");
+    Log.info(new LogLabel(ModuleLabel.CORE,'Engine.ts'), "This is some info");
+    Log.warn(new LogLabel(ModuleLabel.CORE,'Engine.ts'), "This is a warning");
+    Log.error(new LogLabel(ModuleLabel.CORE,'Engine.ts'), new Error("This is an Error!"));
+    Log.info(new LogLabel(ModuleLabel.EVENT), "Hi");
+    Log.info(new LogLabel(ModuleLabel.FRONTEND), "Hi");
+    Log.info(new LogLabel(ModuleLabel.PHYSICS), "Hi");
+    Log.info(new LogLabel(ModuleLabel.LOGGING), "Hi");
+    Log.info(new LogLabel(ModuleLabel.INPUT), "Hi");
+    Log.info(new LogLabel(ModuleLabel.RENDERER), "Hi");
+    Log.info(new LogLabel(ModuleLabel.CORE), "Hi");
+    
 
     return initSuccess;
 }

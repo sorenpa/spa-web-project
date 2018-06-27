@@ -27,7 +27,7 @@ class App extends React.Component<IProps, IState> {
   }
   
   public componentDidMount() {
-    window.addEventListener('resize', this.updateWindowDimensions);
+    window.addEventListener('resize', (this.updateWindowDimensions));
     this.ModalOnClose = this.ModalOnClose.bind(this);
     this.ModalOnAccept = this.ModalOnAccept.bind(this);
     

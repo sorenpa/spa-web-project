@@ -1,6 +1,6 @@
 import { mat4, vec4 } from "gl-matrix";
 
-import { log, LogEntryModule, LogEntryType } from "spage-logging-system";
+import { Log, LogLabel, ModuleLabel } from "spage-logging-system";
 
 import { IModelEntity, IRenderEntityBase } from "../RenderEntity";
 import RenderContext from "./RenderContext";
@@ -57,7 +57,7 @@ export default class Renderer {
             const positionAttributeLocation = shaderProgram.attributeLocations.get('a_VertexPosition');
 
             if (positionAttributeLocation === undefined) {
-                log(LogEntryType.ERROR, LogEntryModule.RENDERER, 'position attribute location is UNDEFINED');
+                Log.error(new LogLabel(ModuleLabel.RENDERER, 'renderer.ts'), new Error('position attribute location is UNDEFINED'));
                 return;
             }
 
@@ -87,14 +87,14 @@ export default class Renderer {
             const projectionLocation: WebGLUniformLocation | null | undefined = shaderProgram.uniformLocations.get('u_ProjectionMatrix');
 
             if (projectionLocation === undefined || projectionLocation === null) {
-                log(LogEntryType.ERROR, LogEntryModule.RENDERER, 'projectionLocation is undefined or null');
+                Log.error(new LogLabel(ModuleLabel.RENDERER, 'renderer.ts'), new Error('projectionLocation is undefined or null'));
                 return;
             }
 
             const colorLocation: WebGLUniformLocation | null | undefined = shaderProgram.uniformLocations.get('u_Color');
 
             if (colorLocation === undefined || colorLocation === null) {
-                log(LogEntryType.ERROR, LogEntryModule.RENDERER, 'colorLocation is undefined or null');
+                Log.error(new LogLabel(ModuleLabel.RENDERER, 'renderer.ts'), new Error('colorLocation is undefined or null'));
                 return;
             }
 
