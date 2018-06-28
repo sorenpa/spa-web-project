@@ -1,5 +1,4 @@
 import {LogLabel} from './LogLabel'
-const BASE_CSS: string = 'color:black'
 
 enum LogEntryType {
     INFO = 'INFO',
@@ -17,33 +16,33 @@ export enum ModuleLabel{
     RENDERER = 'spage-render-system',
 }
 
-function getModuleColor(label: LogLabel): string {
-    let labelColor: string = 'black'
+function getlabelCss(label: LogLabel): string {
+    let labelCss: string = ''
     switch (label.name) {
         case ModuleLabel.CORE:
-            labelColor = '#5599ff'
+            labelCss = 'background:#5599ff; color:black'
             break;
         case ModuleLabel.EVENT:
-            labelColor = '#9966ff'
+            labelCss = 'background:#9966ff; color:black'
             break;
         case ModuleLabel.RENDERER:
-            labelColor = '#70db70'
+            labelCss = 'background:#70db70; color:black'
             break;
         case ModuleLabel.PHYSICS:
-            labelColor = '#ff9955'
+            labelCss = 'background:#ff9955; color:black'
             break;
         case ModuleLabel.FRONTEND:
-            labelColor = '#00e6e6'
+            labelCss = 'background:#00e6e6; color:black'
             break;
         case ModuleLabel.INPUT:
-            labelColor = '#d3bc5f'
+            labelCss = 'background:#d3bc5f; color:black'
             break;
         case ModuleLabel.LOGGING:
-            labelColor = '#666699'
+            labelCss = 'background:#666699; color:black'
             break;
     }
 
-    return labelColor
+    return labelCss
 }
 
 export class Log {
@@ -61,8 +60,7 @@ export class Log {
     }
     
     private static log(type:LogEntryType, label:LogLabel, message:any, ...optional:any[]) {
-        const moduleCss: string = 'background:' + getModuleColor(label);
-    
+        const moduleCss: string = getlabelCss(label);
         const date = new Date();
         const dateString = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} `
         const typeString = "[" + type + "] ";
@@ -70,13 +68,13 @@ export class Log {
     
         switch (type) {
             case LogEntryType.INFO:
-                console.info(dateString + typeString + moduleString, moduleCss, BASE_CSS, message, ...optional);
+                console.info(dateString + typeString + moduleString, moduleCss, message, ...optional);
                 return;
             case LogEntryType.WARNING:
-                console.warn(dateString + typeString + moduleString, moduleCss, BASE_CSS, message, ...optional);
+                console.warn(dateString + typeString + moduleString, moduleCss, message, ...optional);
                 return;
             case LogEntryType.ERROR:
-                console.error(dateString + typeString + moduleString, moduleCss, BASE_CSS, message, ...optional);
+                console.error(dateString + typeString + moduleString, moduleCss, message, ...optional);
                 return;
             default:
                 console.warn('Log received wrong type')
