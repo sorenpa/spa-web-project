@@ -1,6 +1,5 @@
 import { Resource, ResourceFlag, ResourceType } from "./Resource";
 
-
 export class MaterialResource extends Resource {
 
     public static constructorFunc(name:string, flag:ResourceFlag): Resource{
@@ -10,6 +9,8 @@ export class MaterialResource extends Resource {
     constructor(name:string, flag:ResourceFlag){
         super(name, ResourceType.Material,flag);
     }
+
+    
 
     
 }

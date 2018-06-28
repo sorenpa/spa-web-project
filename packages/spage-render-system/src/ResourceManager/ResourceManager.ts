@@ -1,10 +1,16 @@
 import { Log, LogLabel, ModuleLabel } from "spage-logging-system";
 
 import { IResourceRegEntry } from "./IResourceRegEntry";
-import { MaterialResource, Resource, ResourceFlag, ResourceType } from "./Resources";
-
-
-
+import { 
+    CodeResource, 
+    GeometryResource, 
+    MaterialResource, 
+    Resource, 
+    ResourceFlag, 
+    ResourceType, 
+    ShaderResource, 
+    TextureResource 
+} from "./Resources";
 
 export default class ResourceManager{
     
@@ -18,7 +24,12 @@ export default class ResourceManager{
 
         // Register resource types
         this.registerResourceType(ResourceType.Material, "Material", null, null, MaterialResource.constructorFunc);
-        Log.info(new LogLabel(ModuleLabel.RENDERER, 'ResourceManager.ts'), 'Registered base resources:', this.resourceRegistry)
+        this.registerResourceType(ResourceType.Geometry, "Geometry", null, null, GeometryResource.constructorFunc);
+        this.registerResourceType(ResourceType.Shader, "Shader", null, null, ShaderResource.constructorFunc);
+        this.registerResourceType(ResourceType.Texture, "Texture", null, null, TextureResource.constructorFunc);
+        this.registerResourceType(ResourceType.Code, "Code", null, null, CodeResource.constructorFunc);
+
+        Log.info(new LogLabel(ModuleLabel.RENDERER, 'ResourceManager.ts'), 'Resource types:', this.resourceRegistry)
     }
 
     public registerResourceType(resType:ResourceType, typeString:string, 
@@ -35,7 +46,7 @@ export default class ResourceManager{
         } 
 
         this.resourceRegistry.set(resType,entry);
-        Log.info(new LogLabel(ModuleLabel.RENDERER, 'ResourceManager.ts'), 'Registered resource type:', resType)
+        Log.info(new LogLabel(ModuleLabel.RENDERER, 'ResourceManager.ts'), 'Registered resource type:', typeString)
     }
 
     // TODO: The 'name' param has a bad name. It is used to supply file path to the resource.

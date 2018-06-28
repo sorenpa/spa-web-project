@@ -64,7 +64,7 @@ export class Log {
         const date = new Date();
         const dateString = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} `
         const typeString = "[" + type + "] ";
-        const moduleString = "%c" + label.resolveString() + "%c:";
+        const moduleString = "%c" + label.resolveString();
     
         switch (type) {
             case LogEntryType.INFO:

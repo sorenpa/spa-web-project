@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './App.css';
 
-import {Canvas, Modal } from './components/';
+import {Canvas, Modal } from './components';
 
 
 interface IState{

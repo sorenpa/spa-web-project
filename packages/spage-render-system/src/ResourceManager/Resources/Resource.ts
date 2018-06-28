@@ -23,6 +23,20 @@ export enum ResourceFlag {
     TexSRGB = 64
 }
 
+export const resourceTypeString: string[] = [
+    'Undefined',
+    'SceneGraph',
+    'Geometry',
+    'Animation',
+    'Material',
+    'Code',
+    'Shader',
+    'Texture',
+    'ParticleEffect',
+    'Pipeline',
+    'ComputeBuffer'
+]
+
 export abstract class Resource {
     protected refCount: number;
     protected externalRefCount: number;
@@ -46,6 +60,10 @@ export abstract class Resource {
 
     public getType(): ResourceType {
         return this.type;
+    }
+
+    public getTypeString(): string {
+        return resourceTypeString[this.type];
     }
 
     public getFlags(): ResourceFlag {

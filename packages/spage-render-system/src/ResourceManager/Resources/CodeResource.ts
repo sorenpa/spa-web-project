@@ -1,14 +1,14 @@
 import { Resource, ResourceFlag, ResourceType } from "./Resource";
 
 
-export class GeometryResource extends Resource {
+export class CodeResource extends Resource {
 
     public static constructorFunc(name:string, flag:ResourceFlag): Resource{
-        return new GeometryResource(name,flag);
+        return new CodeResource(name,flag);
     }
 
     constructor(name:string, flag:ResourceFlag){
-        super(name, ResourceType.Geometry,flag);
+        super(name, ResourceType.Code,flag);
     }
 
     
