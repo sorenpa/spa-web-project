@@ -8,126 +8,124 @@ Project Development Plan
 
     T0004 Create a factory for entities/ComponentSystem
     T0007 Create better physics with acceleration/collision.
-    T0008 Create Animations when moving - Animations should not affect physics?
+    T0008 Create Animations.
     T0010 we need to model time somehow other than saying 1 fram = 16ms
-    T0011 Implement a logging system for debugging and fault finding. Could prop just be an RxSubject.
     T0012 We need a content loader system
     T0013 Implement a Camera with Keys/Mouse control
+    T0014 Concurrent Modules
+
     =============================================================================================
     Current Task
     =============================================================================================
 
 
     T0006 Create a basic 3D RenderSystem
-        - Design a structure for setting up GL environment, Rendering multiple game objects with different models and materials
-        - Perhaps a more flexible way to generate shaders. Something that sets uniforms, attribs and varyings -> Info object
+    - Design a structure for setting up GL environment, Rendering multiple game objects with different models and materials
 
-        Design principles:
-        ------------------
-        - 100% decoupling from the ECS (Entity Component System) part of the engine.
-            - We need 1 simple interface thats basically CRUD for Entity->RenderItem + render frame
-            - We need to divide the render system into clear and selfcontained parts.
-                - render entity manager
-                    - Needs to register/deregister RenderEntities (A representation of an ECS render entity with relevant components)
-                    - Needs to be able to sort the entities by ShaderProgram -> Texture -> Model
-                - shader manager
-                    - need to register/deregister active shaders.
-                    - need to load/compile/link shaders into programs. 
-                - texture manager
-                    - Need to register/deregister active textures
-                    - Need to load textures from a file
-                - model manager
-                    - Need to register/deregister active models
-                    - We need to load models from a .dea files (COLLADA file format)
-                - [RENDERDEVICE] Some class that controls the rendering of the managed items/resources
-                - [SHADOW SYSTEM] Some functionality that controls shadows
+    // Sub Tasks
+    1. Create a structure:
+    2. Figure out the relationship between nodes in the scene graph
+    3. Develop render functions for Model/Mesh
+    4. Import models from blender or likewise
+    5. Develop a resource system
 
-        we have perhaps
-        No we create a render queue that is 
+    // 1 Create a structure:
+    So we have a SceneManager with:
+        - Map<Number,IRenderEntity> :: 
+            Stores the raw data
+        - SceneGraph :: 
+            Specifying the geometrical/Spatial heirachy for transform matrices Culling etc
+        - RenderQueue :: 
+            ordered/sorted list of IRenderEntity IDs that specify the render order. 
+            generated EVERY frame, processed, and discarded. 
+            Its sorted by a bitKey typically by Shader -> Texture -> (VBO -> Translucent -> Depth)?
 
-        So we have a SceneManager with:
-            - Map<Number,IRenderEntity> :: 
-                Stores the raw data
-            - SceneGraph :: 
-                Specifying the geometrical/Spatial heirachy for transform matrices Culling etc
-            - RenderQueue :: 
-                ordered/sorted list of IRenderEntity IDs that specify the render order. 
-                generated EVERY frame, processed, and discarded. 
-                Its sorted by a bitKey typically by Shader -> Texture -> (VBO -> Translucent -> Depth)?
+        - BaseEntityPool
+        - SceneGraph:
+            - SceneNodes
+                - Light
+                - Camera
+                - Model (Geometry resource)
+                    - Children
+                        - Light
+                        - Joint
+                        - Mesh (Material Resource) - can only live with a model as parent.
+                        - Model
+        - RenderQ derived from the SceneGraph
 
-        *** Looks like the Resource and SceneNode are both basically just "pointer objects". They store references to
-        data located alsewhere. I.E a RenderEntityPool
+    *** Looks like the Resource and SceneNode are both basically just "pointer objects". They store references to
+    data located alsewhere. I.E a RenderEntityPool
 
-        - in H3D they keep a "RenderfunctionRegistry". Basically RenderEntity type (Mesh, Light, Camera ...) -> how to render it.
-            - ResourceManager
-                - Resource (egResource.h -> ResourceTypes)
-                    SceneGraph,
-                        - Not too interesting
-                    Geometry,
-                        - Vertex data, indexbuf, posVbuf, tanVbuf, staticBuf, AABB
-                        - Joints List <------- ??? hmm
-                        - Morph targets
-                    Animation,
-                    Material,
-                        - ShaderResource
-                        - TextureResource
-                    Code,
-                        - used for shader code,
-                    Shader, 
-                        codeRes list, blend, test, cull, shadercombination, shader context, 
-                    Texture,
-                        Just texture image data, and functions to load
-                    ParticleEffect,
-                    Pipeline,
-                    ComputeBuffer
+    - in H3D they keep a "RenderfunctionRegistry". Basically RenderEntity type (Mesh, Light, Camera ...) -> how to render it.
+        - ResourceManager
+            - Resource (egResource.h -> ResourceTypes)
+                SceneGraph,
+                    - Not too interesting
+                Geometry,
+                    - Vertex data, indexbuf, posVbuf, tanVbuf, staticBuf, AABB
+                    - Joints List <------- ??? hmm
+                    - Morph targets
+                Animation,
+                Material,
+                    - ShaderResource
+                    - TextureResource
+                Code,
+                    - used for shader code,
+                Shader, 
+                    codeRes list, blend, test, cull, shadercombination, shader context, 
+                Texture,
+                    Just texture image data, and functions to load
+                ParticleEffect,
+                Pipeline,
+                ComputeBuffer
 
-            Scenenode
-                - base
-                    - flags/type enums etc.
-                    - parent/child tree functionality
-                    - transformations
-                - modelNode
-                    - Geometry resources
-                    - MeshNode list
-                    - jointNode list
-                    - Animation stages
-                - lightNode
-                - GroupNode,
-                    - basically a simple grouping, not important right now
-                - MeshNode (Animateables.h implements IAnimatableNode),
-                    - Material resource,
-                    - vertRStart, vertRend, batchStart, batchEnd
-                    - BB
-                    - Points back to Modelnode.
-                - JointNode,
-                    - Points back to ModelNode
-                - LightNode,
-                    - light stuff
-                - CameraNode,
-                    - Camera stuff
-                - EmitterNode,
-                - ComputeNode
+        Scenenode
+            - base
+                - flags/type enums etc.
+                - parent/child tree functionality
+                - transformations
+            - modelNode
+                - Geometry resources
+                - MeshNode list
+                - jointNode list
+                - Animation stages
+            - lightNode
+            - GroupNode,
+                - basically a simple grouping, not important right now
+            - MeshNode (Animateables.h implements IAnimatableNode),
+                - Material resource,
+                - vertRStart, vertRend, batchStart, batchEnd
+                - BB
+                - Points back to Modelnode.
+            - JointNode,
+                - Points back to ModelNode
+            - LightNode,
+                - light stuff
+            - CameraNode,
+                - Camera stuff
+            - EmitterNode,
+            - ComputeNode
 
-        // TODOs
-        1. Create a structure:
-            - BaseEntityPool
-            - SceneGraph:
-                - SceneNodes
-                    - Light
-                    - Camera
-                    - Model (Geometry resource)
-                        - Children
-                            - Light
-                            - Joint
-                            - Mesh (Material Resource) - can only live with a model as parent.
-                            - Model
-            - RenderQ derived from the SceneGraph
-        2. Figure out the relationship between nodes in the scene graph
-            - How do you populate it? How do you know what the parent node is?
-            - How do you generate MeshNodes?
-            - How do you generate a renderQ from the graph? Or is it done elsewhere ?
-            - Develop render functions for Model/Mesh
-            - Import from blender or likewise
+    This is what we have in the RDI (RenderContext):
+        RDIVertexLayout                    _vertexLayouts[MaxNumVertexLayouts];
+        RDIObjects< RDIBufferGL4 >         _buffers;
+        RDIObjects< RDITextureGL4 >        _textures;
+        RDIObjects< RDITextureBufferGL4 >  _textureBuffs;
+        RDIObjects< RDIShaderGL4 >         _shaders;
+        RDIObjects< RDIRenderBufferGL4 >   _rendBufs;
+        RDIObjects< RDIGeometryInfoGL4 >   _vaos;
+        std::vector< RDIShaderStorageGL4 > _storageBufs;
+
+    // 2. Figure out the relationship between nodes in the scene graph
+        - How do you populate it? How do you know what the parent node is?
+        - How do you generate MeshNodes?
+        - How do you generate a renderQ from the graph? Or is it done elsewhere ?
+
+    
+    // 3. Develop render functions for Model/Mesh
+    // 4. Import models from blender or likewise
+    // 5. Develop a resource system
+        
 
     =============================================================================================
     Done Tasks
@@ -137,6 +135,7 @@ Project Development Plan
     T0002 Establish communication Between 2D and 3D UI parts 
     T0009 Create The event system
     T0005 Fix imports for systems. No deep imports.
+    T0011 Implement a logging system for debugging and fault finding. Could prop just be an RxSubject.
 
 
 
