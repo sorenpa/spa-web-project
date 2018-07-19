@@ -1,6 +1,5 @@
 import { Resource, ResourceFlag, ResourceType } from "./Resource";
 
-
 export class TextureResource extends Resource {
 
     public static constructorFunc(name:string, flag:ResourceFlag): Resource{

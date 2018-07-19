@@ -28,8 +28,8 @@ export class MaterialResource extends Resource {
     }
 
     private combMask: number;
-    private shaderResource: ShaderResource | null; // TODO ID or Ref ?
-    private materialLink: MaterialResource | null // TODO ID or Ref ?
+    private shaderResource: number|undefined;
+    private materialLink: number|undefined; 
     private buffers: IMaterialBuffer[];
     private textureSamplers: IMaterialTextureSampler[];
     private uniforms: IMaterialUniform[];
@@ -42,8 +42,6 @@ export class MaterialResource extends Resource {
 
     public initDefault() {
         this.combMask = 0;
-        this.shaderResource = null;
-        this.materialLink = null;
         this.buffers = new Array<IMaterialBuffer>();
         this.textureSamplers = new Array<IMaterialTextureSampler>();
         this.uniforms = new Array<IMaterialUniform>();

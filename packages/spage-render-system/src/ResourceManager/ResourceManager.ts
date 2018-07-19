@@ -13,26 +13,17 @@ import {
 } from "./Resources";
 
 export default class ResourceManager{
-    
-    private resources: Resource[];
-    private resourceRegistry: Map<number,IResourceRegEntry>;
 
-    constructor(){
-        Log.info(new LogLabel(ModuleLabel.RENDERER, 'ResourceManager.ts'), 'Constructing Resoure Manager')
-        this.resources = new Array<Resource>();
-        this.resourceRegistry = new Map<ResourceType,IResourceRegEntry>();
-
-        // Register resource types
+    public static registerDefaultResourceTypes() {
+        
         this.registerResourceType(ResourceType.Material, "Material", null, null, MaterialResource.constructorFunc);
         this.registerResourceType(ResourceType.Geometry, "Geometry", null, null, GeometryResource.constructorFunc);
         this.registerResourceType(ResourceType.Shader, "Shader", null, null, ShaderResource.constructorFunc);
         this.registerResourceType(ResourceType.Texture, "Texture", null, null, TextureResource.constructorFunc);
         this.registerResourceType(ResourceType.Code, "Code", null, null, CodeResource.constructorFunc);
-
-        Log.info(new LogLabel(ModuleLabel.RENDERER, 'ResourceManager.ts'), 'Resource types:', this.resourceRegistry)
     }
 
-    public registerResourceType(resType:ResourceType, typeString:string, 
+    public static registerResourceType(resType:ResourceType, typeString:string, 
         resTypeInitFunc:(()=>void)|null, resTypeReleaseFunc:(()=>void)|null, resTypeConstructorFunc:(name:string, flag:ResourceFlag)=>Resource){
         
             const regEntry = this.resourceRegistry.get(resType);
@@ -49,8 +40,7 @@ export default class ResourceManager{
         Log.info(new LogLabel(ModuleLabel.RENDERER, 'ResourceManager.ts'), 'Registered resource type:', typeString)
     }
 
-    // TODO: The 'name' param has a bad name. It is used to supply file path to the resource.
-    public addResource(type:ResourceType, name:string, flag:ResourceFlag, externalCall:boolean): number|undefined{
+    public static addResource(type:ResourceType, name:string, flag:ResourceFlag, externalCall:boolean): number|undefined{
 
         if(name === ""){ return undefined }
 
@@ -75,4 +65,11 @@ export default class ResourceManager{
         Log.info(new LogLabel(ModuleLabel.RENDERER, 'ResourceManager.ts'), 'Added new Resource:', newResource)
         return index;
     }
+
+    public static getResource(findFunc:(r:Resource)=>boolean): Resource|undefined {
+        return this.resources.find(findFunc);
+    }
+
+    private static resources: Resource[] = new Array<Resource>();
+    private static resourceRegistry: Map<number,IResourceRegEntry> = new Map<ResourceType,IResourceRegEntry>();
 }

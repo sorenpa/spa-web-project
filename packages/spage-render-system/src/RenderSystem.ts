@@ -12,14 +12,15 @@ import { ResourceType } from './ResourceManager/Resources';
 export default class RenderSystem {
 
     private renderer: Renderer;
-    private resourceManager: ResourceManager;
+    // private resourceManager: ResourceManager;
 
     constructor() {
         entity$.subscribe(this.onEntityEvent.bind(this));
         this.renderer = new Renderer();
-        this.resourceManager = new ResourceManager();
 
-        this.resourceManager.addResource(ResourceType.Material, "Path/To/Resource.xml", 0, false);
+        ResourceManager.registerDefaultResourceTypes();
+
+        ResourceManager.addResource(ResourceType.Material, "Path/To/Resource.xml", 0, false);
     }
 
     public init(canvasElement:HTMLCanvasElement): boolean {

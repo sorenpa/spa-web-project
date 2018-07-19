@@ -54,8 +54,12 @@ export abstract class Resource {
         this.refCount = 0;
     }
 
-    public getName() {
+    public getName() :string {
         return this.name;
+    }
+
+    public getId() : number {
+        return this.id;
     }
 
     public getType(): ResourceType {
